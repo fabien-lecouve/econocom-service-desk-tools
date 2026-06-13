@@ -19,8 +19,8 @@ return new class extends Migration
                 ->cascadeOnDelete()
                 ->unique();
 
-            $table->string('salutation');
-            $table->string('closing');
+            $table->string('salutation', 100);
+            $table->string('closing', 100);
 
             $table->timestamps();
         });

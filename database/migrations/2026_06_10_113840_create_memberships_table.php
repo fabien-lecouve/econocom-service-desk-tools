@@ -23,7 +23,8 @@ return new class extends Migration
                 ->cascadeOnDelete();
 
             $table->foreignId('role_id')
-                ->constrained();
+                ->constrained()
+                ->restrictOnDelete();
 
             $table->timestamps();
 

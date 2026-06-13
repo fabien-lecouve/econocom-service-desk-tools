@@ -24,14 +24,34 @@ return new class extends Migration
 
             $table->foreignId('message_type_id')
                 ->constrained()
-                ->cascadeOnDelete();
+                ->restrictOnDelete();
 
-            $table->string('slug');
-            $table->string('name');
+            $table->foreignId('font_color_id')
+                ->nullable()
+                ->constrained('colors')
+                ->nullOnDelete();
+
+            $table->foreignId('background_color_id')
+                ->nullable()
+                ->constrained('colors')
+                ->nullOnDelete();
+
+            $table->foreignId('border_top_color_id')
+                ->nullable()
+                ->constrained('colors')
+                ->nullOnDelete();
+
+            $table->string('slug', 100);
+            $table->string('name', 100);
+
+            $table->char('shortcut', 1)->nullable();
+            
+            $table->unsignedInteger('position')->default(0);
 
             $table->timestamps();
 
             $table->unique(['project_id', 'slug']);
+            $table->unique(['project_id', 'shortcut']);
         });
     }
 

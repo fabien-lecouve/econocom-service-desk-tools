@@ -20,7 +20,7 @@ return new class extends Migration
 
             $table->foreignId('language_id')
                 ->constrained()
-                ->cascadeOnDelete();
+                ->restrictOnDelete();
 
             $table->text('content');
 

@@ -20,9 +20,9 @@ return new class extends Migration
 
             $table->foreignId('language_id')
                 ->constrained()
-                ->cascadeOnDelete();
+                ->restrictOnDelete();
 
-            $table->string('signature')->nullable();
+            $table->text('signature')->nullable();
 
             $table->timestamps();
 
