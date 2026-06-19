@@ -15,11 +15,26 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        $this->call([
+            // Référentiels
+            LanguageSeeder::class,
+            MessageTypeSeeder::class,
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            // Langues
+            LanguageSettingSeeder::class,
+
+            // Projets & utilisateurs
+            ProjectSeeder::class,
+
+            // Langues par projet
+            ProjectLanguageSettingSeeder::class,
+
+            // Catégories
+            CategorySeeder::class,
+
+            // Messages
+            MessageSeeder::class,
+            MessageTranslationSeeder::class,
         ]);
     }
 }
