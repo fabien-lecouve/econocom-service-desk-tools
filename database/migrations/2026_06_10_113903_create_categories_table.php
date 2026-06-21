@@ -38,14 +38,14 @@ return new class extends Migration
                 ->constrained('colors')
                 ->nullOnDelete();
 
-            $table->string('slug', 100);
-            $table->string('name', 100);
+            $table->string('code', 100);
+            $table->string('label', 100);
 
             $table->unsignedInteger('position')->default(0);
 
             $table->timestamps();
 
-            $table->unique(['project_id', 'slug']);
+            $table->unique(['project_id', 'code']);
         });
     }
 

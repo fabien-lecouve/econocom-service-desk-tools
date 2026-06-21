@@ -41,8 +41,8 @@ return new class extends Migration
                 ->constrained('colors')
                 ->nullOnDelete();
 
-            $table->string('slug', 100);
-            $table->string('name', 100);
+            $table->string('code', 100);
+            $table->string('label', 100);
 
             $table->char('shortcut', 1)->nullable();
             
@@ -50,7 +50,7 @@ return new class extends Migration
 
             $table->timestamps();
 
-            $table->unique(['project_id', 'slug']);
+            $table->unique(['project_id', 'code']);
             $table->unique(['project_id', 'shortcut']);
         });
     }
