@@ -13,7 +13,7 @@ class MessageTranslationSeeder extends Seeder
     public function run(): void
     {
         $languages = DB::table('languages')->pluck('id', 'code');
-        $messages = DB::table('messages')->pluck('id', 'slug');
+        $messages = DB::table('messages')->pluck('id', 'code');
 
         $translations = [
             'escalation_1' => [

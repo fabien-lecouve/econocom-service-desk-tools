@@ -16,7 +16,7 @@ class CategorySeeder extends Seeder
         // Catégorie parente : général
         DB::table('categories')->updateOrInsert(
             [
-                'slug' => 'general',
+                'code' => 'general',
                 'project_id' => 1
             ],
             [
@@ -24,20 +24,20 @@ class CategorySeeder extends Seeder
                 'font_color_id' => null,
                 'background_color_id' => null,
                 'border_top_color_id' => null,
-                'name' => 'général',
+                'label' => 'général',
                 'position' => 1
             ]
         );
 
         $generalId = DB::table('categories')
-            ->where('slug', 'general')
-            ->whereNull('project_id')
+            ->where('code', 'general')
+            ->where('project_id', 1)
             ->value('id');
 
         // Enfant : relances
         DB::table('categories')->updateOrInsert(
             [
-                'slug' => 'escalations',
+                'code' => 'escalations',
                 'project_id' => 1
             ],
             [
@@ -45,7 +45,7 @@ class CategorySeeder extends Seeder
                 'font_color_id' => null,
                 'background_color_id' => null,
                 'border_top_color_id' => null,
-                'name' => 'escalades',
+                'label' => 'escalades',
                 'position' => 1
             ]
         );
@@ -53,7 +53,7 @@ class CategorySeeder extends Seeder
         // Enfant : résolution
         DB::table('categories')->updateOrInsert(
             [
-                'slug' => 'resolution',
+                'code' => 'resolution',
                 'project_id' => 1
             ],
             [
@@ -61,7 +61,7 @@ class CategorySeeder extends Seeder
                 'font_color_id' => null,
                 'background_color_id' => null,
                 'border_top_color_id' => null,
-                'name' => 'résolution',
+                'label' => 'résolution',
                 'position' => 2
             ]
         );

@@ -43,9 +43,11 @@ class Category extends Model
     /**
      * Get the child categories.
      */
-    public function children(): HasMany
+    public function children()
     {
-        return $this->hasMany(Category::class, 'parent_id');
+        return $this->hasMany(Category::class, 'parent_id')
+            ->orderBy('position')
+            ->with('children');
     }
 
     /**
@@ -56,7 +58,7 @@ class Category extends Model
         return $this->hasMany(Message::class);
     }
 
-    
+
     /**
      * Get the font color that owns the category.
      */

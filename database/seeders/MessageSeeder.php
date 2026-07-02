@@ -9,7 +9,7 @@ class MessageSeeder extends Seeder
 {
     public function run(): void
     {
-        $categories = DB::table('categories')->pluck('id', 'slug');
+        $categories = DB::table('categories')->pluck('id', 'code');
         $types = DB::table('message_types')->pluck('id', 'code');
         $position = 1;
 
@@ -18,34 +18,34 @@ class MessageSeeder extends Seeder
             [
                 'category' => 'escalations',
                 'type' => 'escalation',
-                'slug' => 'escalation_1',
-                'name' => 'escalade 1'
+                'code' => 'escalation_1',
+                'label' => 'escalade 1'
             ],
             [
                 'category' => 'escalations',
                 'type' => 'escalation',
-                'slug' => 'escalation_2',
-                'name' => 'escalade 2'
+                'code' => 'escalation_2',
+                'label' => 'escalade 2'
             ],
             [
                 'category' => 'escalations',
                 'type' => 'work_note',
-                'slug' => 'closure',
-                'name' => 'clôture'
+                'code' => 'closure',
+                'label' => 'clôture'
             ],
 
             // Resolutions
             [
                 'category' => 'resolution',
                 'type' => 'comment',
-                'slug' => 'incident_resolution',
-                'name' => 'résolution incident'
+                'code' => 'incident_resolution',
+                'label' => 'résolution incident'
             ],
             [
                 'category' => 'resolution',
                 'type' => 'comment',
-                'slug' => 'request_resolution',
-                'name' => 'résolution demande'
+                'code' => 'request_resolution',
+                'label' => 'résolution demande'
             ],
         ];
 
@@ -53,7 +53,7 @@ class MessageSeeder extends Seeder
             DB::table('messages')->updateOrInsert(
                 [
                     'project_id' => 1,
-                    'slug' => $message['slug']
+                    'code' => $message['code']
                 ],
                 [
                     'category_id' => $categories[$message['category']],
@@ -61,7 +61,7 @@ class MessageSeeder extends Seeder
                     'font_color_id' => null,
                     'background_color_id' => null,
                     'border_top_color_id' => null,
-                    'name' => $message['name'],
+                    'label' => $message['label'],
                     'position' => $position++
                 ]
             );
