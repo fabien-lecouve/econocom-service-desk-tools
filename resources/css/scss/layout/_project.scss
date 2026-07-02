@@ -1,0 +1,136 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+
+// HEADER //
+#header-container-fix {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: $white-secondary;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    padding: 16px;
+
+    h1 {
+        text-align: center;
+        display: none;
+
+        @include up(md) {
+            display: inherit;
+        }
+    }
+}
+
+.header-project {
+    display: flex;
+    justify-content: space-between;
+
+    &__settings {
+        display: flex;
+        gap: 8px;
+    }
+}
+
+
+// MAIN
+#quick-messages {
+    margin-top: 76px;
+    display: block;
+
+    @include up(md) {
+        padding: 8px;
+    }
+
+    @include up(lg) {
+        column-count: 2;
+        column-gap: 8px;
+    }
+}
+
+
+// SECTION
+.section {
+    break-inside: avoid;
+    margin-bottom: 8px;
+    padding: 8px;
+    background-color: $white-secondary;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+
+    @include up(sm) {
+        padding: 16px;
+    }
+
+    @include up(md) {
+        border-radius: 8px;
+    }
+
+    &__title {
+        text-align: center;
+        padding-bottom: 8px;
+        text-transform: capitalize;
+    }
+
+    &__content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 4px;
+
+        @include up(sm) {
+            gap: 8px;
+        }
+    }
+}
+
+// CARD
+.card {
+    background-color: $white-primary;
+    padding: 8px;
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    min-width: 0;
+
+    &__title {
+        text-align: center;
+        padding-bottom: 8px;
+        text-transform: capitalize;
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        justify-content: center;
+        gap: 8px;
+    }
+}
+
+.card-wide {
+    grid-column: span 2;
+}
+
+
+// GROUP
+.group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    flex: 1;
+    gap: 8px;
+    padding: 8px;
+    border-radius: 8px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+
+    &__title {
+        padding-bottom: 8px;
+    }
+
+    &__content {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 8px;
+    }
+}

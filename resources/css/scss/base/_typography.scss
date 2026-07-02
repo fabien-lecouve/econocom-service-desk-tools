@@ -1,0 +1,13 @@
+@use '../abstracts/variables' as *;
+
+* {
+    font-family: "Inter", sans-serif;
+    color: $black-primary;
+}
+
+h1,h2,h3,h4 {
+    font-family: "Montserrat", sans-serif;
+    color: $black-primary;
+    text-transform: uppercase;
+    font-weight: 500;
+}

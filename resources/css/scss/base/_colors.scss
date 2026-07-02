@@ -1,0 +1,22 @@
+@use '../abstracts/variables' as *;
+
+$colors: (
+    "yellow": $yellow,
+    "orange": $orange,
+    "red": $red,
+    "blue": $blue,
+    "green": $green
+);
+
+@each $name, $color in $colors {
+    .accent-#{$name} {
+        border-top: 4px solid #{$name};
+    }
+}
+
+@each $name, $color in $colors {
+    .action-#{$name} {
+        background-color: #{$name};
+        color: $white-secondary;
+    }
+}

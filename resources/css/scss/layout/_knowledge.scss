@@ -1,0 +1,155 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+
+// HEADER
+#header-knowledge {
+    padding: 16px;
+    background-color: $white-secondary;
+    margin-bottom: 16px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+    h1 {
+        text-align: center;
+    }
+}
+
+
+// MAIN
+.kb-main {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+
+    @include up(md) {
+        margin: 0 auto;
+        width: 640px;
+    }
+
+    @include up(lg) {
+        width: 768px;
+    }
+
+    @include up(xl) {
+        width: 1024px;
+    }
+
+    &__section {
+        width: 100%;
+        padding: 16px;
+        background-color: $white-secondary;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+
+        @include up(md) {
+            border-radius: 8px;
+        }
+
+        h2 {
+            margin-bottom: 16px;
+            text-transform: none;
+        }
+
+        ul {
+            margin-left: 40px;
+            margin-right: 40px;
+            padding: 16px;
+            padding-left: 30px;
+            line-height: 1.5;
+            background-color: $white-primary;
+            border-radius: 8px;
+            box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+        }
+
+        ul li::marker {
+            color: $blue;
+            font-size: 1.2em;
+        }
+
+        p {
+            margin-left: 40px;
+            margin-right: 40px;
+            text-align: justify;
+            line-height: 1.5;
+        }
+
+        >div {
+            display: flex;
+            flex-direction: column;
+            gap: 64px;
+            margin-top: 32px;
+            margin-left: 20px;
+            margin-right: 20px;
+
+            div {
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+
+                h3 {
+                    text-transform: none;
+                    font-family: "Inter", sans-serif;
+
+                    span {
+                        background-color: $blue;
+                        color: $white-secondary;
+                        padding: 4px 8px;
+                        margin-right: 8px;
+                        border-radius: 4px;
+                    }
+                }
+
+                .info {
+                    margin-left: 40px;
+                    margin-right: 40px;
+                    padding: 16px;
+                    border-radius: 8px;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    align-items: center;
+
+                    p,
+                    i {
+                        margin: 0;
+                        color: $white-secondary;
+                    }
+
+                    i {
+                        font-size: 1.5em;
+                    }
+                }
+
+                .clues {
+                    background-color: $yellow;
+
+                }
+
+                .action-to-do {
+                    background-color: $green;
+                }
+            }
+        }
+
+        &--symptoms {
+            ul li::marker {
+                color: $red;
+            }
+        }
+
+        &--worknote {
+            p {
+                margin-left: 40px;
+                padding: 16px;
+                line-height: 1.5;
+                background-color: $orange;
+                color: $white-secondary;
+                display: inline-block;
+                border-radius: 8px;
+                box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+            }
+        }
+    }
+}
