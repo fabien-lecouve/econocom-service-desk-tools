@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Message;
 use App\Http\Requests\StoreMessageRequest;
 use App\Http\Requests\UpdateMessageRequest;
+use App\Models\Category;
+use App\Models\Message;
+use Illuminate\Http\Request;
 
 class MessageController extends Controller
 {
@@ -18,11 +20,36 @@ class MessageController extends Controller
         return view('messages.index', ['messages' => $messages]);
     }
 
+    private function mapCategories($categories)
+    {
+        return $categories->map(function ($category) {
+            return [
+                'id' => $category->id,
+                'code' => $category->code,
+                'label' => $category->label,
+                'position' => $category->position,
+                'children' => $this->mapCategories($category->children),
+            ];
+        })->values();
+    }
+
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
+        $projectId = $request->query('project_id');
+
+        $categories = Category::where('project_id', $projectId)
+            ->whereNull('parent_id')
+            ->with('children')
+            ->orderBy('position')
+            ->get();
+
+        $categories = $this->mapCategories($categories);
+
+        dd($categories);
+
         return view('messages.create');
     }
 
