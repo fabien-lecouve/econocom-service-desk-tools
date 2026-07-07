@@ -8,7 +8,9 @@
 
 <div class="form__group">
     <label class="form__label" for="{{ $name }}">
-        {{ $label }}
+        @if (isset($label))
+            {{ $label }}
+        @endif
 
         @if($required)
             <span class="required_field">*</span>

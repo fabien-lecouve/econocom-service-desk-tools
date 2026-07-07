@@ -1,10 +1,8 @@
 @props([
     'name',
     'label',
-    'options' => [],
     'value' => '',
     'required' => false,
-    'placeholder' => 'Sélectionner une option',
 ])
 
 <div class="form__group">
@@ -16,24 +14,11 @@
         @endif
     </label>
 
-    <select
+    <textarea
         {{ $attributes->merge(['class' => 'form__input']) }}
         id="{{ $name }}"
         name="{{ $name }}"
-    >
-        <option value="">
-            {{ $placeholder }}
-        </option>
-
-        @foreach($options as $option)
-            <option
-                value="{{ $option->id }}"
-                @selected(old($name, $value) == $option->id)
-            >
-                {{ $option->label }}
-            </option>
-        @endforeach
-    </select>
+    >{{ old($name, $value) }}</textarea>
 
     @error($name)
         <div class="form__error">{{ $message }}</div>

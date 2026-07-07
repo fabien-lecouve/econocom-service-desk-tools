@@ -1,4 +1,6 @@
-@props(['label', 'type' => 'text'])
+@props([
+    'label',
+    'type' => 'submit'])
 
 <div class="form__actions">
     <div>
