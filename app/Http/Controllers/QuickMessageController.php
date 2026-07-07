@@ -17,18 +17,15 @@ class QuickMessageController extends Controller
     private array $languages = [];
     private array $data = [];
 
-    public function index()
+    public function index(Project $project)
     {
-        // $this->projects = Project::whereHas('memberships', fn ($q) =>
-        //     $q->where('user_id', auth()->id())
-        // )->get();
-
-        $this->projects = Project::all();
+        $this->projects = Project::where('id', $project->id)->get();
 
         $this->allowedProjectIds = $this->projects->pluck('id');
 
         $this->buildLanguages();
         $this->buildData();
+
 
         return view('quick_messages.index', [
             'projects' => $this->projects,

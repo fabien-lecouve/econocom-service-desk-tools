@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasCode;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -9,6 +10,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 #[Fillable(['code', 'label', 'phone'])]
 class Project extends Model
 {
+    use HasCode;
+
     /**
      * Get the memberships for the project.
      */
@@ -28,24 +31,6 @@ class Project extends Model
     public function messages(): HasMany
     {
         return $this->hasMany(Message::class);
-    }
-
-
-
-    /**
-     * Get the project category settings for the project.
-     */
-    public function projectCategorySettings(): HasMany
-    {
-        return $this->hasMany(ProjectCategorySetting::class);
-    }
-
-    /**
-     * Get the project message settings for the project.
-     */
-    public function projectMessageSettings(): HasMany
-    {
-        return $this->hasMany(ProjectMessageSetting::class);
     }
 
     /**
