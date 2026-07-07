@@ -2,22 +2,22 @@
 
 button {
     width: 100%;
-    background-color: $white-secondary;
+    background-color: $white-light;
     padding: 8px;
     border-radius: 8px;
     border: none;
-    text-transform: capitalize;
+    text-transform: uppercase;
     cursor: pointer;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
 
 button.active {
-    background-color: $blue;
-    color: $white-secondary;
+    background-color: $blue-dark;
+    color: $white-light;
 }
 
 button.inactive {
-    background-color: $white-primary;
+    background-color: $white-light;
 }
 
 button.copied {

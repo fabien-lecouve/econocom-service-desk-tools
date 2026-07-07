@@ -1,0 +1,46 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.sidebar {
+    display: flex;
+    padding: 16px;
+    background: #3E0D82;
+    background: linear-gradient(143deg, rgba(62, 13, 130, 1) 0%, rgba(62, 13, 130, 1) 45%, rgba(144, 96, 204, 1) 100%)
+}
+
+.navbar {
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+    width: 100%;
+
+    &__item {
+        display: flex;
+        flex-direction: column;
+
+        &--home {
+            align-items: center;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+        }
+    }
+
+    .menu {
+        display: flex;
+        gap: 32px;
+
+        &__item ul {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+    }
+
+    p,
+    h2,
+    a {
+        color: $white-dark;
+    }
+}

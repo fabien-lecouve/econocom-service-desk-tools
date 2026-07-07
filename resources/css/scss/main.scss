@@ -8,10 +8,15 @@
 
 
 @use 'layout/body';
-@use 'layout/index';
-@use 'layout/project';
-@use 'layout/knowledge';
+@use 'layout/dashboard';
+@use 'layout/sidebar';
+@use 'layout/main';
+
+@use 'pages/project-show';
+@use 'pages/quick-messages';
 
 
+// @use 'layout/index';
+// @use 'layout/knowledge';
 @use 'components/buttons';
-@use 'components/link';
+// @use 'components/link';

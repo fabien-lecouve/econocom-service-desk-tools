@@ -17,6 +17,6 @@ $colors: (
 @each $name, $color in $colors {
     .action-#{$name} {
         background-color: #{$name};
-        color: $white-secondary;
+        color: $white;
     }
 }

@@ -1,6 +1,5 @@
 @use '../abstracts/variables' as *;
-@use '../abstracts/mixins' as *;
 
-body {
-    background-color: $white-primary;
+.body {
+    background-color: $white-light;
 }

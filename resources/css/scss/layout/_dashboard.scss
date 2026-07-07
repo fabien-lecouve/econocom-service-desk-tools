@@ -1,0 +1,8 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.dashboard {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    min-height: 100vh;
+}

@@ -1,0 +1,16 @@
+@use '../abstracts/variables' as *;
+
+.main {
+    padding: 16px;
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 32px;
+    }
+
+    &__content {
+        padding: 16px;
+    }
+}
