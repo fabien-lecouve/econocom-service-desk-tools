@@ -16,6 +16,8 @@
                         <li><a href="{{ route('projects.show', ['project' => $project]) }}">{{ $project->label }}</a>
                         </li>
                     @endforeach
+                    <li><a href="{{ route('projects.create') }}">Créer un nouveau projet</a>
+                    </li>
                 </ul>
             </div>
 

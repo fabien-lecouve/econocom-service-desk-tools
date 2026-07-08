@@ -19,15 +19,35 @@ class CategoryController extends Controller
         return view('categories.index', ['categories' => $categories]);
     }
 
+    private function mapCategories($categories)
+    {
+        return $categories->map(function ($category) {
+            return [
+                'id' => $category->id,
+                'code' => $category->code,
+                'label' => $category->label,
+                'position' => $category->position,
+                'children' => $this->mapCategories($category->children),
+            ];
+        })->values();
+    }
+
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Project $project)
     {
-        $projects = Project::select('id', 'code', 'label')->get();
+        $categories = Category::where('project_id', $project->id)
+            ->whereNull('parent_id')
+            ->with('children')
+            ->orderBy('position')
+            ->get();
+
+        $categories = $this->mapCategories($categories);
 
         return view('categories.create', [
-            'projects' => $projects
+            'project' => $project,
+            'categories' => $categories
         ]);
     }
 
@@ -37,9 +57,15 @@ class CategoryController extends Controller
     public function store(StoreCategoryRequest $request)
     {
         $validated = $request->validated();
+
+        $project = Project::findOrFail($request->project_id);
+
+        $validated['code'] = Category::generateCode($project);
         $category = Category::create($validated);
 
-        return redirect()->route('categories.index')->with('success', "Catégorie $category->label créée");
+        return redirect()->route('categories.create', [
+            'project' => $project
+        ])->with('success', "Catégorie $category->label créée");
     }
 
     /**

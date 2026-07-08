@@ -40,11 +40,6 @@
 
             <div x-text="toast"></div>
 
-            <div>
-                <a :href="`{{ route('messages.create') }}?project_id=${projectId}`">
-                    +
-                </a>
-            </div>
         </div>
     </div>
 

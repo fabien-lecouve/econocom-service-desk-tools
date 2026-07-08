@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Project;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
+use App\Models\Concerns\HasCode;
 use App\Models\Language;
 
 class ProjectController extends Controller
 {
+    use HasCode;
+
     /**
      * Display a listing of the resource.
      */

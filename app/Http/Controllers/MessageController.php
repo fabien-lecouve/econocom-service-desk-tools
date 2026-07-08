@@ -6,6 +6,7 @@ use App\Http\Requests\StoreMessageRequest;
 use App\Http\Requests\UpdateMessageRequest;
 use App\Models\Category;
 use App\Models\Message;
+use App\Models\Project;
 use Illuminate\Http\Request;
 
 class MessageController extends Controller
@@ -36,11 +37,9 @@ class MessageController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Request $request)
+    public function create(Project $project)
     {
-        $projectId = $request->query('project_id');
-
-        $categories = Category::where('project_id', $projectId)
+        $categories = Category::where('project_id', $project->id)
             ->whereNull('parent_id')
             ->with('children')
             ->orderBy('position')
@@ -48,9 +47,10 @@ class MessageController extends Controller
 
         $categories = $this->mapCategories($categories);
 
-        dd($categories);
-
-        return view('messages.create');
+        return view('messages.create', [
+            'project' => $project,
+            'categories' => $categories
+        ]);
     }
 
     /**

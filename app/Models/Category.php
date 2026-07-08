@@ -82,4 +82,12 @@ class Category extends Model
     {
         return $this->belongsTo(Color::class, 'border_top_color_id');
     }
+
+    public static function generateCode(Project $project): string
+    {
+        $count = $project->categories()->count() + 1;
+        $total = str_pad((string) $count, 3, "0", STR_PAD_LEFT);
+
+        return $project->code . '-cat-' . $total;
+    }
 }

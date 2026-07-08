@@ -27,10 +27,10 @@
 
         @foreach($options as $option)
             <option
-                value="{{ $option->id }}"
-                @selected(old($name, $value) == $option->id)
+                value="{{ $option['id'] }}"
+                @selected(old($name, $value) == $option['id'])
             >
-                {{ $option->label }}
+                {{ $option['label'] }}
             </option>
         @endforeach
     </select>

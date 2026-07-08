@@ -21,15 +21,22 @@
 
                 <div class="row">
                     @foreach ($project->projectLanguageSettings as $setting)
-                    <div class="row__card">
-                        <h3>Signature {{ $setting->language->label }} :</h3>
+                        <div class="row__card">
+                            <h3>Signature {{ $setting->language->label }} :</h3>
 
-                        <p>{!! nl2br(e($setting->signature)) !!}</p>
-                    </div>
+                            <p>{!! nl2br(e($setting->signature)) !!}</p>
+                        </div>
                     @endforeach
                 </div>
             </div>
 
+        </section>
+
+        <section>
+            <li><a href="{{ route('categories.create', ['project' => $project]) }}">Créer une nouvelle catégorie</a>
+            </li>
+            <li><a href="{{ route('messages.create', ['project' => $project]) }}">Créer un nouveau message</a>
+            </li>
         </section>
 
     </div>

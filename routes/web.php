@@ -12,7 +12,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('categories', CategoryController::class);
+Route::get('projects/{project}/categories/create', [CategoryController::class, 'create'])
+    ->name('categories.create');
+
+Route::resource('categories', CategoryController::class)->except('create');
+
 Route::resource('messages', MessageController::class);
 Route::resource('message-translations', MessageTranslationController::class);
 Route::resource('projects', ProjectController::class);
