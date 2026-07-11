@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasSlugCode;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 #[Fillable(['code', 'label', 'phone'])]
 class Project extends Model
 {
+    use HasSlugCode, SoftDeletes;
     /**
      * Get the memberships for the project.
      */

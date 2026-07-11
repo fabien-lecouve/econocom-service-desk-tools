@@ -2,14 +2,18 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasIncrementalCode;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 #[Fillable(['project_id', 'parent_id', 'font_color_id', 'background_color_id', 'border_top_color_id', 'code', 'label', 'position'])]
 class Category extends Model
 {
+    use HasIncrementalCode, SoftDeletes;
+
     /**
      * Get the attributes that should be cast.
      *
@@ -85,9 +89,6 @@ class Category extends Model
 
     public static function generateCode(Project $project): string
     {
-        $count = $project->categories()->count() + 1;
-        $total = str_pad((string) $count, 3, "0", STR_PAD_LEFT);
-
-        return $project->code . '-cat-' . $total;
+        return static::generateIncrementalCode($project, 'cat');
     }
 }

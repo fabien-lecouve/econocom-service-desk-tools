@@ -2,14 +2,18 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasIncrementalCode;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 #[Fillable(['project_id', 'category_id', 'message_type_id', 'font_color_id', 'background_color_id', 'border_top_color_id', 'code', 'label', 'shortcut', 'position'])]
 class Message extends Model
 {
+    use HasIncrementalCode, SoftDeletes;
+
     /**
      * Get the attributes that should be cast.
      *
@@ -78,5 +82,10 @@ class Message extends Model
     public function translations(): HasMany
     {
         return $this->hasMany(MessageTranslation::class);
+    }
+
+    public static function generateCode(Project $project): string
+    {
+        return static::generateIncrementalCode($project, 'msg');
     }
 }

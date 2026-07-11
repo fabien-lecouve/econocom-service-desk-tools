@@ -5,10 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-#[Fillable(['project_id', 'language_id', 'signature'])]
+#[Fillable(['project_id', 'language_id', 'signature', 'phone_override'])]
 class ProjectLanguageSetting extends Model
 {
+    use SoftDeletes;
+
     /**
      * Get the project that owns the language setting.
      */
