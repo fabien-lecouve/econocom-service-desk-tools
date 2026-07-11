@@ -16,10 +16,12 @@ return new class extends Migration
 
             $table->string('code', 50)->unique();
             $table->string('label', 100);
-            
+
             $table->string('phone')->nullable();
 
             $table->timestamps();
+
+            $table->softDeletes();
         });
     }
 

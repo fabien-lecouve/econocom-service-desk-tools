@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('project_language_settings', function (Blueprint $table) {
             $table->id();
-            
+
             $table->foreignId('project_id')
                 ->constrained()
                 ->cascadeOnDelete();
@@ -24,7 +24,11 @@ return new class extends Migration
 
             $table->text('signature')->nullable();
 
+            $table->text('phone_override')->nullable();
+
             $table->timestamps();
+
+            $table->softDeletes();
 
             $table->unique(['project_id', 'language_id']);
         });

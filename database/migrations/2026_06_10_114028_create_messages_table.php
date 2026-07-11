@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
-            
+
             $table->foreignId('project_id')
                 ->constrained()
                 ->cascadeOnDelete();
@@ -45,10 +45,12 @@ return new class extends Migration
             $table->string('label', 100);
 
             $table->char('shortcut', 1)->nullable();
-            
+
             $table->unsignedInteger('position')->default(0);
 
             $table->timestamps();
+
+            $table->softDeletes();
 
             $table->unique(['project_id', 'code']);
             $table->unique(['project_id', 'shortcut']);
