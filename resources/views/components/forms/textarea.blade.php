@@ -5,6 +5,10 @@
     'required' => false,
 ])
 
+@php
+    $errorKey = str_replace(['[', ']'], ['.', ''], $name);
+@endphp
+
 <div class="form__group">
     <label class="form__label" for="{{ $name }}">
         {{ $label }}
@@ -18,9 +22,9 @@
         {{ $attributes->merge(['class' => 'form__input']) }}
         id="{{ $name }}"
         name="{{ $name }}"
-    >{{ old($name, $value) }}</textarea>
+    >{{ old($errorKey, $value) }}</textarea>
 
-    @error($name)
+    @error($errorKey)
         <div class="form__error">{{ $message }}</div>
     @enderror
 </div>

@@ -48,6 +48,7 @@ class ProjectLanguageSettingController extends Controller
                 'project_id' => $request->project_id,
                 'language_id' => $data['language_id'],
                 'signature' => $data['signature'],
+                'phone_override' => $data['phone_override'],
             ]);
         }
 

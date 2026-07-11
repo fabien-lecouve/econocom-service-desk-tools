@@ -4,7 +4,7 @@
     'options' => [],
     'value' => '',
     'required' => false,
-    'placeholder' => 'Sélectionner une option',
+    'placeholder' => '',
 ])
 
 <div class="form__group">
@@ -21,9 +21,12 @@
         id="{{ $name }}"
         name="{{ $name }}"
     >
-        <option value="">
-            {{ $placeholder }}
-        </option>
+
+        @if ($placeholder)
+            <option value="">
+                {{ $placeholder }}
+            </option>
+        @endif
 
         @foreach($options as $option)
             <option

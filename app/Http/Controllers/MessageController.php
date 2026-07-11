@@ -6,8 +6,10 @@ use App\Http\Requests\StoreMessageRequest;
 use App\Http\Requests\UpdateMessageRequest;
 use App\Models\Category;
 use App\Models\Message;
+use App\Models\MessageType;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MessageController extends Controller
 {
@@ -39,6 +41,8 @@ class MessageController extends Controller
      */
     public function create(Project $project)
     {
+        $project->load('projectLanguageSettings.language');
+
         $categories = Category::where('project_id', $project->id)
             ->whereNull('parent_id')
             ->with('children')
@@ -47,9 +51,12 @@ class MessageController extends Controller
 
         $categories = $this->mapCategories($categories);
 
+        $types = MessageType::all();
+
         return view('messages.create', [
             'project' => $project,
-            'categories' => $categories
+            'categories' => $categories,
+            'types' => $types
         ]);
     }
 
@@ -59,9 +66,34 @@ class MessageController extends Controller
     public function store(StoreMessageRequest $request)
     {
         $validated = $request->validated();
-        $message = Message::create($validated);
 
-        return redirect()->route('messages.index')->with('success', "Message $message->label créé");
+        $translations = $validated['translations'];
+        unset($validated['translations']);
+
+        $project = Project::findOrFail($validated['project_id']);
+
+        $message = DB::transaction(function () use ($validated, $translations, $project) {
+            $validated['code'] = Message::generateCode($project);
+
+            $message = Message::create($validated);
+
+            foreach ($translations as $translation) {
+                if (! empty($translation['content'])) {
+                    $message->translations()->create([
+                        'language_id' => $translation['language_id'],
+                        'content' => $translation['content'],
+                    ]);
+                }
+            }
+
+            return $message;
+        });
+
+        return redirect()
+            ->route('projects.show', [
+                'project' => $project
+            ])
+            ->with('success', "Message {$message->label} créé");
     }
 
     /**

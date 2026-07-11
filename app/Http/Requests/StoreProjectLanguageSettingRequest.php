@@ -36,6 +36,11 @@ class StoreProjectLanguageSettingRequest extends FormRequest
                 'required',
                 'string',
             ],
+
+            'languages.*.phone_override' => [
+                'nullable',
+                'string'
+            ],
         ];
     }
 }

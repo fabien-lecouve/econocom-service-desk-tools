@@ -44,34 +44,26 @@ class StoreMessageRequest extends FormRequest
             ],
 
             'font_color_id' => [
-                'nullable', 
-                'integer', 
+                'nullable',
+                'integer',
                 'exists:colors,id'
             ],
 
             'background_color_id' => [
-                'nullable', 
-                'integer', 
+                'nullable',
+                'integer',
                 'exists:colors,id'
             ],
 
             'border_top_color_id' => [
-                'nullable', 
-                'integer', 
+                'nullable',
+                'integer',
                 'exists:colors,id'
             ],
 
-            'code' => [
+            'label' => [
                 'required',
                 'string',
-                'max:100',
-                Rule::unique('messages', 'code')
-                    ->where('project_id', $this->input('project_id'))
-            ],
-
-            'label' => [
-                'required', 
-                'string', 
                 'max:100'
             ],
 
@@ -84,9 +76,27 @@ class StoreMessageRequest extends FormRequest
             ],
 
             'position' => [
-                'nullable', 
-                'integer', 
+                'nullable',
+                'integer',
                 'min:0'
+            ],
+
+            'translations' => [
+                'required',
+                'array',
+                'min:1',
+            ],
+
+            'translations.*.language_id' => [
+                'required',
+                'integer',
+                Rule::exists('project_language_settings', 'language_id')
+                    ->where('project_id', $this->input('project_id')),
+            ],
+
+            'translations.*.content' => [
+                'required',
+                'string',
             ],
         ];
     }

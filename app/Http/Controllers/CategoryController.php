@@ -58,12 +58,12 @@ class CategoryController extends Controller
     {
         $validated = $request->validated();
 
-        $project = Project::findOrFail($request->project_id);
+        $project = Project::findOrFail($validated['project_id']);
 
         $validated['code'] = Category::generateCode($project);
         $category = Category::create($validated);
 
-        return redirect()->route('categories.create', [
+        return redirect()->route('projects.show', [
             'project' => $project
         ])->with('success', "Catégorie $category->label créée");
     }

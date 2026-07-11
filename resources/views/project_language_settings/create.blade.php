@@ -32,6 +32,11 @@
                     required
                 />
 
+                <x-forms.input
+                    name="languages[{{ $language->id }}][phone_override]"
+                    label="Téléphone {{ $language->code }}"
+                />
+
             @endforeach
 
             <x-forms.submit label="Créer" />
