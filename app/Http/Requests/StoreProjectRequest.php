@@ -34,6 +34,11 @@ class StoreProjectRequest extends FormRequest
                 'string'
             ],
 
+            'email' => [
+                'nullable',
+                'string'
+            ],
+
             'languages' => ['required', 'array'],
             'languages.*' => ['exists:languages,id'],
         ];

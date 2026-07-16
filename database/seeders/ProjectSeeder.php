@@ -16,7 +16,8 @@ class ProjectSeeder extends Seeder
             [
                 'code' => 'urgo',
                 'label' => 'urgo',
-                'phone' => '+33380442655'
+                'phone' => '+33380442655',
+                'email' => 'support@urgo.com'
             ]
         ];
 
@@ -25,7 +26,8 @@ class ProjectSeeder extends Seeder
                 ['code' => $project['code']],
                 [
                     'label' => $project['label'],
-                    'phone' => $project['phone']
+                    'phone' => $project['phone'],
+                    'email' => $project['email']
                 ]
             );
         }

@@ -5,20 +5,16 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Validator;
 
 class StoreMessageRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
         return true;
     }
 
     /**
-     * Get the validation rules that apply to the request.
-     *
      * @return array<string, ValidationRule|array<mixed>|string>
      */
     public function rules(): array
@@ -46,25 +42,25 @@ class StoreMessageRequest extends FormRequest
             'font_color_id' => [
                 'nullable',
                 'integer',
-                'exists:colors,id'
+                'exists:colors,id',
             ],
 
             'background_color_id' => [
                 'nullable',
                 'integer',
-                'exists:colors,id'
+                'exists:colors,id',
             ],
 
             'border_top_color_id' => [
                 'nullable',
                 'integer',
-                'exists:colors,id'
+                'exists:colors,id',
             ],
 
             'label' => [
                 'required',
                 'string',
-                'max:100'
+                'max:100',
             ],
 
             'shortcut' => [
@@ -72,13 +68,13 @@ class StoreMessageRequest extends FormRequest
                 'string',
                 'size:1',
                 Rule::unique('messages', 'shortcut')
-                    ->where('project_id', $this->input('project_id'))
+                    ->where('project_id', $this->input('project_id')),
             ],
 
             'position' => [
                 'nullable',
                 'integer',
-                'min:0'
+                'min:0',
             ],
 
             'translations' => [
@@ -90,14 +86,36 @@ class StoreMessageRequest extends FormRequest
             'translations.*.language_id' => [
                 'required',
                 'integer',
+                'distinct',
                 Rule::exists('project_language_settings', 'language_id')
                     ->where('project_id', $this->input('project_id')),
             ],
 
             'translations.*.content' => [
-                'required',
+                'nullable',
                 'string',
             ],
+        ];
+    }
+
+    public function after(): array
+    {
+        return [
+            function (Validator $validator) {
+                $translations = collect($this->input('translations', []));
+
+                $hasContent = $translations->contains(
+                    fn (array $translation) =>
+                        filled($translation['content'] ?? null)
+                );
+
+                if (! $hasContent) {
+                    $validator->errors()->add(
+                        'translations',
+                        'Au moins une traduction doit être renseignée.'
+                    );
+                }
+            },
         ];
     }
 }

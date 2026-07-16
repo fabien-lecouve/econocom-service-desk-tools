@@ -15,6 +15,8 @@
 
             <x-forms.input name="phone" label="Téléphone" />
 
+            <x-forms.input name="email" label="Email" />
+
             <x-forms.checkbox
                 name="languages"
                 legend="Choisissez les langues du projet"

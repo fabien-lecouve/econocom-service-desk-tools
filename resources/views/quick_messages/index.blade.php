@@ -24,7 +24,7 @@
 
                     <div id="header__languages" class="header-project__settings">
                         <template x-for="l in projectLanguages()" :key="'language-' + l.language_id">
-                            <button type="button" @click="languageId = l.language_id"
+                            <button type="button" @click="selectLanguage(l.language_id)"
                                 :class="languageId === l.language_id ? 'active' : 'inactive'" x-text="l.code">
                             </button>
                         </template>

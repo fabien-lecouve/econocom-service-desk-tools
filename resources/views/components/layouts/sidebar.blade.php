@@ -21,13 +21,13 @@
                 </ul>
             </div>
 
-            <div class="menu__item">
+            {{-- <div class="menu__item">
                 <h2>base de connaissance</h2>
                 <ul>
                     <li><a href="">Office 365</a></li>
                     <li><a href="">Poste de travail</a></li>
                 </ul>
-            </div>
+            </div> --}}
 
         </div>
 

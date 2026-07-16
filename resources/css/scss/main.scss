@@ -7,16 +7,16 @@
 @use 'base/colors';
 
 
-@use 'layout/body';
 @use 'layout/dashboard';
 @use 'layout/sidebar';
 @use 'layout/main';
 
-@use 'pages/project-show';
+@use 'pages/projects/show';
+
+@use 'pages/categories/create' as categoryCreate;
+@use 'pages/messages/create' as messageCreate;
+
 @use 'pages/quick-messages';
 
 
-// @use 'layout/index';
-// @use 'layout/knowledge';
 @use 'components/buttons';
-// @use 'components/link';

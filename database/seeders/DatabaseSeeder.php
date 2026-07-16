@@ -24,17 +24,17 @@ class DatabaseSeeder extends Seeder
             LanguageSettingSeeder::class,
 
             // Projets & utilisateurs
-            ProjectSeeder::class,
+            // ProjectSeeder::class,
 
             // Langues par projet
-            ProjectLanguageSettingSeeder::class,
+            // ProjectLanguageSettingSeeder::class,
 
             // Catégories
-            CategorySeeder::class,
+            // CategorySeeder::class,
 
             // Messages
-            MessageSeeder::class,
-            MessageTranslationSeeder::class,
+            // MessageSeeder::class,
+            // MessageTranslationSeeder::class,
         ]);
     }
 }

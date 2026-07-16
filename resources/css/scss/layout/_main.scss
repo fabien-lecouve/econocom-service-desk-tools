@@ -1,16 +1,22 @@
 @use '../abstracts/variables' as *;
 
 .main {
-    padding: 16px;
+    min-width: 0;
+    padding: 32px;
+    background-color: $white-light;
 
     &__header {
         display: flex;
-        justify-content: space-between;
         align-items: center;
-        margin-bottom: 32px;
+        justify-content: space-between;
+        gap: 32px;
+        margin-bottom: 24px;
     }
 
     &__content {
-        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        padding: 0;
     }
 }

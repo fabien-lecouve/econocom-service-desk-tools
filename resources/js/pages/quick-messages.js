@@ -6,6 +6,7 @@ window.quickMessages = function (projects, languagesByProject, data) {
 
         projectId: projects[0]?.id ?? null,
         languageId: null,
+        lastMessage: null,
         toast: '',
 
         init() {
@@ -15,6 +16,17 @@ window.quickMessages = function (projects, languagesByProject, data) {
         selectProject(id) {
             this.projectId = id;
             this.languageId = this.projectLanguages()[0]?.language_id ?? null;
+
+            // Évite de recopier un message appartenant à l'ancien projet.
+            this.lastMessage = null;
+        },
+
+        async selectLanguage(id) {
+            this.languageId = id;
+
+            if (this.lastMessage) {
+                await this.copy(this.lastMessage);
+            }
         },
 
         categories() {
@@ -26,17 +38,68 @@ window.quickMessages = function (projects, languagesByProject, data) {
         },
 
         getSelectedLanguage() {
-            return this.projectLanguages().find(l => l.language_id === this.languageId) ?? null;
+            return this.projectLanguages().find(
+                language => language.language_id === this.languageId
+            ) ?? null;
+        },
+
+        getSelectedProject() {
+            return this.projects.find(
+                project => project.id === this.projectId
+            ) ?? null;
+        },
+
+        replaceVariables(text) {
+            const project = this.getSelectedProject();
+            const language = this.getSelectedLanguage();
+
+            const variables = {
+                phone: language?.phone_override || project?.phone || '',
+            };
+
+            return Object.entries(variables).reduce(
+                (result, [key, value]) => result.replaceAll(`{${key}}`, value),
+                text ?? ''
+            );
+        },
+
+        getMessageContent(message) {
+            const selectedContent = message.content?.[this.languageId];
+
+            if (selectedContent?.trim()) {
+                return selectedContent;
+            }
+
+            // Cherche selon l’ordre des langues du projet.
+            for (const language of this.projectLanguages()) {
+                const content = message.content?.[language.language_id];
+
+                if (content?.trim()) {
+                    return content;
+                }
+            }
+
+            // Sécurité si une traduction existe mais que sa langue
+            // n’est plus configurée sur le projet.
+            return Object.values(message.content ?? {}).find(
+                content => content?.trim()
+            ) ?? '';
         },
 
         getFormattedMessage(message) {
             const lang = this.getSelectedLanguage();
-            if (!lang) return '';
 
-            const salutation = lang.salutation ?? '';
-            const closing = lang.closing ?? '';
-            const signature = lang.signature ?? '';
-            const content = message.content?.[this.languageId] ?? '';
+            if (!lang) {
+                return '';
+            }
+
+            const salutation = this.replaceVariables(lang.salutation);
+            const closing = this.replaceVariables(lang.closing);
+            const signature = this.replaceVariables(lang.signature);
+
+            const content = this.replaceVariables(
+                this.getMessageContent(message)
+            );
 
             switch (message.type) {
                 case 'work_note':
@@ -51,14 +114,25 @@ window.quickMessages = function (projects, languagesByProject, data) {
         },
 
         async copy(message) {
-            try {
-                await navigator.clipboard.writeText(this.getFormattedMessage(message));
-                this.toast = 'Copié';
-            } catch (e) {
-                this.toast = 'Erreur copie';
-            }
+            this.lastMessage = message;
 
-            setTimeout(() => this.toast = '', 1000);
+            try {
+                await navigator.clipboard.writeText(
+                    this.getFormattedMessage(message)
+                );
+
+                this.showToast('Copié');
+            } catch (error) {
+                this.showToast('Erreur copie');
+            }
+        },
+
+        showToast(message) {
+            this.toast = message;
+
+            setTimeout(() => {
+                this.toast = '';
+            }, 1000);
         }
     };
 };

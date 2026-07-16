@@ -53,6 +53,7 @@ class QuickMessageController extends Controller
                     'closing' => $setting->language->setting->closing,
 
                     'signature' => $setting->signature,
+                    'phone_override' => $setting->phone_override,
                 ];
             })
             ->groupBy('project_id')

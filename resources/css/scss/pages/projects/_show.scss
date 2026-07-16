@@ -1,0 +1,393 @@
+@use '../../abstracts/variables' as *;
+
+#project-show-container {
+    .project-card,
+    .section {
+        border: 1px solid $white-dark;
+        border-radius: 12px;
+        background-color: $white-light;
+    }
+
+    .project-card {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+        padding: 28px 32px;
+
+        &__identity {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 180px;
+            min-height: 100px;
+            padding-right: 32px;
+            border-right: 1px solid $white-dark;
+            text-align: center;
+        }
+
+        &__logo-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 72px;
+            height: 56px;
+            margin-bottom: 8px;
+            border: 1px solid $gray-light;
+            border-radius: 8px;
+            color: $gray-dark;
+            font-size: 0.75rem;
+        }
+
+        &__code {
+            margin: 0;
+            color: $black-dark;
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        &__content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        &__heading {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+
+        &__title {
+            margin: 0;
+            color: $black-dark;
+            font-size: 1.4rem;
+        }
+
+        &__status {
+            padding: 5px 12px;
+            border-radius: 999px;
+            background-color: $purple-light;
+            color: $purple-dark;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        &__details {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        &__detail {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        &__label {
+            margin: 0;
+            color: $gray-dark;
+            font-size: 0.85rem;
+        }
+
+        &__value {
+            margin: 0;
+            color: $black;
+            font-size: 0.95rem;
+        }
+
+        &__link {
+            color: $purple-dark;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+
+            &:focus-visible {
+                outline: 2px solid $purple-light;
+                outline-offset: 3px;
+            }
+        }
+    }
+
+    .project-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+    }
+
+    .section {
+        padding: 24px;
+
+        &__header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid $white-dark;
+        }
+
+        &__title {
+            margin: 0;
+            color: $black-dark;
+            font-size: 1.05rem;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        &__content {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            padding: 0;
+        }
+
+        &__link {
+            color: $purple-dark;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+
+            &:focus-visible {
+                outline: 2px solid $purple-light;
+                outline-offset: 3px;
+            }
+        }
+    }
+
+    .signature-list {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .signature-card {
+        padding: 18px 0;
+        border-bottom: 1px solid $white-dark;
+
+        &:first-child {
+            padding-top: 0;
+        }
+
+        &:last-child {
+            padding-bottom: 0;
+            border-bottom: 0;
+        }
+
+        &__header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 12px;
+        }
+
+        &__title {
+            margin: 0;
+            color: $black-dark;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        &__button {
+            padding: 8px 14px;
+            border: 1px solid $white-dark;
+            border-radius: 7px;
+            background-color: $white-light;
+            color: $black-light;
+            text-decoration: none;
+            transition:
+                background-color 150ms ease,
+                border-color 150ms ease;
+
+            &:hover {
+                border-color: $gray-light;
+                background-color: $white;
+            }
+
+            &:focus-visible {
+                outline: 2px solid $purple-light;
+                outline-offset: 2px;
+            }
+        }
+
+        &__content {
+            color: $black-light;
+            line-height: 1.6;
+
+            p {
+                margin: 0;
+            }
+        }
+    }
+
+    .information-list {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .information-row {
+        display: grid;
+        grid-template-columns: 200px 1fr;
+        gap: 24px;
+        padding: 14px 0;
+        border-bottom: 1px solid $white-dark;
+
+        &:first-child {
+            padding-top: 0;
+        }
+
+        &:last-child {
+            padding-bottom: 0;
+            border-bottom: 0;
+        }
+
+        dt {
+            color: $gray-dark;
+        }
+
+        dd {
+            margin: 0;
+            color: $black;
+        }
+
+        a {
+            color: $purple-dark;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    .quick-links {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+    }
+
+    .quick-link {
+        display: flex;
+        min-height: 100px;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+        border: 1px solid $white-dark;
+        border-radius: 9px;
+        background-color: $white-light;
+        color: $black;
+        text-align: center;
+        text-decoration: none;
+        transition:
+            background-color 150ms ease,
+            border-color 150ms ease,
+            transform 150ms ease;
+
+        &:hover {
+            border-color: $purple-light;
+            background-color: $white;
+            transform: translateY(-2px);
+        }
+
+        &:focus-visible {
+            outline: 2px solid $purple-light;
+            outline-offset: 2px;
+        }
+    }
+
+    .statistics {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+    }
+
+    .statistic {
+        padding: 18px 12px;
+        border: 1px solid $white-dark;
+        border-radius: 9px;
+        text-align: center;
+
+        &__value {
+            display: block;
+            margin-bottom: 8px;
+            color: $black-dark;
+            font-size: 1.8rem;
+            font-weight: 500;
+        }
+
+        &__label {
+            color: $black-light;
+            font-size: 0.85rem;
+        }
+    }
+
+    .header {
+        &__heading {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        &__subtitle {
+            margin: 0;
+            color: $gray-dark;
+            font-size: 0.8rem;
+        }
+
+        &__title {
+            margin: 0;
+            color: $black-dark;
+            font-size: 2rem;
+        }
+
+        &__actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        &__link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 42px;
+            padding: 10px 16px;
+            border: 1px solid $white-dark;
+            border-radius: 8px;
+            background-color: $white-light;
+            color: $black;
+            text-decoration: none;
+            transition:
+                background-color 150ms ease,
+                border-color 150ms ease;
+
+            &:hover {
+                border-color: $purple-light;
+                background-color: $white;
+            }
+
+            &:focus-visible {
+                outline: 2px solid $purple-light;
+                outline-offset: 2px;
+            }
+
+            &--primary {
+                border-color: $purple-dark;
+                background-color: $purple-dark;
+                color: $white-light;
+
+                &:hover {
+                    border-color: $purple;
+                    background-color: $purple;
+                }
+            }
+        }
+    }
+}
