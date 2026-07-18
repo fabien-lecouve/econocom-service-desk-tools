@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-#[Fillable(['code', 'label', 'phone', 'email'])]
+#[Fillable(['code', 'label', 'internal_phone', 'external_phone', 'email'])]
 class Project extends Model
 {
     use HasSlugCode, SoftDeletes;

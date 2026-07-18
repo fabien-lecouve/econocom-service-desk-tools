@@ -17,10 +17,8 @@
                 Changer de projet
             </a> --}}
 
-            <a
-                href="{{ route('quick-messages.index', ['project' => $project]) }}"
-                class="header__link header__link--primary"
-            >
+            <a href="{{ route('quick-messages.index', ['project' => $project]) }}"
+                class="header__link header__link--primary">
                 Messages rapides
             </a>
         </div>
@@ -179,10 +177,19 @@
                         <dd>{{ $project->label }}</dd>
                     </div>
 
-                    <div class="information-row">
-                        <dt>Téléphone</dt>
-                        <dd>{{ $project->phone ?? '01 56 88 12 34' }}</dd>
-                    </div>
+                    @if ($project->internal_phone)
+                        <div class="information-row">
+                            <dt>Téléphone interne</dt>
+                            <dd>{{ $project->internal_phone }}</dd>
+                        </div>
+                    @endif
+
+                    @if ($project->external_phone)
+                        <div class="information-row">
+                            <dt>Téléphone externe</dt>
+                            <dd>{{ $project->external_phone }}</dd>
+                        </div>
+                    @endif
 
                     <div class="information-row">
                         <dt>Email support</dt>
@@ -200,7 +207,9 @@
 
                         <dd>
                             @forelse ($project->projectLanguageSettings as $setting)
-                                {{ $setting->language->label }}@if (!$loop->last), @endif
+                                {{ $setting->language->label }}@if (!$loop->last)
+                                    ,
+                                @endif
                             @empty
                                 Français, English
                             @endforelse
@@ -229,24 +238,15 @@
                 </div>
 
                 <div class="section__content quick-links">
-                    <a
-                        href="{{ route('quick-messages.index', ['project' => $project]) }}"
-                        class="quick-link"
-                    >
+                    <a href="{{ route('quick-messages.index', ['project' => $project]) }}" class="quick-link">
                         Messages rapides
                     </a>
 
-                    <a
-                        href="{{ route('categories.create', ['project' => $project]) }}"
-                        class="quick-link"
-                    >
+                    <a href="{{ route('categories.create', ['project' => $project]) }}" class="quick-link">
                         Créer une catégorie
                     </a>
 
-                    <a
-                        href="{{ route('messages.create', ['project' => $project]) }}"
-                        class="quick-link"
-                    >
+                    <a href="{{ route('messages.create', ['project' => $project]) }}" class="quick-link">
                         Créer un message
                     </a>
 

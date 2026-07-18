@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-#[Fillable(['project_id', 'language_id', 'signature', 'phone_override'])]
+#[Fillable(['project_id', 'language_id', 'signature', 'internal_phone_override', 'external_phone_override'])]
 class ProjectLanguageSetting extends Model
 {
     use SoftDeletes;

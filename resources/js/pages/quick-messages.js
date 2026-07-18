@@ -54,7 +54,9 @@ window.quickMessages = function (projects, languagesByProject, data) {
             const language = this.getSelectedLanguage();
 
             const variables = {
-                phone: language?.phone_override || project?.phone || '',
+                external_phone: language?.external_phone_override || project?.external_phone || '',
+                internal_phone: language?.internal_phone_override || project?.internal_phone || '',
+                email: project?.email || '',
             };
 
             return Object.entries(variables).reduce(

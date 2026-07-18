@@ -29,9 +29,16 @@ class StoreProjectRequest extends FormRequest
                 'max:100'
             ],
 
-            'phone' => [
+            'internal_phone' => [
                 'nullable',
-                'string'
+                'string',
+                'max:30',
+            ],
+
+            'external_phone' => [
+                'nullable',
+                'string',
+                'max:30',
             ],
 
             'email' => [

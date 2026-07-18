@@ -13,7 +13,9 @@
 
             <x-forms.input name="label" label="Libellé" required />
 
-            <x-forms.input name="phone" label="Téléphone" />
+            <x-forms.input name="internal_phone" label="Numéro de téléphone interne" />
+
+            <x-forms.input name="external_phone" label="Numéro de téléphone externe" />
 
             <x-forms.input name="email" label="Email" />
 

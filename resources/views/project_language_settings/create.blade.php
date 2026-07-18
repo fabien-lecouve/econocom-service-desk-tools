@@ -33,8 +33,13 @@
                 />
 
                 <x-forms.input
-                    name="languages[{{ $language->id }}][phone_override]"
-                    label="Téléphone {{ $language->code }}"
+                    name="languages[{{ $language->id }}][internal_phone_override]"
+                    label="Numéro de téléphone {{ $language->code }} interne (remplace le numéro par défaut)"
+                />
+
+                <x-forms.input
+                    name="languages[{{ $language->id }}][external_phone_override]"
+                    label="Numéro de téléphone {{ $language->code }} externe (remplace le numéro par défaut)"
                 />
 
             @endforeach

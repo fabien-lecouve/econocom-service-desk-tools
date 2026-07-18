@@ -13,7 +13,8 @@
                 <tr class="table__row">
                     <th class="table__cell">Code</th>
                     <th class="table__cell">Libellé</th>
-                    <th class="table__cell">Téléphone</th>
+                    <th class="table__cell">Téléphone interne</th>
+                    <th class="table__cell">Téléphone externe</th>
                     <th class="table__cell">Langues</th>
                 </tr>
             </thead>
@@ -24,7 +25,8 @@
                     <tr class="table__row">
                         <td class="table__cell">{{ $project->code }}</td>
                         <td class="table__cell">{{ $project->label }}</td>
-                        <td class="table__cell">{{ $project->phone }}</td>
+                        <td class="table__cell">{{ $project->internal_phone }}</td>
+                        <td class="table__cell">{{ $project->external_phone }}</td>
                         <td class="table__cell">
                             @foreach ($project->projectLanguageSettings as $setting)
                                 {{ $setting->language->label }}
