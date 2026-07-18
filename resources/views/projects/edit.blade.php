@@ -5,9 +5,9 @@
 
     <header class="main__header header">
         <h1 class="header__title">Modifier une catégorie</h1>
-        <x-buttons.link type="back" :href="route('categories.index')">
+        {{-- <x-buttons.link type="back" :href="route('categories.index')">
             Retour aux catégories
-        </x-buttons.link>
+        </x-buttons.link> --}}
     </header>
 
     <div class="main__content">

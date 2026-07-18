@@ -5,9 +5,9 @@
 
     <header class="main__header header">
         <h1 class="header__title">Catégories</h1>
-        <x-buttons.link type="add" :href="route('categories.create')">
+        {{-- <x-buttons.link type="add" :href="route('categories.create')">
             Créer une catégorie
-        </x-buttons.link>
+        </x-buttons.link> --}}
     </header>
 
     <div class="main__content">
