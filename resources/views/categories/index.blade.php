@@ -48,6 +48,6 @@
         </table>
     </div>
 
-    <x-modals.confirm id="confirmDelete" title="Supprimer cette catégorie ?" />
+    {{-- <x-modals.confirm id="confirmDelete" title="Supprimer cette catégorie ?" /> --}}
 
 </x-layouts.dashboard>
