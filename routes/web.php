@@ -16,12 +16,6 @@ Route::get('/', function () {
     return redirect()->route('projects.index');
 });
 
-
-// Registration routes
-// Route::view('/register', 'auth.register')
-//     ->middleware('guest')
-//     ->name('register');
-
 Route::post('/register', Register::class)
     ->middleware('guest');
 
@@ -88,18 +82,6 @@ Route::middleware('auth')->group(function () {
                 ->name('destroy');
         });
 
-    // Route::get('projects/{project}/categories', [CategoryController::class, 'index'])
-    //     ->name('categories.index');
-    // Route::get('projects/{project}/categories/create', [CategoryController::class, 'create'])
-    //     ->name('categories.create');
-
-
-    // Route::get('projects/{project}/messages/create', [MessageController::class, 'create'])
-    //     ->name('messages.create');
-
-    // Route::resource('categories', CategoryController::class)->except('create');
-
-    Route::resource('messages', MessageController::class)->except('create');
     Route::resource('message-translations', MessageTranslationController::class);
     Route::resource('projects', ProjectController::class);
     Route::resource('project-language-settings', ProjectLanguageSettingController::class);
