@@ -12,11 +12,22 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Project $project)
     {
-        $categories = Category::all();
+        $this->authorize('viewAny', [Category::class, $project]);
 
-        return view('categories.index', ['categories' => $categories]);
+        $categories = Category::where('project_id', $project->id)
+            ->whereNull('parent_id')
+            ->with('children')
+            ->orderBy('position')
+            ->get();
+
+        $categories = $this->mapCategories($categories);
+
+        return view('categories.index', [
+            'project' => $project,
+            'categories' => $categories,
+        ]);
     }
 
     private function mapCategories($categories)
@@ -37,6 +48,8 @@ class CategoryController extends Controller
      */
     public function create(Project $project)
     {
+        $this->authorize('viewAny', [Category::class, $project]);
+
         $categories = Category::where('project_id', $project->id)
             ->whereNull('parent_id')
             ->with('children')
@@ -54,8 +67,10 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCategoryRequest $request)
+    public function store(StoreCategoryRequest $request, Project $project)
     {
+        $this->authorize('viewAny', [Category::class, $project]);
+
         $validated = $request->validated();
 
         $project = Project::findOrFail($validated['project_id']);
@@ -79,30 +94,54 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Category $category)
+    public function edit(Project $project, Category $category)
     {
-        return view('categories.edit', ['category' => $category]);
+        $this->authorize('update', $category);
+
+        $categories = Category::where('project_id', $project->id)
+            ->whereNull('parent_id')
+            ->with('children')
+            ->orderBy('position')
+            ->get();
+
+        $categories = $this->mapCategories($categories);
+
+        return view('categories.edit', [
+            'project' => $project,
+            'category' => $category,
+            'categories' => $categories,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCategoryRequest $request, Category $category)
+    public function update(UpdateCategoryRequest $request, Project $project, Category $category)
     {
+        $this->authorize('update', $category);
+
         $validated = $request->validated();
+
         $category->update($validated);
 
-        return redirect()->route('categories.index')->with('success', "Catégorie $category->label modifiée");
+        return redirect()
+            ->route('categories.index', $project)
+            ->with('success', "La catégorie « {$category->label} » a été modifiée.");
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $category)
+    public function destroy(Project $project, Category $category)
     {
+        $this->authorize('delete', Category::class);
+
         $label = $category->label;
+
         $category->delete();
 
-        return redirect()->route('categories.index')->with('success', "Catégorie $label supprimée");
+        return redirect()
+            ->route('categories.index', $project)
+            ->with('success', "La catégorie « {$label} » a été supprimée.");
     }
 }

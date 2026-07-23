@@ -11,10 +11,17 @@
 @use 'layout/sidebar';
 @use 'layout/main';
 
-@use 'pages/projects/show';
+@use 'pages/projects/show' as projectShow;
+@use 'pages/projects/edit' as projectEdit;
 
+@use 'pages/categories/index' as categoryIndex;
 @use 'pages/categories/create' as categoryCreate;
+
+@use 'pages/messages/index' as messageIndex;
 @use 'pages/messages/create' as messageCreate;
+
+@use 'pages/users/index' as userIndex;
+@use 'pages/users/create' as userCreate;
 
 @use 'pages/quick-messages';
 

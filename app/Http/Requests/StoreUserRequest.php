@@ -4,9 +4,9 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password;
 
-class UpdateProjectRequest extends FormRequest
+class StoreUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,61 +21,63 @@ class UpdateProjectRequest extends FormRequest
      *
      * @return array<string, ValidationRule|array<mixed>|string>
      */
+
     public function rules(): array
     {
         return [
-            'label' => [
+            'firstname' => [
                 'required',
                 'string',
                 'max:100',
             ],
 
-            'internal_phone' => [
-                'nullable',
+            'lastname' => [
+                'required',
                 'string',
-                'max:50',
-            ],
-
-            'external_phone' => [
-                'nullable',
-                'string',
-                'max:50',
+                'max:100',
             ],
 
             'email' => [
-                'nullable',
+                'required',
+                'string',
                 'email',
                 'max:255',
+                'unique:users,email',
             ],
 
-            'languages' => [
+            'password' => [
+                'required',
+                'confirmed',
+                Password::defaults(),
+            ],
+
+            'is_admin' => [
+                'sometimes',
+                'boolean',
+            ],
+
+            'is_knowledge_manager' => [
+                'sometimes',
+                'boolean',
+            ],
+
+            'memberships' => [
                 'required',
                 'array',
                 'min:1',
             ],
 
-            'languages.*.language_id' => [
+            'memberships.*.project_id' => [
                 'required',
                 'integer',
-                'exists:languages,id',
+                'exists:projects,id',
                 'distinct',
             ],
 
-            'languages.*.signature' => [
-                'nullable',
-                'string',
-            ],
-
-            'languages.*.internal_phone_override' => [
-                'nullable',
-                'string',
-                'max:50',
-            ],
-
-            'languages.*.external_phone_override' => [
-                'nullable',
-                'string',
-                'max:50',
+            'memberships.*.role_id' => [
+                'required',
+                'integer',
+                'exists:roles,id',
             ],
         ];
     }

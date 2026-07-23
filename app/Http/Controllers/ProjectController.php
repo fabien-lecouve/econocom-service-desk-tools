@@ -6,6 +6,7 @@ use App\Models\Project;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Language;
+use Illuminate\Support\Facades\DB;
 
 class ProjectController extends Controller
 {
@@ -15,6 +16,8 @@ class ProjectController extends Controller
      */
     public function index()
     {
+        // $this->authorize('viewAny', Project::class);
+
         $projects = Project::with('projectLanguageSettings.language')->get();
 
         return view('projects.index', ['projects' => $projects]);
@@ -25,6 +28,8 @@ class ProjectController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Project::class);
+
         $languages = Language::pluck('label', 'id');
 
         return view('projects.create', ['languages' => $languages]);
@@ -35,6 +40,8 @@ class ProjectController extends Controller
      */
     public function store(StoreProjectRequest $request)
     {
+        $this->authorize('create', Project::class);
+
         $validated = $request->validated();
         $project = Project::create($validated);
 
@@ -49,6 +56,8 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
+        $this->authorize('view', $project);
+
         $project->load('projectLanguageSettings.language');
 
         return view('projects.show', [
@@ -61,18 +70,51 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        return view('projects.edit', ['project' => $project]);
+        $this->authorize('view', $project);
+
+        $project->load('projectLanguageSettings.language');
+
+        return view('projects.edit', [
+            'project' => $project,
+            'languages' => Language::all(),
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
+
     public function update(UpdateProjectRequest $request, Project $project)
     {
-        $validated = $request->validated();
-        $project->update($validated);
+        $this->authorize('view', $project);
 
-        return redirect()->route('projects.index')->with('success', "Projet $project->label modifié");
+        $validated = $request->validated();
+
+        DB::transaction(function () use ($validated, $project) {
+            $project->update([
+                'label' => $validated['label'],
+                'internal_phone' => $validated['internal_phone'] ?? null,
+                'external_phone' => $validated['external_phone'] ?? null,
+                'email' => $validated['email'] ?? null,
+            ]);
+
+            foreach ($validated['languages'] as $language) {
+                $project->projectLanguageSettings()->updateOrCreate(
+                    [
+                        'language_id' => $language['language_id'],
+                    ],
+                    [
+                        'signature' => $language['signature'] ?? null,
+                        'internal_phone_override' => $language['internal_phone_override'] ?? null,
+                        'external_phone_override' => $language['external_phone_override'] ?? null,
+                    ]
+                );
+            }
+        });
+
+        return redirect()
+            ->route('projects.show', $project)
+            ->with('success', "Le projet {$project->label} a été modifié.");
     }
 
     /**
@@ -80,6 +122,8 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
+        $this->authorize('delete', Project::class);
+
         $label = $project->label;
         $project->delete();
 

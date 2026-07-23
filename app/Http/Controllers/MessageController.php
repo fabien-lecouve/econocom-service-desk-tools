@@ -16,11 +16,25 @@ class MessageController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Project $project)
     {
-        $messages = Message::all();
+        $this->authorize('viewAny', [Message::class, $project]);
 
-        return view('messages.index', ['messages' => $messages]);
+        $categories = Category::where('project_id', $project->id)
+            ->whereNull('parent_id')
+            ->with([
+                'children',
+                'messages' => function ($query) {
+                    $query->orderBy('position');
+                },
+            ])
+            ->orderBy('position')
+            ->get();
+
+        return view('messages.index', [
+            'project' => $project,
+            'categories' => $categories,
+        ]);
     }
 
     private function mapCategories($categories)
@@ -41,6 +55,8 @@ class MessageController extends Controller
      */
     public function create(Project $project)
     {
+        $this->authorize('viewAny', [Message::class, $project]);
+
         $project->load('projectLanguageSettings.language');
 
         $categories = Category::where('project_id', $project->id)
@@ -63,8 +79,10 @@ class MessageController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreMessageRequest $request)
+    public function store(StoreMessageRequest $request, Project $project)
     {
+        $this->authorize('viewAny', [Message::class, $project]);
+
         $validated = $request->validated();
 
         $translations = $validated['translations'];
@@ -107,30 +125,95 @@ class MessageController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Message $message)
+    public function edit(Project $project, Message $message)
     {
-        return view('messages.edit', ['message' => $message]);
+        $this->authorize('update', $message);
+
+        $project->load('projectLanguageSettings.language');
+
+        $message->load('translations');
+
+        $categories = Category::where('project_id', $project->id)
+            ->whereNull('parent_id')
+            ->with('children')
+            ->orderBy('position')
+            ->get();
+
+        $categories = $this->mapCategories($categories);
+
+        $types = MessageType::all();
+
+        return view('messages.edit', [
+            'project' => $project,
+            'message' => $message,
+            'categories' => $categories,
+            'types' => $types,
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateMessageRequest $request, Message $message)
-    {
-        $validated = $request->validated();
-        $message->update($validated);
+    public function update(
+        UpdateMessageRequest $request,
+        Project $project,
+        Message $message
+    ) {
+        $this->authorize('update', $message);
 
-        return redirect()->route('messages.index')->with('success', "Message $message->label modifié");
+        $validated = $request->validated();
+
+        $translations = $validated['translations'];
+        unset($validated['translations']);
+
+        DB::transaction(function () use ($validated, $translations, $message) {
+            $message->update($validated);
+
+            $submittedLanguageIds = collect($translations)
+                ->pluck('language_id');
+
+            /*
+         * Supprime les traductions correspondant aux langues présentes
+         * dans le formulaire. Elles seront ensuite recréées si leur
+         * contenu n'est pas vide.
+         */
+            $message->translations()
+                ->whereIn('language_id', $submittedLanguageIds)
+                ->delete();
+
+            foreach ($translations as $translation) {
+                if (! empty($translation['content'])) {
+                    $message->translations()->create([
+                        'language_id' => $translation['language_id'],
+                        'content' => $translation['content'],
+                    ]);
+                }
+            }
+        });
+
+        return redirect()
+            ->route('messages.index', [
+                'project' => $project,
+            ])
+            ->with(
+                'success',
+                "Message {$message->label} modifié"
+            );
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Message $message)
+    public function destroy(Project $project, Message $message)
     {
-        $label = $message->label;
+        $this->authorize('delete', Message::class);
+
         $message->delete();
 
-        return redirect()->route('messages.index')->with('success', "Message $label supprimé");
+        return redirect()
+            ->route('messages.index', [
+                'project' => $project,
+            ])
+            ->with(
+                'success',
+                "Message {$message->label} supprimé"
+            );
     }
 }

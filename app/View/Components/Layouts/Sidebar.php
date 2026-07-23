@@ -22,7 +22,12 @@ class Sidebar extends Component
      */
     public function render(): View|Closure|string
     {
-        $projects = Project::select('id', 'label')->orderBy('label', 'asc')->get();
+        $projects = Project::select('id', 'label')
+            ->whereHas('memberships', function ($query) {
+                $query->where('user_id', auth()->id());
+            })
+            ->orderBy('label')
+            ->get();
 
         return view('components.layouts.sidebar', ['projects' => $projects]);
     }

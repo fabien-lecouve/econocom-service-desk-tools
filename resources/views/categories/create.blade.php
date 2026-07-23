@@ -66,7 +66,7 @@
                 id="category-create-form"
                 class="category-form"
                 method="POST"
-                action="{{ route('categories.store') }}"
+                action="{{ route('categories.store', $project) }}"
             >
                 @csrf
 

@@ -1,0 +1,55 @@
+.category-tree {
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+
+    &__item {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__row {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: .75rem 1rem;
+        border: 1px solid #ddd;
+        border-radius: .5rem;
+        background: #fff;
+
+        &:hover {
+            background: #f8f8f8;
+        }
+    }
+
+    &__label {
+        flex: 1;
+        font-weight: 600;
+    }
+
+    &__code {
+        width: 180px;
+        color: #666;
+        font-size: .9rem;
+    }
+
+    &__actions {
+        display: flex;
+        gap: .75rem;
+        align-items: center;
+
+        form {
+            display: inline;
+        }
+
+        a,
+        button {
+            border: none;
+            background: none;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            font: inherit;
+        }
+    }
+}

@@ -1,0 +1,30 @@
+.table {
+    width: 100%;
+    border-collapse: collapse;
+
+    &__head {
+        background: var(--color-primary);
+        color: white;
+    }
+
+    &__cell {
+        padding: 1rem;
+        border-bottom: 1px solid #ddd;
+        vertical-align: top;
+
+        &--actions {
+            white-space: nowrap;
+            display: flex;
+            gap: .5rem;
+            align-items: center;
+        }
+    }
+
+    &__row:nth-child(even) {
+        background: #f8f8f8;
+    }
+
+    small {
+        color: #777;
+    }
+}

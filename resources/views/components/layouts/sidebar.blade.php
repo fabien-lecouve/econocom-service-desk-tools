@@ -29,6 +29,14 @@
                 </ul>
             </div> --}}
 
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+
+                <button type="submit" class="sidebar__logout">
+                    Déconnexion
+                </button>
+            </form>
+
         </div>
 
     </nav>

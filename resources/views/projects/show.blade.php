@@ -10,12 +10,12 @@
         </div>
 
         <div class="header__actions">
-            {{-- <a
-                href="{{ route('projects.index') }}"
+            <a
+                href="{{ route('projects.edit', ['project' => $project]) }}"
                 class="header__link"
             >
-                Changer de projet
-            </a> --}}
+                Modifier le projet
+            </a>
 
             <a href="{{ route('quick-messages.index', ['project' => $project]) }}"
                 class="header__link header__link--primary">
@@ -238,22 +238,22 @@
                 </div>
 
                 <div class="section__content quick-links">
-                    <a href="{{ route('quick-messages.index', ['project' => $project]) }}" class="quick-link">
-                        Messages rapides
+                    <a href="{{ route('categories.index', $project) }}" class="quick-link">
+                        Les catégories
                     </a>
 
                     <a href="{{ route('categories.create', ['project' => $project]) }}" class="quick-link">
                         Créer une catégorie
                     </a>
 
+                    <a href="{{ route('messages.index', $project) }}" class="quick-link">
+                        Les messages
+                    </a>
+
                     <a href="{{ route('messages.create', ['project' => $project]) }}" class="quick-link">
                         Créer un message
                     </a>
 
-                    {{-- Lien fictif --}}
-                    <a href="#" class="quick-link">
-                        Derniers messages copiés
-                    </a>
                 </div>
             </section>
 

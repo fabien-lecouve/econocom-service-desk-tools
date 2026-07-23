@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Validator;
 
 class UpdateMessageRequest extends FormRequest
 {
@@ -23,6 +24,8 @@ class UpdateMessageRequest extends FormRequest
      */
     public function rules(): array
     {
+        $message = $this->route('message');
+
         return [
             'project_id' => [
                 'required',
@@ -44,36 +47,27 @@ class UpdateMessageRequest extends FormRequest
             ],
 
             'font_color_id' => [
-                'nullable', 
-                'integer', 
-                'exists:colors,id'
+                'nullable',
+                'integer',
+                'exists:colors,id',
             ],
 
             'background_color_id' => [
-                'nullable', 
-                'integer', 
-                'exists:colors,id'
+                'nullable',
+                'integer',
+                'exists:colors,id',
             ],
 
             'border_top_color_id' => [
-                'nullable', 
-                'integer', 
-                'exists:colors,id'
-            ],
-
-            'code' => [
-                'required',
-                'string',
-                'max:100',
-                Rule::unique('messages', 'code')
-                    ->where('project_id', $this->input('project_id'))
-                    ->ignore($this->message?->id),
+                'nullable',
+                'integer',
+                'exists:colors,id',
             ],
 
             'label' => [
-                'required', 
-                'string', 
-                'max:100'
+                'required',
+                'string',
+                'max:100',
             ],
 
             'shortcut' => [
@@ -82,15 +76,56 @@ class UpdateMessageRequest extends FormRequest
                 'size:1',
                 Rule::unique('messages', 'shortcut')
                     ->where('project_id', $this->input('project_id'))
-                    ->ignore($this->message?->id),
+                    ->ignore($message),
             ],
 
             'position' => [
-                'nullable', 
-                'integer', 
-                'min:0'
+                'nullable',
+                'integer',
+                'min:0',
+            ],
+
+            'translations' => [
+                'required',
+                'array',
+                'min:1',
+            ],
+
+            'translations.*.language_id' => [
+                'required',
+                'integer',
+                'distinct',
+                Rule::exists('project_language_settings', 'language_id')
+                    ->where('project_id', $this->input('project_id')),
+            ],
+
+            'translations.*.content' => [
+                'nullable',
+                'string',
             ],
         ];
     }
-}
 
+    public function after(): array
+    {
+        return [
+            function (Validator $validator) {
+                $translations = collect(
+                    $this->input('translations', [])
+                );
+
+                $hasContent = $translations->contains(
+                    fn(array $translation) =>
+                    filled($translation['content'] ?? null)
+                );
+
+                if (! $hasContent) {
+                    $validator->errors()->add(
+                        'translations',
+                        'Au moins une traduction doit être renseignée.'
+                    );
+                }
+            },
+        ];
+    }
+}

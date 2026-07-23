@@ -1,0 +1,195 @@
+.user-create {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: calc(100vh - 10rem);
+    padding: 3rem 1.5rem;
+
+    &__card {
+        width: 100%;
+        max-width: 34rem;
+        padding: 2rem;
+        background-color: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 0.75rem;
+        box-shadow: 0 0.5rem 1.5rem rgba(15, 23, 42, 0.08);
+    }
+
+    &__header {
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+
+    &__title {
+        margin: 0;
+        color: #111827;
+        font-size: 1.75rem;
+        font-weight: 700;
+    }
+}
+
+.user-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    &__group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    &__label {
+        color: #374151;
+        font-size: 0.9rem;
+        font-weight: 600;
+    }
+
+    &__input,
+    &__select {
+        width: 100%;
+        min-height: 2.75rem;
+        padding: 0.7rem 0.85rem;
+        color: #111827;
+        font: inherit;
+        background-color: #ffffff;
+        border: 1px solid #d1d5db;
+        border-radius: 0.4rem;
+        outline: none;
+        transition:
+            border-color 150ms ease,
+            box-shadow 150ms ease,
+            background-color 150ms ease;
+
+        &:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.15);
+        }
+
+        &:disabled {
+            color: #6b7280;
+            background-color: #f3f4f6;
+            cursor: not-allowed;
+        }
+    }
+
+    &__select {
+        cursor: pointer;
+    }
+
+    &__input--error,
+    &__select--error {
+        border-color: #dc2626;
+
+        &:focus {
+            border-color: #dc2626;
+            box-shadow: 0 0 0 0.2rem rgba(220, 38, 38, 0.15);
+        }
+    }
+
+    &__error {
+        margin: 0;
+        color: #dc2626;
+        font-size: 0.8rem;
+    }
+
+    &__fieldset {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+        margin: 0;
+        padding: 1.5rem;
+        border: 1px solid #dbe1e8;
+        border-radius: 0.5rem;
+    }
+
+    &__legend {
+        padding: 0 0.5rem;
+        color: #1f2937;
+        font-size: 1rem;
+        font-weight: 700;
+    }
+
+    &__actions {
+        display: flex;
+        justify-content: flex-end;
+        padding-top: 0.5rem;
+    }
+
+    &__submit {
+        width: 100%;
+        padding: 0.75rem 1.25rem;
+        color: #ffffff;
+        font: inherit;
+        font-weight: 600;
+        background-color: #2563eb;
+        border: 1px solid #2563eb;
+        border-radius: 0.4rem;
+        cursor: pointer;
+        transition:
+            background-color 150ms ease,
+            border-color 150ms ease,
+            transform 100ms ease;
+
+        &:hover {
+            background-color: #1d4ed8;
+            border-color: #1d4ed8;
+        }
+
+        &:active {
+            transform: translateY(1px);
+        }
+
+        &:focus-visible {
+            outline: 0.2rem solid rgba(37, 99, 235, 0.25);
+            outline-offset: 0.15rem;
+        }
+    }
+
+    &__switch {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem 0;
+
+        &:not(:last-child) {
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        input[type="checkbox"] {
+            width: 1.15rem;
+            height: 1.15rem;
+            cursor: pointer;
+        }
+    }
+
+    &__switch-title {
+        display: block;
+        color: #111827;
+        font-weight: 600;
+    }
+
+    &__switch-description {
+        display: block;
+        margin-top: .25rem;
+        color: #6b7280;
+        font-size: .85rem;
+    }
+}
+
+@media (max-width: 40rem) {
+    .user-create {
+        padding: 1.5rem 1rem;
+
+        &__card {
+            padding: 1.5rem;
+        }
+    }
+
+    .user-form {
+        &__fieldset {
+            padding: 1.25rem;
+        }
+    }
+}

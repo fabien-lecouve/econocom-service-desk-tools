@@ -51,7 +51,12 @@ class Category extends Model
     {
         return $this->hasMany(Category::class, 'parent_id')
             ->orderBy('position')
-            ->with('children');
+            ->with([
+                'children',
+                'messages' => function ($query) {
+                    $query->orderBy('position');
+                },
+            ]);
     }
 
     /**
