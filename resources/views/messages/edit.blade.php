@@ -1,456 +1,242 @@
 <x-layouts.dashboard>
     <x-slot:title>
-        Modifier un message
+        Modifier {{ $message->label }}
     </x-slot:title>
 
-    <div
-        class="message-create"
-        x-data="{
-            ...categorySelector(
-                @js($categories),
-                @js(old('category_id', $message->category_id))
-            ),
+    <x-layouts.header
+        :title="'Modifier ' . $message->label"
+        :breadcrumbs="[
+            [
+                'link' => route('projects.show', $project),
+                'title' => $project->label,
+            ],
+            [
+                'link' => route('messages.index', $project),
+                'title' => 'Messages',
+            ],
+            [
+                'title' => $message->label,
+            ],
+        ]"
+        :actions="[
+            [
+                'type' => 'link',
+                'link' => route('messages.index', $project),
+                'label' => 'Annuler',
+                'icon' => 'fa-solid fa-xmark'
+            ],
+            [
+                'type' => 'submit',
+                'label' => 'Enregistrer',
+                'form' => 'message-edit-form',
+                'class' => 'button--primary',
+                'icon' => 'fa-solid fa-floppy-disk'
+            ]
+        ]"
+    />
 
-            label: @js(old('label', $message->label)),
-            messageType: @js(old('message_type_id', $message->message_type_id))
-        }"
+    <form
+        id="message-edit-form"
+        method="POST"
+        action="{{ route('messages.update', [$project, $message]) }}"
+        class="form"
     >
-        <header class="message-create__header">
-            <div>
-                <nav class="breadcrumb" aria-label="Fil d’Ariane">
-                    <a href="{{ route('projects.show', ['project' => $project]) }}">
-                        {{ $project->label }}
-                    </a>
 
-                    <span>/</span>
+        @csrf
+        @method('PUT')
 
-                    <a href="{{ route('messages.index', ['project' => $project]) }}">
-                        Messages
-                    </a>
+        <input
+            type="hidden"
+            name="project_id"
+            value="{{ $project->id }}"
+        >
 
-                    <span>/</span>
+        <section class="form__section">
 
-                    <span aria-current="page">
-                        Modifier
-                    </span>
-                </nav>
+            <div class="form__header">
+                <div class="icon icon--round icon-title">
+                    <i class="fa-solid fa-info"></i>
+                </div>
 
-                <div class="message-create__title-group">
-                    <div class="message-create__title-symbol">
-                        M
-                    </div>
+                <div>
+                    <h2 class="form__title">Informations générales</h2>
 
-                    <div>
-                        <p class="message-create__subtitle">
-                            Projet {{ $project->label }}
-                        </p>
-
-                        <h1 class="message-create__title">
-                            Modifier un message
-                        </h1>
-                    </div>
+                    <p class="form__description">
+                        Définissez le nom de la catégorie
+                    </p>
                 </div>
             </div>
 
-            <div class="message-create__actions">
-                <a
-                    href="{{ route('messages.index', ['project' => $project]) }}"
-                    class="message-create__button"
-                >
-                    Annuler
-                </a>
+            <div class="form__content form__content--3">
 
-                <button
-                    type="submit"
-                    form="message-edit-form"
-                    class="message-create__button message-create__button--primary"
-                >
-                    Enregistrer
-                </button>
+                <x-forms.input
+                    name="label"
+                    label="Libellé"
+                    :value="old('label', $message->label)"
+                    required
+                />
+
+                <x-forms.select
+                    name="message_type_id"
+                    label="Type de message"
+                    :options="$types"
+                    :value="old('message_type_id', $message->message_type_id)"
+                    placeholder="Sélectionner un type de message"
+                    required
+                />
+
+                <x-forms.input
+                    name="shortcut"
+                    label="Raccourci clavier"
+                    :value="old('shortcut', $message->shortcut)"
+                />
+
             </div>
-        </header>
 
-        <div class="message-create__layout">
-            <form
-                id="message-edit-form"
-                class="message-form"
-                method="POST"
-                action="{{ route('messages.update', [
-                    'project' => $project,
-                    'message' => $message,
-                ]) }}"
-            >
-                @csrf
-                @method('PUT')
+        </section>
 
-                <input
-                    type="hidden"
-                    name="project_id"
-                    value="{{ $project->id }}"
-                >
+        <section class="form__section">
 
-                <section class="form-section">
-                    <div class="form-section__header">
-                        <h2 class="form-section__title">
-                            Informations générales
-                        </h2>
+            <div class="form__header">
+                <div class="icon icon--round icon-title">
+                    <i class="fa-regular fa-folder"></i>
+                </div>
+
+                <div>
+                    <h2 class="form__title">Hiérarchie</h2>
+
+                    <p class="form__description">
+                        Choisissez la catégorie dans laquelle cette catégorie sera placée
+                    </p>
+                </div>
+            </div>
+
+            <div class="form__content category-form__hierarchy">
+
+                <x-forms.category-selector
+                    :categories="$categories"
+                    name="category_id"
+                    type="message"
+                    :initialCategoryId="$message->category_id"
+                />
+
+                <x-forms.number
+                    name="position"
+                    label="Position"
+                    :value="old('position', $message->position)"
+                    min="1"
+                />
+
+            </div>
+
+        </section>
+
+        <section class="form__section form__section--split">
+
+            <div class="form__main">
+
+                <div class="form__header">
+                    <div class="icon icon--round icon-title">
+                        <i class="fa-solid fa-palette"></i>
                     </div>
 
-                    <div class="form-section__content">
-                        <div class="message-form__row message-form__row--three">
-                            <div class="message-form__group">
-                                <label
-                                    for="project-label"
-                                    class="message-form__label"
-                                >
-                                    Projet
-                                </label>
+                    <div>
+                        <h2 class="form__title">Apparence</h2>
 
-                                <input
-                                    id="project-label"
-                                    class="message-form__input"
-                                    type="text"
-                                    value="{{ $project->label }}"
-                                    disabled
-                                >
-                            </div>
-
-                            <div class="message-form__group">
-                                <input
-                                    type="hidden"
-                                    name="category_id"
-                                    x-model="selectedCategoryId"
-                                >
-
-                                <template
-                                    x-for="(level, index) in levels"
-                                    :key="index"
-                                >
-                                    <div class="message-form__group">
-                                        <label
-                                            class="message-form__label"
-                                            x-text="index === 0
-                                                ? 'Catégorie'
-                                                : `Sous-catégorie niveau ${index}`"
-                                        ></label>
-
-                                        <select
-                                            class="message-form__select"
-                                            x-model="selected[index]"
-                                            @change="changeLevel(index)"
-                                        >
-                                            <option value="">
-                                                Sélectionner une catégorie
-                                            </option>
-
-                                            <template
-                                                x-for="category in level"
-                                                :key="category.id"
-                                            >
-                                                <option
-                                                    :value="String(category.id)"
-                                                    x-text="category.label"
-                                                ></option>
-                                            </template>
-                                        </select>
-                                    </div>
-                                </template>
-
-                                @error('category_id')
-                                    <p class="message-form__error">
-                                        {{ $message }}
-                                    </p>
-                                @enderror
-                            </div>
-
-                            <div class="message-form__group">
-                                <label
-                                    for="message-type"
-                                    class="message-form__label"
-                                >
-                                    Type de message
-
-                                    <span class="message-form__required">
-                                        *
-                                    </span>
-                                </label>
-
-                                <select
-                                    id="message-type"
-                                    class="message-form__select @error('message_type_id') message-form__input--error @enderror"
-                                    name="message_type_id"
-                                    required
-                                    x-model="messageType"
-                                >
-                                    <option value="">
-                                        Sélectionner un type de message
-                                    </option>
-
-                                    @foreach ($types as $type)
-                                        <option
-                                            value="{{ $type->id }}"
-                                            @selected(
-                                                old(
-                                                    'message_type_id',
-                                                    $message->message_type_id
-                                                ) == $type->id
-                                            )
-                                        >
-                                            {{ $type->label }}
-                                        </option>
-                                    @endforeach
-                                </select>
-
-                                @error('message_type_id')
-                                    <p class="message-form__error">
-                                        {{ $message }}
-                                    </p>
-                                @enderror
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <section class="form-section">
-                    <div class="form-section__header">
-                        <h2 class="form-section__title">
-                            Informations du message
-                        </h2>
-                    </div>
-
-                    <div class="form-section__content">
-                        <div class="message-form__row">
-                            <div class="message-form__group">
-                                <label
-                                    for="label"
-                                    class="message-form__label"
-                                >
-                                    Libellé
-
-                                    <span class="message-form__required">
-                                        *
-                                    </span>
-                                </label>
-
-                                <input
-                                    id="label"
-                                    class="message-form__input @error('label') message-form__input--error @enderror"
-                                    type="text"
-                                    name="label"
-                                    value="{{ old('label', $message->label) }}"
-                                    placeholder="Ex : Réinitialisation de mot de passe"
-                                    required
-                                    x-model="label"
-                                >
-
-                                <p class="message-form__help">
-                                    Nom affiché dans la liste des messages.
-                                </p>
-
-                                @error('label')
-                                    <p class="message-form__error">
-                                        {{ $message }}
-                                    </p>
-                                @enderror
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <section class="form-section form-section--translations">
-                    <div class="form-section__header">
-                        <h2 class="form-section__title">
-                            Traductions
-
-                            <span class="message-form__required">
-                                *
-                            </span>
-                        </h2>
-
-                        <p class="form-section__description">
-                            Modifiez le contenu du message pour chaque langue
-                            activée sur ce projet.
+                        <p class="form__description">
+                            Définissez les couleurs de la catégorie
                         </p>
                     </div>
+                </div>
 
-                    <div class="translation-table">
-                        <div class="translation-table__header">
-                            <div>Langue</div>
-                            <div>Contenu du message</div>
-                        </div>
+                <div class="form__content form__content--3">
 
-                        @foreach ($project->projectLanguageSettings as $setting)
-                            @php
-                                $languageId = $setting->language->id;
+                    <x-forms.select
+                        name="font_color_id"
+                        label="Texte"
+                        placeholder="Couleur"
+                    />
 
-                                $translation = $message->translations
-                                    ->firstWhere('language_id', $languageId);
+                    <x-forms.select
+                        name="background_color_id"
+                        label="Fond"
+                        placeholder="Couleur"
+                    />
 
-                                $fieldName = "translations.$languageId.content";
+                    <x-forms.select
+                        name="border_top_color_id"
+                        label="Bordure"
+                        placeholder="Couleur"
+                    />
 
-                                $content = old(
-                                    $fieldName,
-                                    $translation?->content ?? ''
-                                );
-                            @endphp
+                </div>
 
-                            <div class="translation-table__row">
-                                <div class="translation-table__language">
-                                    <span class="translation-table__language-code">
-                                        {{ strtoupper($setting->language->code) }}
-                                    </span>
+            </div>
 
-                                    <span>
-                                        {{ $setting->language->label }}
-                                    </span>
-                                </div>
+            <aside class="form__aside">
 
-                                <div class="translation-table__content">
-                                    <input
-                                        type="hidden"
-                                        name="translations[{{ $languageId }}][language_id]"
-                                        value="{{ $languageId }}"
-                                    >
+                <div class="form__header">
+                    <h2 class="form__title">Aperçu</h2>
+                </div>
 
-                                    <textarea
-                                        id="translation-{{ $languageId }}"
-                                        class="translation-table__textarea @error($fieldName) translation-table__textarea--error @enderror"
-                                        name="translations[{{ $languageId }}][content]"
-                                        rows="5"
-                                        maxlength="5000"
-                                        placeholder="Saisir le contenu du message en {{ strtolower($setting->language->label) }}..."
-                                    >{{ $content }}</textarea>
+                <div class="form__content">
+                    <p>Message</p>
+                </div>
 
-                                    <div class="translation-table__counter">
-                                        <span
-                                            x-data="{ length: @js(mb_strlen($content)) }"
-                                            @input.window="
-                                                if ($event.target.id === 'translation-{{ $languageId }}') {
-                                                    length = $event.target.value.length
-                                                }
-                                            "
-                                            x-text="`${length} / 5000`"
-                                        ></span>
-                                    </div>
+            </aside>
 
-                                    @error($fieldName)
-                                        <p class="message-form__error">
-                                            {{ $message }}
-                                        </p>
-                                    @enderror
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
+        </section>
 
-                    @error('translations')
-                        <p class="message-form__error">
-                            {{ $message }}
-                        </p>
-                    @enderror
-                </section>
-            </form>
-        </div>
-    </div>
-</x-layouts.dashboard>
+        <section class="form__section">
 
-<script>
-    function categorySelector(categories, initialCategoryId = '') {
-        return {
-            categories: categories ?? [],
-            levels: [categories ?? []],
-            selected: [],
-            selectedCategoryId: initialCategoryId
-                ? String(initialCategoryId)
-                : '',
+            <div class="form__header">
+                <div class="icon icon--round icon-title">
+                    <i class="fa-solid fa-globe"></i>
+                </div>
 
-            init() {
-                if (this.selectedCategoryId) {
-                    this.restoreSelection(this.selectedCategoryId);
-                }
-            },
+                <div>
+                    <h2 class="form__title">Traductions</h2>
 
-            changeLevel(index) {
-                this.selected = this.selected.slice(0, index + 1);
-                this.levels = this.levels.slice(0, index + 1);
+                    <p class="form__description">
+                        Ajoutez le contenu du message pour chaque langue activée sur ce projet
+                    </p>
+                </div>
+            </div>
 
-                const selectedId = this.selected[index];
+            <div class="form__content form__content--2">
 
-                if (!selectedId) {
-                    this.selectedCategoryId =
-                        this.selected[index - 1] ?? '';
+                @foreach ($project->projectLanguageSettings as $setting)
 
-                    return;
-                }
+                    @php
+                        $languageId = $setting->language->id;
 
-                const category = this.findCategory(
-                    this.levels[index],
-                    selectedId
-                );
-
-                this.selectedCategoryId = String(selectedId);
-
-                if (category?.children?.length > 0) {
-                    this.levels.push(category.children);
-                }
-            },
-
-            restoreSelection(categoryId) {
-                const path = this.findPath(
-                    this.categories,
-                    categoryId
-                );
-
-                if (!path) {
-                    return;
-                }
-
-                this.levels = [this.categories];
-                this.selected = [];
-
-                path.forEach((category, index) => {
-                    this.selected[index] = String(category.id);
-
-                    if (
-                        index < path.length - 1 &&
-                        category.children?.length > 0
-                    ) {
-                        this.levels.push(category.children);
-                    }
-                });
-
-                this.selectedCategoryId = String(categoryId);
-            },
-
-            findPath(categories, categoryId, path = []) {
-                for (const category of categories) {
-                    const currentPath = [...path, category];
-
-                    if (String(category.id) === String(categoryId)) {
-                        return currentPath;
-                    }
-
-                    if (category.children?.length > 0) {
-                        const result = this.findPath(
-                            category.children,
-                            categoryId,
-                            currentPath
+                        $translation = $message
+                            ->translations
+                            ->firstWhere('language_id', $languageId);
+                        $value = old(
+                            "translations.$languageId.content",
+                            $translation?->content
                         );
+                    @endphp
 
-                        if (result) {
-                            return result;
-                        }
-                    }
-                }
+                    <x-forms.hidden
+                        name="translations[{{ $languageId }}][language_id]"
+                        value="{{ $languageId }}"
+                    />
 
-                return null;
-            },
+                    <x-forms.textarea
+                        name="translations[{{ $languageId }}][content]"
+                        label="Corps du message {{ $setting->language->code }}"
+                        :value="$value"
+                        rows="15"
+                        required
+                    />
 
-            findCategory(categories, id) {
-                return categories.find(
-                    category => String(category.id) === String(id)
-                );
-            }
-        };
-    }
-</script>
+                @endforeach
+
+            </div>
+
+        </section>
+    </form>
+
+</x-layouts.dashboard>

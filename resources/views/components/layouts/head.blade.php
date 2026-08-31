@@ -12,8 +12,8 @@
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/36558d4fea.js" crossorigin="anonymous"></script>
 
-    <title>{{ isset($title) ? 'Artesan | ' . $title : 'Artesan' }}</title>
-    
+    <title>{{ isset($title) ? 'Econocom | ' . $title : 'Econocom' }}</title>
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 

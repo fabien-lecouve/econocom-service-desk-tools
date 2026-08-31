@@ -4,6 +4,7 @@
     'type' => 'text',
     'value' => '',
     'required' => false,
+    'placeholder' => '',
 ])
 
 <div class="form__group">
@@ -23,7 +24,10 @@
         type="{{ $type }}"
         name="{{ $name }}"
         @if($type !== 'file')
-        value="{{ old($name, $value) }}"
+            value="{{ old($name, $value) }}"
+        @endif
+        @if ($placeholder)
+            placeholder="{{ $placeholder }}"
         @endif
     >
 

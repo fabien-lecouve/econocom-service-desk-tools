@@ -3,32 +3,46 @@
         Utilisateurs
     </x-slot:title>
 
-    <header class="main__header header">
-        <h1 class="header__title">Utilisateurs</h1>
-    </header>
+    <x-layouts.header
+        title="Utilisateurs"
+        :breadcrumbs="[
+            [
+                'title' => 'Utilisateurs',
+            ],
+        ]" :actions="[
+            [
+                'type' => 'link',
+                'link' => route('users.create'),
+                'label' => 'Créer un utilisateur',
+                'class' => 'button--primary',
+                'icon' => 'fa-solid fa-plus',
+            ],
+        ]"
+    />
 
-    <div class="main__content">
+    <div class="table-container">
+
         <table class="table">
-            <thead class="table__head">
-                <tr class="table__row">
-                    <th class="table__cell">Prénom</th>
-                    <th class="table__cell">Nom</th>
-                    <th class="table__cell">Email</th>
-                    <th class="table__cell">Projets</th>
-                    <th class="table__cell">Admin</th>
-                    <th class="table__cell">Knowledge Manager</th>
-                    <th class="table__cell table__cell--actions">Actions</th>
+            <thead class="table__thead">
+                <tr>
+                    <th>Prénom</th>
+                    <th>Nom</th>
+                    <th>Email</th>
+                    <th>Projets</th>
+                    <th>Admin</th>
+                    <th>Knowledge Manager</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
 
-            <tbody class="table__body">
+            <tbody class="table__tbody">
                 @foreach ($users as $user)
-                    <tr class="table__row">
-                        <td class="table__cell">{{ $user->firstname }}</td>
-                        <td class="table__cell">{{ $user->lastname }}</td>
-                        <td class="table__cell">{{ $user->email }}</td>
+                    <tr>
+                        <td>{{ $user->firstname }}</td>
+                        <td>{{ $user->lastname }}</td>
+                        <td>{{ $user->email }}</td>
 
-                        <td class="table__cell">
+                        <td>
                             @forelse($user->memberships as $membership)
                                 <div>
                                     <strong>{{ $membership->project->label }}</strong>
@@ -39,17 +53,17 @@
                             @endforelse
                         </td>
 
-                        <td class="table__cell">
+                        <td class="center">
                             {{ $user->is_admin ? '✔' : '✖' }}
                         </td>
 
-                        <td class="table__cell">
+                        <td class="center">
                             {{ $user->is_knowledge_manager ? '✔' : '✖' }}
                         </td>
 
-                        <td class="table__cell table__cell--actions">
-                            <a href="{{ route('users.edit', $user) }}" class="btn btn--secondary">
-                                Modifier
+                        <td class="actions">
+                            <a class="actions__edit" href="{{ route('users.edit', $user) }}" class="btn btn--secondary">
+                                <i class="fa-solid fa-pen"></i>
                             </a>
 
                             <form action="{{ route('users.destroy', $user) }}" method="POST"
@@ -57,8 +71,8 @@
                                 @csrf
                                 @method('DELETE')
 
-                                <button type="submit" class="btn btn--danger">
-                                    Supprimer
+                                <button class="actions__delete"  type="submit" class="btn btn--danger">
+                                    <i class="fa-solid fa-trash"></i>
                                 </button>
                             </form>
                         </td>

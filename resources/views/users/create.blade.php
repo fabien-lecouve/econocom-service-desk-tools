@@ -3,187 +3,191 @@
         Créer un utilisateur
     </x-slot:title>
 
-    <main class="user-create">
-        <section class="user-create__card">
-            <header class="user-create__header">
-                <h1 class="user-create__title">
-                    Créer un utilisateur
-                </h1>
-            </header>
+    <x-layouts.header
+        title="Créer un utilisateur"
+        :breadcrumbs="[
+            [
+                'link' => route('users.index'),
+                'title' => 'Utilisateurs',
+            ],
+            [
+                'title' => 'Créer',
+            ],
+        ]"
+        :actions="[
+            [
+                'type' => 'link',
+                'link' => route('users.index'),
+                'label' => 'Annuler',
+                'icon' => 'fa-solid fa-xmark'
+            ],
+            [
+                'type' => 'submit',
+                'label' => 'Enregistrer',
+                'form' => 'user-create-form',
+                'class' => 'button--primary',
+                'icon' => 'fa-solid fa-floppy-disk'
+            ]
+        ]" />
 
-            <form class="user-form" method="POST" action="{{ route('users.store') }}">
-                @csrf
+    <form
+        id="user-create-form"
+        method="POST"
+        action="{{ route('users.store') }}"
+        class="form"
+        >
 
-                <div class="user-form__group">
-                    <label class="user-form__label" for="firstname">
-                        Prénom
-                    </label>
+        @csrf
 
-                    <input id="firstname" class="user-form__input @error('firstname') user-form__input--error @enderror"
-                        type="text" name="firstname" value="{{ old('firstname') }}" autocomplete="given-name"
-                        required>
+        <section class="form__section">
 
-                    @error('firstname')
-                        <p class="user-form__error">
-                            {{ $message }}
-                        </p>
-                    @enderror
+            <div class="form__header">
+                <div class="icon icon--round icon-title">
+                    <i class="fa-solid fa-info"></i>
                 </div>
 
-                <div class="user-form__group">
-                    <label class="user-form__label" for="lastname">
-                        Nom
-                    </label>
+                <div>
+                    <h2 class="form__title">Informations générales</h2>
 
-                    <input id="lastname" class="user-form__input @error('lastname') user-form__input--error @enderror"
-                        type="text" name="lastname" value="{{ old('lastname') }}" autocomplete="family-name"
-                        required>
-
-                    @error('lastname')
-                        <p class="user-form__error">
-                            {{ $message }}
-                        </p>
-                    @enderror
+                    <p class="form__description">
+                        Renseignez les informations de l'utilisateur
+                    </p>
                 </div>
+            </div>
 
-                <div class="user-form__group">
-                    <label class="user-form__label" for="email">
-                        Adresse e-mail
-                    </label>
+            <div class="form__content form__content--3">
 
-                    <input id="email" class="user-form__input @error('email') user-form__input--error @enderror"
-                        type="email" name="email" value="{{ old('email') }}" placeholder="mail@example.com"
-                        autocomplete="email" required>
+                <x-forms.input
+                    name="firstname"
+                    label="Prénom"
+                    required
+                />
 
-                    @error('email')
-                        <p class="user-form__error">
-                            {{ $message }}
-                        </p>
-                    @enderror
-                </div>
+                <x-forms.input
+                    name="lastname"
+                    label="Nom"
+                    required
+                />
 
-                <div class="user-form__group">
-                    <label class="user-form__label" for="password">
-                        Mot de passe
-                    </label>
+                <x-forms.input
+                    name="email"
+                    label="Adresse e-mail"
+                    type="email"
+                    required
+                />
 
-                    <input id="password" class="user-form__input @error('password') user-form__input--error @enderror"
-                        type="password" name="password" autocomplete="new-password" required>
+            </div>
 
-                    @error('password')
-                        <p class="user-form__error">
-                            {{ $message }}
-                        </p>
-                    @enderror
-                </div>
-
-                <div class="user-form__group">
-                    <label class="user-form__label" for="password_confirmation">
-                        Confirmer le mot de passe
-                    </label>
-
-                    <input id="password_confirmation" class="user-form__input" type="password"
-                        name="password_confirmation" autocomplete="new-password" required>
-                </div>
-
-                <fieldset class="user-form__fieldset">
-                    <legend class="user-form__legend">
-                        Accès au projet
-                    </legend>
-
-                    <div class="user-form__group">
-                        <label class="user-form__label" for="project_id">
-                            Projet
-                        </label>
-
-                        <select id="project_id"
-                            class="user-form__select @error('memberships.0.project_id') user-form__select--error @enderror"
-                            name="memberships[0][project_id]" required>
-                            <option value="">
-                                Sélectionnez un projet
-                            </option>
-
-                            @foreach ($projects as $project)
-                                <option value="{{ $project->id }}" @selected(old('memberships.0.project_id') == $project->id)>
-                                    {{ $project->label }}
-                                </option>
-                            @endforeach
-                        </select>
-
-                        @error('memberships.0.project_id')
-                            <p class="user-form__error">
-                                {{ $message }}
-                            </p>
-                        @enderror
-                    </div>
-
-                    <div class="user-form__group">
-                        <label class="user-form__label" for="role_id">
-                            Rôle
-                        </label>
-
-                        <select id="role_id"
-                            class="user-form__select @error('memberships.0.role_id') user-form__select--error @enderror"
-                            name="memberships[0][role_id]" required>
-                            <option value="">
-                                Sélectionnez un rôle
-                            </option>
-
-                            @foreach ($roles as $role)
-                                <option value="{{ $role->id }}" @selected(old('memberships.0.role_id') == $role->id)>
-                                    {{ $role->label }}
-                                </option>
-                            @endforeach
-                        </select>
-
-                        @error('memberships.0.role_id')
-                            <p class="user-form__error">
-                                {{ $message }}
-                            </p>
-                        @enderror
-                    </div>
-                </fieldset>
-
-                <fieldset class="user-form__fieldset">
-                    <legend class="user-form__legend">
-                        Permissions globales
-                    </legend>
-
-                    <label class="user-form__switch">
-                        <div>
-                            <span class="user-form__switch-title">
-                                Administrateur
-                            </span>
-
-                            <span class="user-form__switch-description">
-                                Accès complet à l'application.
-                            </span>
-                        </div>
-
-                        <input type="checkbox" name="is_admin" value="1" @checked(old('is_admin'))>
-                    </label>
-
-                    <label class="user-form__switch">
-                        <div>
-                            <span class="user-form__switch-title">
-                                Knowledge Manager
-                            </span>
-
-                            <span class="user-form__switch-description">
-                                Gestionnaire de la base de connaissances.
-                            </span>
-                        </div>
-
-                        <input type="checkbox" name="is_knowledge_manager" value="1" @checked(old('is_knowledge_manager'))>
-                    </label>
-                </fieldset>
-
-                <div class="user-form__actions">
-                    <button class="user-form__submit" type="submit">
-                        Créer l’utilisateur
-                    </button>
-                </div>
-            </form>
         </section>
-    </main>
+
+        <section class="form__section">
+
+            <div class="form__header">
+                <div class="icon icon--round icon-title">
+                    <i class="fa-solid fa-key"></i>
+                </div>
+
+                <div>
+                    <h2 class="form__title">Sécurité</h2>
+
+                    <p class="form__description">
+                        Définissez le mot de passe de l'utilisateur
+                    </p>
+                </div>
+            </div>
+
+            <div class="form__content form__content--2">
+
+                <x-forms.input
+                    name="password"
+                    label="Mot de passe"
+                    type="password"
+                    required
+                />
+
+                <x-forms.input
+                    name="password_confirmation"
+                    label="Confirmer le mot de passe"
+                    type="password"
+                    required
+                />
+
+            </div>
+
+        </section>
+
+        <section class="form__section">
+
+            <div class="form__header">
+                <div class="icon icon--round icon-title">
+                    <i class="fa-solid fa-chart-diagram"></i>
+                </div>
+
+                <div>
+                    <h2 class="form__title">Projet</h2>
+
+                    <p class="form__description">
+                        Affectez l'utilisateur à un projet et définissez son rôle
+                    </p>
+                </div>
+            </div>
+
+            <div class="form__content form__content--2">
+
+                <x-forms.select
+                    name="project_id"
+                    label="Projet"
+                    :options="$projects"
+                    placeholder="Sélectionnez un projet"
+                    required
+                />
+
+                <x-forms.select
+                    name="role_id"
+                    label="Rôle"
+                    :options="$roles"
+                    placeholder="Sélectionnez un rôle"
+                    required
+                />
+
+            </div>
+
+        </section>
+
+        <section class="form__section">
+
+            <div class="form__header">
+                <div class="icon icon--round icon-title">
+                    <i class="fa-solid fa-shield"></i>
+                </div>
+
+                <div>
+                    <h2 class="form__title">Permissions globales</h2>
+
+                    <p class="form__description">
+                        Définissez les permissions globales de l'utilisateur
+                    </p>
+                </div>
+            </div>
+
+            <div class="form__content form__content--2">
+
+                <x-forms.checkbox
+                    name="is_admin"
+                    :options="[1 => 'Administrateur']"
+                    required
+                />
+
+                <x-forms.checkbox
+                    name="is_knowledge_manager"
+                    :options="[1 => 'Knowledge Manager']"
+                    required
+                />
+
+            </div>
+
+        </section>
+
+    </form>
+
 </x-layouts.dashboard>

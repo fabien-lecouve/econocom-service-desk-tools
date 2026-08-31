@@ -4,26 +4,25 @@
 
 @use 'base/normalize';
 @use 'base/typography';
-@use 'base/colors';
 
 
+@use 'layout/guest';
 @use 'layout/dashboard';
 @use 'layout/sidebar';
-@use 'layout/main';
-
-@use 'pages/projects/show' as projectShow;
-@use 'pages/projects/edit' as projectEdit;
-
-@use 'pages/categories/index' as categoryIndex;
-@use 'pages/categories/create' as categoryCreate;
-
-@use 'pages/messages/index' as messageIndex;
-@use 'pages/messages/create' as messageCreate;
-
-@use 'pages/users/index' as userIndex;
-@use 'pages/users/create' as userCreate;
-
-@use 'pages/quick-messages';
+@use 'layout/header';
 
 
-@use 'components/buttons';
+@use 'components/actions';
+@use 'components/badge';
+@use 'components/button';
+@use 'components/card';
+@use 'components/detail';
+@use 'components/form';
+@use 'components/icon';
+@use 'components/table';
+@use 'components/tree';
+
+
+// @use 'pages/quick-messages';
+
+

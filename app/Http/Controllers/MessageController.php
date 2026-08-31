@@ -37,25 +37,12 @@ class MessageController extends Controller
         ]);
     }
 
-    private function mapCategories($categories)
-    {
-        return $categories->map(function ($category) {
-            return [
-                'id' => $category->id,
-                'code' => $category->code,
-                'label' => $category->label,
-                'position' => $category->position,
-                'children' => $this->mapCategories($category->children),
-            ];
-        })->values();
-    }
-
     /**
      * Show the form for creating a new resource.
      */
     public function create(Project $project)
     {
-        $this->authorize('viewAny', [Message::class, $project]);
+        $this->authorize('create', [Message::class, $project]);
 
         $project->load('projectLanguageSettings.language');
 
@@ -64,8 +51,6 @@ class MessageController extends Controller
             ->with('children')
             ->orderBy('position')
             ->get();
-
-        $categories = $this->mapCategories($categories);
 
         $types = MessageType::all();
 
@@ -81,7 +66,7 @@ class MessageController extends Controller
      */
     public function store(StoreMessageRequest $request, Project $project)
     {
-        $this->authorize('viewAny', [Message::class, $project]);
+        $this->authorize('create', [Message::class, $project]);
 
         $validated = $request->validated();
 
@@ -107,19 +92,8 @@ class MessageController extends Controller
             return $message;
         });
 
-        return redirect()
-            ->route('projects.show', [
-                'project' => $project
-            ])
+        return redirect()->route('projects.show', ['project' => $project])
             ->with('success', "Message {$message->label} créé");
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Message $message)
-    {
-        //
     }
 
     /**
@@ -139,8 +113,6 @@ class MessageController extends Controller
             ->orderBy('position')
             ->get();
 
-        $categories = $this->mapCategories($categories);
-
         $types = MessageType::all();
 
         return view('messages.edit', [
@@ -151,11 +123,8 @@ class MessageController extends Controller
         ]);
     }
 
-    public function update(
-        UpdateMessageRequest $request,
-        Project $project,
-        Message $message
-    ) {
+    public function update(UpdateMessageRequest $request, Project $project, Message $message)
+    {
         $this->authorize('update', $message);
 
         $validated = $request->validated();

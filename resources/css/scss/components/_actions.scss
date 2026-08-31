@@ -1,0 +1,35 @@
+@use '../abstracts/variables' as *;
+
+.actions {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+
+    &__show {
+        padding: 8px;
+        border-radius: 4px;
+        border: 1px solid $green-dark;
+        i {
+            color: $green-dark;
+        }
+    }
+
+    &__edit {
+        padding: 8px;
+        border-radius: 4px;
+        border: 1px solid $purple-dark;
+        i {
+            color: $purple-dark;
+        }
+    }
+
+    &__delete {
+        padding: 8px;
+        border-radius: 4px;
+        border: 1px solid $red;
+        background-color: inherit;
+        i {
+            color: $red;
+        }
+    }
+}

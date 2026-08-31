@@ -3,24 +3,34 @@
         Catégories
     </x-slot:title>
 
-    <header class="main__header header">
-        <h1 class="header__title">
-            {{ $project->label }} - Catégories
-        </h1>
+    <x-layouts.header
+        title="Catégories"
+        :breadcrumbs="[
+            [
+                'link' => route('projects.show', $project),
+                'title' => $project->label,
+            ],
+            [
+                'title' => 'Catégories',
+            ]
+        ]"
+        :actions="[
+            [
+                'type' => 'link',
+                'link' => route('categories.create', $project),
+                'label' => 'Créer une catégorie',
+                'class' => 'button--primary',
+                'icon' => 'fa-solid fa-plus'
+            ]
+        ]" />
 
-        <a href="{{ route('categories.create', $project) }}" class="button">
-            Créer une catégorie
-        </a>
-    </header>
 
-    <div class="main__content">
-        <div class="category-tree">
+    <div class="tree">
 
-            @foreach ($categories as $category)
-                @include('categories.partials.category', ['category' => $category, 'level' => 0])
-            @endforeach
+        @foreach ($categories as $category)
+            @include('categories.partials.category', ['category' => $category, 'level' => 0])
+        @endforeach
 
-        </div>
     </div>
 
 </x-layouts.dashboard>

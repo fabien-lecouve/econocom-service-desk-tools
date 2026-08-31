@@ -1,0 +1,76 @@
+@use '../abstracts/variables' as *;
+
+.table-container {
+    background-color: $white-light;
+    padding: 16px;
+    border-radius: 8px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+
+    &__col--15 {
+        width: 15%;
+    }
+
+    &__col--20 {
+        width: 20%;
+    }
+
+    &__col--45 {
+        width: 45%;
+    }
+
+    &__col--80 {
+        width: 80%;
+    }
+
+    th, td {
+        border: 1px solid $white-dark;
+        padding: 16px;
+    }
+
+    .no-padding {
+        padding: inherit;
+    }
+
+    &__thead {
+
+        th {
+            background-color: $white;
+
+            &:first-child {
+                border-top-left-radius: 8px;
+            }
+
+            &:last-child {
+                border-top-right-radius: 8px;
+            }
+        }
+    }
+
+    &__tbody {
+
+        tr:last-child {
+
+            td:first-child {
+                border-bottom-left-radius: 8px;
+            }
+
+            td:last-child {
+                border-bottom-right-radius: 8px;
+            }
+        }
+    }
+
+    &__textarea {
+        border: inherit;
+        border-radius: inherit;
+    }
+}
+
+.center {
+    text-align: center;
+}

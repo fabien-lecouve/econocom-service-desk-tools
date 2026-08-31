@@ -1,18 +1,22 @@
-<div class="category-tree__item">
+<div class="tree__item">
 
-    <div class="category-tree__row" style="padding-left: {{ $level * 2 }}rem;">
-
-        <div class="category-tree__label">
-            📁 {{ $category['label'] }}
+    <div class="tree__row">
+        <div class="tree__label" style="padding-left: {{ $level * 2 }}rem;">
+            <div class="icon icon--square icon-label">
+                <i class="fa-solid fa-folder"></i>
+            </div>
+            <span>
+                {{ $category['label'] }}
+            </span>
         </div>
 
-        <div class="category-tree__code">
+        <div class="tree__code">
             {{ $category['code'] }}
         </div>
 
-        <div class="category-tree__actions">
-            <a href="{{ route('categories.edit', ['project' => $project, 'category' => $category['id']]) }}">
-                Modifier
+        <div class="actions">
+            <a class="actions__edit" href="{{ route('categories.edit', ['project' => $project, 'category' => $category['id']]) }}">
+                <i class="fa-solid fa-pen"></i>
             </a>
 
             {{-- <form action="{{ route('categories.destroy', ['project' => $project, 'category' => $category['id']]) }}"
@@ -20,8 +24,8 @@
                 @csrf
                 @method('DELETE')
 
-                <button type="submit" onclick="return confirm('Supprimer cette catégorie ?')">
-                    Supprimer
+                <button class="actions__delete" type="submit" onclick="return confirm('Supprimer cette catégorie ?')">
+                    <i class="fa-solid fa-trash"></i>
                 </button>
             </form> --}}
         </div>
@@ -32,7 +36,6 @@
         @include('categories.partials.category', [
             'category' => $child,
             'level' => $level + 1,
-        ])
+            ])
     @endforeach
-
 </div>

@@ -10,13 +10,15 @@
 @endphp
 
 <div class="form__group">
-    <label class="form__label" for="{{ $name }}">
-        {{ $label }}
+    @if (isset($label))
+        <label class="form__label" for="{{ $name }}">
+            {{ $label }}
 
-        @if($required)
+            @if($required)
             <span class="required_field">*</span>
-        @endif
-    </label>
+            @endif
+        </label>
+    @endif
 
     <textarea
         {{ $attributes->merge(['class' => 'form__input']) }}

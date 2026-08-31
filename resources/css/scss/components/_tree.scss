@@ -1,0 +1,68 @@
+@use '../abstracts/variables' as *;
+
+.tree {
+    border-radius: 8px;
+    background-color: $white-light;
+
+    &__item {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__row {
+        padding: 8px 16px;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 250px 110px;
+        align-items: center;
+        min-height: 56px;
+
+        border-bottom: 1px solid $gray-light;
+
+        &:hover {
+            background-color: $white-dark;
+        }
+
+        &--category {
+            .tree__label span {
+                font-weight: 700;
+            }
+            &:hover {
+                background-color: inherit;
+            }
+        }
+
+        &--message {
+            .tree__label span {
+                font-weight: 500;
+            }
+        }
+    }
+
+    > .tree__item:last-child {
+        > .tree__row {
+            border-bottom: none;
+        }
+    }
+
+    &__label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        span {
+            font-weight: 600;
+        }
+    }
+
+    &__code {
+        justify-self: start;
+        padding: 8px;
+        border-radius: 4px;
+        background-color: $white;
+        color: $gray-dark;
+    }
+
+    &__actions {
+        justify-self: end;
+    }
+}

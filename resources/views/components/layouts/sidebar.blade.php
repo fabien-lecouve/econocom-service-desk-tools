@@ -1,38 +1,40 @@
 <aside class="sidebar">
 
-    <nav class="navbar">
+    <nav class="sidebar__nav">
 
-        <a href="" class="navbar__item navbar__item--home">
-            <h2>econocom</h2>
-            <p>service desk tools</p>
+        <a href="" class="sidebar__brand">
+            <h2 class="sidebar__brand-title">econocom</h2>
+            <p class="sidebar__brand-subtitle">service desk tools</p>
         </a>
 
-        <div class="navbar__item menu">
+        <div class="sidebar__content">
 
-            <div class="menu__item">
-                <h2>projets</h2>
-                <ul>
+            <div class="sidebar-menu">
+                <h3 class="sidebar-menu__title">Projets</h3>
+
+                <ul class="sidebar-menu__list">
                     @foreach ($projects as $project)
-                        <li><a href="{{ route('projects.show', ['project' => $project]) }}">{{ $project->label }}</a>
+                        <li class="sidebar-menu__item {{ request()->route('project')?->id === $project->id ? 'active' : '' }}">
+                            <a class="sidebar-menu__link" href="{{ route('projects.show', $project) }}">
+                                {{ $project->label }}
+                            </a>
                         </li>
                     @endforeach
-                    <li><a href="{{ route('projects.create') }}">Créer un nouveau projet</a>
+
+                    <li class="sidebar-menu__item {{ request()->routeIs('projects.create') ? 'active' : '' }}">
+                        <a class="sidebar-menu__link" href="{{ route('projects.create') }}">
+                            <i class="fa-solid fa-plus"></i>
+                            Créer un projet
+                        </a>
                     </li>
                 </ul>
             </div>
 
-            {{-- <div class="menu__item">
-                <h2>base de connaissance</h2>
-                <ul>
-                    <li><a href="">Office 365</a></li>
-                    <li><a href="">Poste de travail</a></li>
-                </ul>
-            </div> --}}
-
-            <form method="POST" action="{{ route('logout') }}">
+            <form class="sidebar__logout" method="POST" action="{{ route('logout') }}">
                 @csrf
 
-                <button type="submit" class="sidebar__logout">
+                <button class="sidebar__logout-button" type="submit">
+                    <i class="fa-solid fa-right-from-bracket"></i>
                     Déconnexion
                 </button>
             </form>

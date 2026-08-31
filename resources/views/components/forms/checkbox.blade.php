@@ -1,37 +1,28 @@
 @props([
     'name',
-    'legend',
     'options' => [],
+    'value' => [],
     'required' => false,
 ])
 
-<div class="form__group">
-    <fieldset>
-        <legend>
-            {{ $legend }}
+<div class="form__group form__group--row">
 
-            @if($required)
-                <span class="required_field">*</span>
-            @endif
-        </legend>
+    @foreach ($options as $key => $label)
+        <div class="form__checkbox">
+            <input
+                {{ $attributes->merge(['class' => 'form__checkbox-input']) }}
+                id="{{ $name }}_{{ $key }}"
+                type="checkbox"
+                name="{{ $name }}[]"
+                value="{{ $key }}"
+                @checked(in_array($key, old($name, (array) $value)))
+            >
 
-        @foreach ($options as $key => $value)
-            <div class="form__checkbox">
-                <input
-                    {{ $attributes->merge(['class' => 'form__checkbox-input']) }}
-                    id="{{ $name }}_{{ $key }}"
-                    type="checkbox"
-                    name="{{ $name }}[]"
-                    value="{{ $key }}"
-                    @checked(in_array($key, old($name, [])))
-                >
-
-                <label class="form__checkbox-label" for="{{ $name }}_{{ $key }}">
-                    {{ $value }}
-                </label>
-            </div>
-        @endforeach
-    </fieldset>
+            <label class="form__checkbox-label" for="{{ $name }}_{{ $key }}">
+                {{ ucfirst($label) }}
+            </label>
+        </div>
+    @endforeach
 
     @error($name)
         <div class="form__error">{{ $message }}</div>

@@ -22,25 +22,10 @@ class CategoryController extends Controller
             ->orderBy('position')
             ->get();
 
-        $categories = $this->mapCategories($categories);
-
         return view('categories.index', [
             'project' => $project,
             'categories' => $categories,
         ]);
-    }
-
-    private function mapCategories($categories)
-    {
-        return $categories->map(function ($category) {
-            return [
-                'id' => $category->id,
-                'code' => $category->code,
-                'label' => $category->label,
-                'position' => $category->position,
-                'children' => $this->mapCategories($category->children),
-            ];
-        })->values();
     }
 
     /**
@@ -48,15 +33,13 @@ class CategoryController extends Controller
      */
     public function create(Project $project)
     {
-        $this->authorize('viewAny', [Category::class, $project]);
+        $this->authorize('create', [Category::class, $project]);
 
         $categories = Category::where('project_id', $project->id)
             ->whereNull('parent_id')
             ->with('children')
             ->orderBy('position')
             ->get();
-
-        $categories = $this->mapCategories($categories);
 
         return view('categories.create', [
             'project' => $project,
@@ -69,7 +52,7 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request, Project $project)
     {
-        $this->authorize('viewAny', [Category::class, $project]);
+        $this->authorize('create', [Category::class, $project]);
 
         $validated = $request->validated();
 
@@ -84,14 +67,6 @@ class CategoryController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Category $category)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit(Project $project, Category $category)
@@ -103,8 +78,6 @@ class CategoryController extends Controller
             ->with('children')
             ->orderBy('position')
             ->get();
-
-        $categories = $this->mapCategories($categories);
 
         return view('categories.edit', [
             'project' => $project,

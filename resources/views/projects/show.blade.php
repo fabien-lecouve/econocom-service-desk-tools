@@ -3,299 +3,214 @@
         {{ $project->label }}
     </x-slot:title>
 
-    <header class="main__header header">
-        <div class="header__heading">
-            <p class="header__subtitle">Projet sélectionné</p>
-            <h1 class="header__title">{{ $project->label }}</h1>
-        </div>
+    <x-layouts.header
+        :title="$project->label"
+        :breadcrumbs="[
+            [
+                'link' => route('projects.index'),
+                'title' => 'Projets',
+            ],
+            [
+                'title' => $project->label,
+            ]
+        ]"
+        :actions="[
+            [
+                'type' => 'link',
+                'link' => route('projects.edit', $project),
+                'label' => 'Modifier le projet',
+                'icon' => 'fa-solid fa-pen',
+                'class' => 'button--primary'
+            ]
+        ]" />
 
-        <div class="header__actions">
-            <a
-                href="{{ route('projects.edit', ['project' => $project]) }}"
-                class="header__link"
-            >
-                Modifier le projet
-            </a>
+    <div class="detail">
 
-            <a href="{{ route('quick-messages.index', ['project' => $project]) }}"
-                class="header__link header__link--primary">
-                Messages rapides
-            </a>
-        </div>
-    </header>
+        <dl class="detail__section">
 
-    <div class="main__content" id="project-show-container">
-
-        {{-- <section class="project-card">
-            <div class="project-card__identity">
-                <div class="project-card__logo-placeholder">
-                    Logo
+            <div class="detail__header">
+                <div class="icon icon--round icon-title">
+                    <i class="fa-solid fa-info"></i>
                 </div>
-
-                <p class="project-card__code">
-                    {{ $project->code ?? $project->label }}
-                </p>
+                <h2 class="detail__title">Informations du projet</h2>
             </div>
 
-            <div class="project-card__content">
-                <div class="project-card__heading">
-                    <h2 class="project-card__title">
-                        {{ $project->label }}
-                    </h2>
+            <div class="detail__content detail__content--4">
 
-                    <span class="project-card__status">
-                        Actif
-                    </span>
+                <div class="detail__item detail__item--column">
+                    <i class="fa-solid fa-barcode"></i>
+                    <dt>Code projet</dt>
+                    <dd>{{ $project->code }}</dd>
                 </div>
 
-                <div class="project-card__details">
-                    <div class="project-card__detail">
-                        <p class="project-card__label">Téléphone</p>
-
-                        <p class="project-card__value">
-                            {{ $project->phone ?? '01 56 88 12 34' }}
-                        </p>
-                    </div>
-
-                    <div class="project-card__detail">
-                        <p class="project-card__label">Email support, récupérer champ mail projet</p>
-
-                        <a
-                            href="mailto:support.{{ $project->code ?? 'projet' }}@econocom.com"
-                            class="project-card__link"
-                        >
-                            support.{{ $project->code ?? 'projet' }}@econocom.com
-                        </a>
-                    </div>
-
-                    <div class="project-card__detail">
-                        <p class="project-card__label">
-                            Responsable côté client
-                        </p>
-
-                        <p class="project-card__value">
-                            Pierre Martin
-                        </p>
-                    </div>
+                <div class="detail__item detail__item--column">
+                    <i class="fa-solid fa-phone"></i>
+                    <dt>Téléphone interne</dt>
+                    <dd>{{ $project->internal_phone ?? 'Non communiqué' }}</dd>
                 </div>
+
+                <div class="detail__item detail__item--column">
+                    <i class="fa-solid fa-phone"></i>
+                    <dt>Téléphone externe</dt>
+                    <dd>{{ $project->external_phone ?? 'Non communiqué' }}</dd>
+                </div>
+
+                <div class="detail__item detail__item--column">
+                    <i class="fa-regular fa-envelope"></i>
+                    <dt>Email support</dt>
+                    <dd>{{ $project->email ?? 'Non communiqué' }}</dd>
+                </div>
+
             </div>
-        </section> --}}
 
-        <div class="project-grid">
+        </dl>
 
-            <section class="section">
-                <div class="section__header">
-                    <h2 class="section__title">
-                        Signatures par langue
-                    </h2>
+        <section class="detail__section">
+
+            <div class="detail__header">
+                <div class="icon icon--round icon-title">
+                    <i class="fa-solid fa-bolt"></i>
                 </div>
+                <h2 class="detail__title">
+                    Accès rapides
+                </h2>
+            </div>
 
-                <div class="section__content signature-list">
+            <div class="detail__content detail__content--5">
+
+                <a href="{{ route('categories.index', $project) }}" class="card">
+                    <div class="card__header">
+                        <div class="card__icon">
+                            <i class="fa-solid fa-folder"></i>
+                        </div>
+
+                        <h3 class="card__title">Catégories</h3>
+                    </div>
+                    <div class="card__content">
+                        <p class="card__description">Gérer l'arborescence des catégories</p>
+                        <div class="card__arrow">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="{{ route('categories.create', ['project' => $project]) }}" class="card">
+                    <div class="card__header">
+                        <div class="card__icon">
+                            <i class="fa-solid fa-folder-plus"></i>
+                        </div>
+
+                        <h3 class="card__title">Nouvelle catégorie</h3>
+                    </div>
+                    <div class="card__content">
+                        <p class="card__description">Créer une catégorie</p>
+
+                        <div class="card__arrow">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="{{ route('messages.index', $project) }}" class="card">
+                    <div class="card__header">
+                        <div class="card__icon">
+                            <i class="fa-solid fa-file"></i>
+                        </div>
+
+                        <h3 class="card__title">Messages</h3>
+                    </div>
+                    <div class="card__content">
+                        <p class="card__description">Gérer l'arborescence des messages</p>
+
+                        <div class="card__arrow">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="{{ route('messages.create', ['project' => $project]) }}" class="card">
+                    <div class="card__header">
+                        <div class="card__icon">
+                            <i class="fa-solid fa-file-circle-plus"></i>
+                        </div>
+
+                        <h3 class="card__title">Nouveau message</h3>
+                    </div>
+                    <div class="card__content">
+                        <p class="card__description">Créer un message</p>
+
+                        <div class="card__arrow">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="{{ route('quick-messages.index', ['project' => $project]) }}" class="card" target="_blank">
+                    <div class="card__header">
+                        <div class="card__icon">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        </div>
+
+                        <h3 class="card__title">Messages rapides</h3>
+                    </div>
+                    <div class="card__content">
+                        <p class="card__description">Accéder aux boutons cliquables</p>
+
+                        <div class="card__arrow">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+        <section class="detail__section">
+
+            <div class="detail__header">
+                <div class="icon icon--round icon-title">
+                    <i class="fa-solid fa-globe"></i>
+                </div>
+                <h2 class="detail__title">
+                    Paramètres des langues
+                </h2>
+            </div>
+
+            <table class="table">
+                <colgroup>
+                    <col class="table__col--15">
+                    <col class="table__col--45">
+                    <col class="table__col--20">
+                    <col class="table__col--20">
+                </colgroup>
+                <thead class="table__thead">
+                    <tr>
+                        <th>Langue</th>
+                        <th>Signature</th>
+                        <th>Téléphone interne spécifique</th>
+                        <th>Téléphone externe spécifique</th>
+                    </tr>
+                </thead>
+                <tbody class="table__tbody">
                     @forelse ($project->projectLanguageSettings as $setting)
-                        <article class="signature-card">
-                            <div class="signature-card__header">
-                                <h3 class="signature-card__title">
-                                    {{ $setting->language->label }}
-                                </h3>
-
-                                {{-- Route fictive à remplacer lorsqu'elle existera --}}
-                                {{-- <a
-                                    href="#"
-                                    class="signature-card__button"
-                                >
-                                    Modifier
-                                </a> --}}
-                            </div>
-
-                            <div class="signature-card__content">
-                                <p>
-                                    {!! nl2br(e($setting->signature)) !!}
-                                </p>
-                            </div>
-                        </article>
+                        <tr>
+                            <td><span class="badge">{{ strtoupper($setting->language->code) }}</span> {{ $setting->language->label}}</td>
+                            <td>{!! nl2br(e($setting->signature)) !!}</td>
+                            <td class="center">{{ $setting->internal_phone_override ?? 'Non communiqué' }}</td>
+                            <td class="center">{{ $setting->external_phone_override ?? 'Non communiqué' }}</td>
+                        </tr>
                     @empty
-                        <article class="signature-card">
-                            <div class="signature-card__header">
-                                <h3 class="signature-card__title">
-                                    Français
-                                </h3>
-
-                                <a href="#" class="signature-card__button">
-                                    Modifier
-                                </a>
-                            </div>
-
-                            <div class="signature-card__content">
-                                <p>
-                                    Cordialement,<br>
-                                    L'équipe Econocom Service Desk<br><br>
-                                    {{ $project->phone ?? '01 56 88 12 34' }}<br>
-                                    support.{{ $project->code ?? 'projet' }}@econocom.com
-                                </p>
-                            </div>
-                        </article>
-
-                        <article class="signature-card">
-                            <div class="signature-card__header">
-                                <h3 class="signature-card__title">
-                                    English
-                                </h3>
-
-                                <a href="#" class="signature-card__button">
-                                    Modifier
-                                </a>
-                            </div>
-
-                            <div class="signature-card__content">
-                                <p>
-                                    Best regards,<br>
-                                    Econocom Service Desk Team<br><br>
-                                    {{ $project->phone ?? '01 56 88 12 34' }}<br>
-                                    support.{{ $project->code ?? 'projet' }}@econocom.com
-                                </p>
-                            </div>
-                        </article>
+                        <tr>
+                            <td>Non communiqué</td>
+                            <td>Non communiqué</td>
+                            <td>Non communiqué</td>
+                            <td>Non communiqué/td>
+                        </tr>
                     @endforelse
-                </div>
-            </section>
+                </tbody>
+            </table>
 
-            <section class="section">
-                <div class="section__header">
-                    <h2 class="section__title">
-                        Informations projet
-                    </h2>
-                </div>
-
-                <dl class="section__content information-list">
-                    <div class="information-row">
-                        <dt>Code projet</dt>
-                        <dd>{{ $project->code ?? 'LACOSTE' }}</dd>
-                    </div>
-
-                    <div class="information-row">
-                        <dt>Nom complet</dt>
-                        <dd>{{ $project->label }}</dd>
-                    </div>
-
-                    @if ($project->internal_phone)
-                        <div class="information-row">
-                            <dt>Téléphone interne</dt>
-                            <dd>{{ $project->internal_phone }}</dd>
-                        </div>
-                    @endif
-
-                    @if ($project->external_phone)
-                        <div class="information-row">
-                            <dt>Téléphone externe</dt>
-                            <dd>{{ $project->external_phone }}</dd>
-                        </div>
-                    @endif
-
-                    <div class="information-row">
-                        <dt>Email support</dt>
-                        <dd>{{ $project->email ?? '' }}
-                        </dd>
-                    </div>
-
-                    <div class="information-row">
-                        <dt>Fuseau horaire</dt>
-                        <dd>Europe/Paris</dd>
-                    </div>
-
-                    <div class="information-row">
-                        <dt>Langues disponibles</dt>
-
-                        <dd>
-                            @forelse ($project->projectLanguageSettings as $setting)
-                                {{ $setting->language->label }}@if (!$loop->last)
-                                    ,
-                                @endif
-                            @empty
-                                Français, English
-                            @endforelse
-                        </dd>
-                    </div>
-
-                    <div class="information-row">
-                        <dt>Techniciens associés</dt>
-                        <dd>12</dd>
-                    </div>
-
-                    <div class="information-row">
-                        <dt>Date de création</dt>
-                        <dd>
-                            {{ $project->created_at?->format('d/m/Y') ?? '15/03/2023' }}
-                        </dd>
-                    </div>
-                </dl>
-            </section>
-
-            <section class="section">
-                <div class="section__header">
-                    <h2 class="section__title">
-                        Accès rapides
-                    </h2>
-                </div>
-
-                <div class="section__content quick-links">
-                    <a href="{{ route('categories.index', $project) }}" class="quick-link">
-                        Les catégories
-                    </a>
-
-                    <a href="{{ route('categories.create', ['project' => $project]) }}" class="quick-link">
-                        Créer une catégorie
-                    </a>
-
-                    <a href="{{ route('messages.index', $project) }}" class="quick-link">
-                        Les messages
-                    </a>
-
-                    <a href="{{ route('messages.create', ['project' => $project]) }}" class="quick-link">
-                        Créer un message
-                    </a>
-
-                </div>
-            </section>
-
-            <section class="section">
-                <div class="section__header">
-                    <h2 class="section__title">
-                        Statistiques ce mois
-                    </h2>
-                </div>
-
-                <div class="section__content statistics">
-                    <div class="statistic">
-                        <span class="statistic__value">154</span>
-                        <span class="statistic__label">
-                            Messages copiés
-                        </span>
-                    </div>
-
-                    <div class="statistic">
-                        <span class="statistic__value">87</span>
-                        <span class="statistic__label">
-                            Tickets traités
-                        </span>
-                    </div>
-
-                    <div class="statistic">
-                        <span class="statistic__value">12</span>
-                        <span class="statistic__label">
-                            Messages favoris
-                        </span>
-                    </div>
-
-                    <div class="statistic">
-                        <span class="statistic__value">3</span>
-                        <span class="statistic__label">
-                            Catégories utilisées
-                        </span>
-                    </div>
-                </div>
-            </section>
-
-        </div>
-
+        </section>
     </div>
+
 </x-layouts.dashboard>

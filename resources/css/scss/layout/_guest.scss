@@ -1,0 +1,6 @@
+@use '../abstracts/variables' as *;
+
+.guest {
+    padding: 32px;
+    background-color: $white;
+}

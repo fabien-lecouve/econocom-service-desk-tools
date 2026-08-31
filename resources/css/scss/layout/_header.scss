@@ -1,0 +1,46 @@
+@use '../abstracts/variables' as *;
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 32px;
+
+    &__title {
+        margin-bottom: 8px;
+    }
+
+    .breadcrumb {
+        &__list {
+            display: flex;
+        }
+
+        &__item {
+            display: flex;
+            align-items: center;
+        }
+
+        &__item:not(:last-child)::after {
+            content: ">";
+            margin-inline: 8px;
+            color: $gray-dark;
+        }
+
+        &__link {
+            text-transform: capitalize;
+            color: $purple-dark;
+        }
+
+        &__span {
+            color: $gray-dark;
+        }
+    }
+
+    &__actions {
+        display: flex;
+        gap: 16px;
+    }
+
+    &__link {
+    }
+}

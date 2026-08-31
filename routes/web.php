@@ -7,7 +7,6 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ProjectLanguageSettingController;
 use App\Http\Controllers\QuickMessageController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\Register;
 use App\Http\Controllers\Auth\Login;
 use App\Http\Controllers\Auth\Logout;
 use App\Http\Controllers\UserController;
@@ -15,9 +14,6 @@ use App\Http\Controllers\UserController;
 Route::get('/', function () {
     return redirect()->route('projects.index');
 });
-
-Route::post('/register', Register::class)
-    ->middleware('guest');
 
 // Login routes
 Route::view('/login', 'auth.login')
