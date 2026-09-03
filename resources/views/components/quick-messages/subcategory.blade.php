@@ -1,6 +1,6 @@
-<div class="card">
-    <h3 class="card__title" x-text="subcategory.label"></h3>
-    <div class="card__content">
+<div class="subcategory">
+    <h3 class="subcategory__title" x-text="subcategory.label"></h3>
+    <div class="subcategory__content">
 
         <template x-if="subcategory.messages.length">
             <div class="group__content">

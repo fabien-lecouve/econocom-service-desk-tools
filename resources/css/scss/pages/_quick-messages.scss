@@ -2,10 +2,10 @@
 @use '../abstracts/mixins' as *;
 
 
-#quick-messages-container {
+.quick-messages {
 
-    // HEADER //
-    #header-container-fix {
+    /* HEADER */
+    .header {
         position: fixed;
         top: 0;
         width: 100%;
@@ -13,62 +13,40 @@
         box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
         padding: 16px;
 
-        h1 {
-            text-align: center;
-            display: none;
-
-            @include up(md) {
-                display: inherit;
-            }
+        &__content {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
         }
-    }
 
-    .header-project {
-        display: flex;
-        justify-content: space-between;
-
-        &__settings {
+        &__projects,
+        &__languages {
             display: flex;
             gap: 8px;
         }
     }
 
 
-    // MAIN
-    #quick-messages {
+    &__content {
         margin-top: 76px;
-        display: block;
-
-        @include up(md) {
-            padding: 8px;
-        }
-
-        @include up(lg) {
-            column-count: 2;
-            column-gap: 8px;
-        }
+        /* padding: 16px; */
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
     }
 
 
-    // SECTION
-    .section {
+    /* CATEGORY */
+    .category {
         break-inside: avoid;
-        margin-bottom: 8px;
-        padding: 8px;
         background-color: $white-light;
-        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-
-        @include up(sm) {
-            padding: 16px;
-        }
-
-        @include up(md) {
-            border-radius: 8px;
-        }
+        /* box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; */
+        padding: 8px;
+        /* border-radius: 8px; */
 
         &__title {
             text-align: center;
-            padding-bottom: 8px;
+            margin-bottom: 8px;
             text-transform: capitalize;
         }
 
@@ -76,65 +54,75 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
             gap: 4px;
-
-            @include up(sm) {
-                gap: 8px;
-            }
         }
     }
 
-    // CARD
-    .card {
-        background-color: $white;
+
+    /* SUBCATEGORY */
+    .subcategory {
         padding: 8px;
         border-radius: 8px;
-        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-        min-width: 0;
+        width: 100%;
+        grid-column: 1 / -1;
 
         &__title {
             text-align: center;
-            padding-bottom: 8px;
-            text-transform: capitalize;
+            margin-bottom: 8px;
         }
 
         &__content {
             display: flex;
             flex-direction: row;
-            align-items: stretch;
-            justify-content: center;
             gap: 8px;
         }
     }
 
-    .card-wide {
-        grid-column: span 2;
-    }
 
-
-    // GROUP
+    /* GROUP */
     .group {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: center;
-        flex: 1;
-        gap: 8px;
         padding: 8px;
-        border-radius: 8px;
-        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+        width: 100%;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 
         &__title {
-            padding-bottom: 8px;
+            text-align: center;
         }
 
         &__content {
-            width: 100%;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            gap: 8px;
+            gap: 4px;
         }
     }
 
+
+    .quick__button {
+        width: 100%;
+        background-color: $white-light;
+        padding: 8px;
+        border-radius: 8px;
+        border: none;
+        text-transform: uppercase;
+        cursor: pointer;
+        box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    }
+
+    .header__button.active {
+        background-color: $blue-dark;
+        color: $white-light;
+    }
+
+    .header__button.inactive {
+        background-color: $white;
+    }
+
+    .message__button.copied {
+        outline: none;
+        box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+        transition: box-shadow 0.1s ease;
+    }
+
+    .accent-orange {
+        border-top: 4px solid $orange;
+    }
 }

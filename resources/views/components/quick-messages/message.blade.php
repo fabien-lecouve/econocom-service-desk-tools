@@ -5,6 +5,7 @@
         <button
             type="button"
             @click="copy(message)"
+            class="quick__button message__button"
             :class="{ 'accent-orange': message.type === 'work_note' }"
             x-text="message.label">
         </button>

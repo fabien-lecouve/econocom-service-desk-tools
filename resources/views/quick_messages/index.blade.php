@@ -8,23 +8,23 @@
         @js($languages),
         @js($data)
     )">
-        <div id="quick-messages-container">
+        <div class="quick-messages">
 
-            <header id="header-container-fix">
-                <div class="header-project">
-                    <div id="header__projects" class="header-project__settings">
+            <header class="header">
+                <div class="header__content">
+                    <div class="header__projects">
                         <template x-for="p in projects" :key="'project-' + p.id">
                             <button type="button" @click="selectProject(p.id)"
+                                class="quick__button header__button"
                                 :class="projectId === p.id ? 'active' : 'inactive'" x-text="p.label">
                             </button>
                         </template>
                     </div>
 
-                    <h1>messages rapides</h1>
-
-                    <div id="header__languages" class="header-project__settings">
+                    <div class="header__languages">
                         <template x-for="l in projectLanguages()" :key="'language-' + l.language_id">
                             <button type="button" @click="selectLanguage(l.language_id)"
+                                class="quick__button header__button"
                                 :class="languageId === l.language_id ? 'active' : 'inactive'" x-text="l.code">
                             </button>
                         </template>
@@ -32,7 +32,7 @@
                 </div>
             </header>
 
-            <main id="quick-messages">
+            <main class="quick-messages__content">
                 <template x-for="category in categories()" :key="category.category_id">
                     <x-quick-messages.category />
                 </template>

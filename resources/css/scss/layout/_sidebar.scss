@@ -1,8 +1,8 @@
 @use '../abstracts/variables' as *;
 
 .sidebar {
-    background-color: $white-light;
-    border-right: 1px solid $white-dark;
+    background-color: $black;
+    // border-right: 1px solid $white-dark;
     position: sticky;
     top: 0;
     height: 100vh;
@@ -23,6 +23,7 @@
         &-title {
             font-size: 2rem;
             font-weight: 400;
+            color: $white-dark;
         }
 
         &-subtitle {
@@ -50,14 +51,14 @@
             border: none;
             background: none;
 
-            color: $gray-dark;
+            color: $white-dark;
             font-family: inherit;
             font-size: 1rem;
 
             cursor: pointer;
 
             &:hover {
-                color: $purple-dark;
+                color: $white-light;
             }
 
             i {
@@ -73,9 +74,11 @@
 
     &__title {
         margin-left: 32px;
+        margin-bottom: 8px;
         font-size: 1.5rem;
         font-weight: 400;
         text-transform: capitalize;
+        color: $white-dark;
     }
 
     &__list {
@@ -85,17 +88,18 @@
 
     &__item {
         &:hover {
-            background-color: $purple-light;
+            border-right: 4px solid $purple-dark;
+            background-color: $white-light;
 
             .sidebar-menu__link,
             i {
-                color: $white-light;
+                color: $purple-dark;
             }
         }
 
         &.active {
-            border-left: 4px solid $purple-dark;
-            background-color: $white-dark;
+            border-right: 4px solid $purple-dark;
+            background-color: $white;
 
             .sidebar-menu__link {
                 color: $purple-dark;

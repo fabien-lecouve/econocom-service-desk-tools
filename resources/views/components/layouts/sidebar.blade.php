@@ -21,12 +21,12 @@
                         </li>
                     @endforeach
 
-                    <li class="sidebar-menu__item {{ request()->routeIs('projects.create') ? 'active' : '' }}">
+                    {{-- <li class="sidebar-menu__item {{ request()->routeIs('projects.create') ? 'active' : '' }}">
                         <a class="sidebar-menu__link" href="{{ route('projects.create') }}">
                             <i class="fa-solid fa-plus"></i>
                             Créer un projet
                         </a>
-                    </li>
+                    </li> --}}
                 </ul>
             </div>
 
