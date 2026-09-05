@@ -42,7 +42,7 @@
                     <i class="fa-solid fa-pen"></i>
                 </a>
 
-                {{-- <form
+                <form
                     action="{{ route('messages.destroy', [
                         'project' => $project,
                         'message' => $message,
@@ -55,7 +55,7 @@
                         <i class="fa-solid fa-trash"></i>
                     </button>
 
-                </form> --}}
+                </form>
 
             </div>
 

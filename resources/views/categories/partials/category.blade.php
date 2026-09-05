@@ -19,7 +19,7 @@
                 <i class="fa-solid fa-pen"></i>
             </a>
 
-            {{-- <form action="{{ route('categories.destroy', ['project' => $project, 'category' => $category['id']]) }}"
+            <form action="{{ route('categories.destroy', ['project' => $project, 'category' => $category['id']]) }}"
                 method="POST">
                 @csrf
                 @method('DELETE')
@@ -27,7 +27,7 @@
                 <button class="actions__delete" type="submit" onclick="return confirm('Supprimer cette catégorie ?')">
                     <i class="fa-solid fa-trash"></i>
                 </button>
-            </form> --}}
+            </form>
         </div>
 
     </div>

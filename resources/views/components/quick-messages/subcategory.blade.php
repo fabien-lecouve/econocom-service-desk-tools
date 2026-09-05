@@ -1,17 +1,26 @@
-<div class="subcategory">
-    <h3 class="subcategory__title" x-text="subcategory.label"></h3>
-    <div class="subcategory__content">
+@props(['source'])
 
-        <template x-if="subcategory.messages.length">
-            <div class="group__content">
-                <x-quick-messages.message source="subcategory" />
-            </div>
-        </template>
+<template x-if="{{ $source }}.children.length">
+    <template x-for="subcategory in {{ $source }}.children" :key="'subcategory-' + subcategory.code">
+        <div class="category-child">
 
-        <template x-for="child in subcategory.children" :key="'subcategory-' + child.category_id">
-            <div x-data="{ group: child }">
-                <x-quick-messages.group />
-            </div>
-        </template>
-    </div>
-</div>
+            <template x-if="subcategory.messages.length">
+                <x-quick-messages.group source="subcategory" />
+            </template>
+
+            <template x-if="subcategory.children.length">
+                <div class="subcategory">
+                    <h3 class="subcategory__title" x-text="subcategory.label">
+                    </h3>
+
+                    <div class="subcategory__content">
+                        <template x-for="group in subcategory.children" :key="'group-' + group.code">
+                            <x-quick-messages.group source="group" />
+                        </template>
+                    </div>
+                </div>
+            </template>
+
+        </div>
+    </template>
+</template>

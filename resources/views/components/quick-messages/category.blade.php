@@ -6,10 +6,8 @@
             <x-quick-messages.message source="category" />
         </template>
 
-        <template x-for="child in category.children" :key="'subcategory-' + child.category_id">
-            <div x-data="{ subcategory: child }">
-                <x-quick-messages.subcategory />
-            </div>
+        <template x-if="category.children.length">
+            <x-quick-messages.subcategory source="category" />
         </template>
 
     </div>
