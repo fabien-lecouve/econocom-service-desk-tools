@@ -27,22 +27,29 @@
     }
 
 
+    /* MAIN CONTENT */
     &__content {
         margin-top: 76px;
-        /* padding: 16px; */
-        display: flex;
-        flex-direction: column;
+        display: grid;
+        grid-template-columns: 1fr;
         gap: 8px;
+        align-items: start;
+
+        @include up(md) {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        @include up(xl) {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
     }
 
 
     /* CATEGORY */
     .category {
-        break-inside: avoid;
-        background-color: $white-light;
-        /* box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; */
+        background-color: $gray-light;
         padding: 8px;
-        /* border-radius: 8px; */
+        min-width: 0;
 
         &__title {
             text-align: center;
@@ -52,18 +59,27 @@
 
         &__content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 4px;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 8px;
+            align-items: start;
+        }
+
+        &--wide {
+            grid-column: 1 / -1;
+        }
+
+        &-child {
+            display: contents;
         }
     }
 
 
     /* SUBCATEGORY */
     .subcategory {
-        padding: 8px;
-        border-radius: 8px;
-        width: 100%;
+        background-color: $white-dark;
         grid-column: 1 / -1;
+        width: 100%;
+        padding: 8px;
 
         &__title {
             text-align: center;
@@ -71,21 +87,28 @@
         }
 
         &__content {
-            display: flex;
-            flex-direction: row;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 8px;
+            align-items: start;
         }
     }
 
 
     /* GROUP */
     .group {
+        background-color: $white;
+        border-radius: 8px;
         padding: 8px;
         width: 100%;
+        min-width: 0;
         box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 
         &__title {
             text-align: center;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            font-weight: 600;
         }
 
         &__content {
@@ -93,20 +116,27 @@
             flex-direction: column;
             gap: 4px;
         }
+
+        &--wide {
+            grid-column: 1 / -1;
+        }
     }
 
 
+    /* BUTTONS */
     .quick__button {
         width: 100%;
         background-color: $white-light;
         padding: 8px;
         border-radius: 8px;
         border: none;
-        text-transform: uppercase;
+        text-transform: lowercase;
         cursor: pointer;
         box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
     }
 
+
+    /* HEADER BUTTON STATES */
     .header__button.active {
         background-color: $blue-dark;
         color: $white-light;
@@ -116,12 +146,19 @@
         background-color: $white;
     }
 
+
+    /* MESSAGE STATES */
     .message__button.copied {
         outline: none;
-        box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+        box-shadow:
+            rgba(6, 24, 44, 0.4) 0px 0px 0px 2px,
+            rgba(6, 24, 44, 0.65) 0px 4px 6px -1px,
+            rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
         transition: box-shadow 0.1s ease;
     }
 
+
+    /* ACCENTS */
     .accent-orange {
         border-top: 4px solid $orange;
     }

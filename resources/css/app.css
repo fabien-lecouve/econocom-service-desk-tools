@@ -602,9 +602,14 @@ a, button {
 
 .quick-messages {
   /* HEADER */
+  /* MAIN CONTENT */
   /* CATEGORY */
   /* SUBCATEGORY */
   /* GROUP */
+  /* BUTTONS */
+  /* HEADER BUTTON STATES */
+  /* MESSAGE STATES */
+  /* ACCENTS */
 }
 .quick-messages .header {
   position: fixed;
@@ -625,17 +630,25 @@ a, button {
 }
 .quick-messages__content {
   margin-top: 76px;
-  /* padding: 16px; */
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 8px;
+  align-items: start;
+}
+@media (min-width: 768px) {
+  .quick-messages__content {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1280px) {
+  .quick-messages__content {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 .quick-messages .category {
-  break-inside: avoid;
-  background-color: #FFFFFF;
-  /* box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; */
+  background-color: #D1D5DB;
   padding: 8px;
-  /* border-radius: 8px; */
+  min-width: 0;
 }
 .quick-messages .category__title {
   text-align: center;
@@ -644,36 +657,53 @@ a, button {
 }
 .quick-messages .category__content {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 4px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  align-items: start;
+}
+.quick-messages .category--wide {
+  grid-column: 1/-1;
+}
+.quick-messages .category-child {
+  display: contents;
 }
 .quick-messages .subcategory {
-  padding: 8px;
-  border-radius: 8px;
-  width: 100%;
+  background-color: #E5E5E5;
   grid-column: 1/-1;
+  width: 100%;
+  padding: 8px;
 }
 .quick-messages .subcategory__title {
   text-align: center;
   margin-bottom: 8px;
 }
 .quick-messages .subcategory__content {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
+  align-items: start;
 }
 .quick-messages .group {
+  background-color: #F5F5F5;
+  border-radius: 8px;
   padding: 8px;
   width: 100%;
+  min-width: 0;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 .quick-messages .group__title {
   text-align: center;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  font-weight: 600;
 }
 .quick-messages .group__content {
   display: flex;
   flex-direction: column;
   gap: 4px;
+}
+.quick-messages .group--wide {
+  grid-column: 1/-1;
 }
 .quick-messages .quick__button {
   width: 100%;
@@ -681,7 +711,7 @@ a, button {
   padding: 8px;
   border-radius: 8px;
   border: none;
-  text-transform: uppercase;
+  text-transform: lowercase;
   cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
