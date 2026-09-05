@@ -107,7 +107,7 @@ class CategoryController extends Controller
      */
     public function destroy(Project $project, Category $category)
     {
-        $this->authorize('delete', Category::class);
+        $this->authorize('delete', $category);
 
         $label = $category->label;
 

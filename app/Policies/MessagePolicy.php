@@ -77,7 +77,7 @@ class MessagePolicy
      */
     public function delete(User $user, Message $message): bool
     {
-        return false;
+        return $user->is_admin;
     }
 
     /**

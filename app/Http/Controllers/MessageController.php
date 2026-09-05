@@ -172,7 +172,7 @@ class MessageController extends Controller
      */
     public function destroy(Project $project, Message $message)
     {
-        $this->authorize('delete', Message::class);
+        $this->authorize('delete', $message);
 
         $message->delete();
 

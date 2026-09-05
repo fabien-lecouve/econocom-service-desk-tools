@@ -14,6 +14,15 @@ class Category extends Model
 {
     use HasIncrementalCode, SoftDeletes;
 
+    protected static function booted()
+    {
+        static::deleting(function (Category $category) {
+            $category->messages()->delete();
+            $category->children()->get()->each->delete();
+        });
+    }
+
+
     /**
      * Get the attributes that should be cast.
      *
