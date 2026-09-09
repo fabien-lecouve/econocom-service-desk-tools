@@ -5,10 +5,12 @@ namespace App\Policies;
 use App\Models\Project;
 use App\Models\Role;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
+use App\Policies\Concerns\HasProjectAccess;
 
 class ProjectPolicy
 {
+    use HasProjectAccess;
+
     /**
      * Determine whether the user can view any models.
      */
@@ -23,9 +25,7 @@ class ProjectPolicy
     public function view(User $user, Project $project): bool
     {
         return $user->is_admin
-            || $user->memberships()
-            ->where('project_id', $project->id)
-            ->exists();
+            || $this->isProjectMember($user, $project->id);
     }
 
     /**
@@ -42,14 +42,10 @@ class ProjectPolicy
     public function update(User $user, Project $project): bool
     {
         return $user->is_admin
-            || $user->memberships()
-            ->where('project_id', $project->id)
-            ->whereHas(
-                'role',
-                fn($query) =>
-                $query->where('code', Role::TECHNICIAN_REFERENT)
-            )
-            ->exists();
+            || $this->hasProjectRole($user, $project->id, [
+                Role::TECHNICIAN_REFERENT,
+                Role::TECHNICAL_COORDINATOR,
+            ]);
     }
 
     /**

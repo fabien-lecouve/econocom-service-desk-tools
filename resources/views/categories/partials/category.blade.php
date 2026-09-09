@@ -15,19 +15,24 @@
         </div>
 
         <div class="actions">
-            <a class="actions__edit" href="{{ route('categories.edit', ['project' => $project, 'category' => $category['id']]) }}">
-                <i class="fa-solid fa-pen"></i>
-            </a>
+            @can('update', $category)
+                <a class="actions__edit"
+                    href="{{ route('categories.edit', ['project' => $project, 'category' => $category['id']]) }}">
+                    <i class="fa-solid fa-pen"></i>
+                </a>
+            @endcan
 
-            <form action="{{ route('categories.destroy', ['project' => $project, 'category' => $category['id']]) }}"
-                method="POST">
-                @csrf
-                @method('DELETE')
+            @can('delete', $category)
+                <form action="{{ route('categories.destroy', ['project' => $project, 'category' => $category['id']]) }}"
+                    method="POST">
+                    @csrf
+                    @method('DELETE')
 
-                <button class="actions__delete" type="submit" onclick="return confirm('Supprimer cette catégorie ?')">
-                    <i class="fa-solid fa-trash"></i>
-                </button>
-            </form>
+                    <button class="actions__delete" type="submit" onclick="return confirm('Supprimer cette catégorie ?')">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </form>
+            @endcan
         </div>
 
     </div>
@@ -36,6 +41,6 @@
         @include('categories.partials.category', [
             'category' => $child,
             'level' => $level + 1,
-            ])
+        ])
     @endforeach
 </div>

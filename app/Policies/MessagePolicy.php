@@ -6,19 +6,19 @@ use App\Models\Message;
 use App\Models\Project;
 use App\Models\Role;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
+use App\Policies\Concerns\HasProjectAccess;
 
 class MessagePolicy
 {
+    use HasProjectAccess;
+
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user, Project $project): bool
     {
         return $user->is_admin
-            || $user->memberships()
-            ->where('project_id', $project->id)
-            ->exists();
+            || $this->isProjectMember($user, $project->id);
     }
 
     /**
@@ -27,9 +27,7 @@ class MessagePolicy
     public function view(User $user, Message $message): bool
     {
         return $user->is_admin
-            || $user->memberships()
-            ->where('project_id', $message->project_id)
-            ->exists();
+            || $this->isProjectMember($user, $message->project_id);
     }
 
     /**
@@ -38,18 +36,11 @@ class MessagePolicy
     public function create(User $user, Project $project): bool
     {
         return $user->is_admin
-            || $user->memberships()
-            ->where('project_id', $project->id)
-            ->whereHas(
-                'role',
-                fn($query) =>
-                $query->whereIn('code', [
-                    Role::TECHNICIAN,
-                    Role::TECHNICIAN_REFERENT,
-                    Role::TECHNICAL_COORDINATOR
-                ])
-            )
-            ->exists();
+            || $this->hasProjectRole($user, $project->id, [
+                Role::TECHNICIAN,
+                Role::TECHNICIAN_REFERENT,
+                Role::TECHNICAL_COORDINATOR,
+            ]);
     }
 
     /**
@@ -58,18 +49,11 @@ class MessagePolicy
     public function update(User $user, Message $message): bool
     {
         return $user->is_admin
-            || $user->memberships()
-            ->where('project_id', $message->project_id)
-            ->whereHas(
-                'role',
-                fn($query) =>
-                $query->whereIn('code', [
-                    Role::TECHNICIAN,
-                    Role::TECHNICIAN_REFERENT,
-                    Role::TECHNICAL_COORDINATOR
-                ])
-            )
-            ->exists();
+            || $this->hasProjectRole($user, $message->project_id, [
+                Role::TECHNICIAN,
+                Role::TECHNICIAN_REFERENT,
+                Role::TECHNICAL_COORDINATOR,
+            ]);
     }
 
     /**
@@ -77,7 +61,11 @@ class MessagePolicy
      */
     public function delete(User $user, Message $message): bool
     {
-        return $user->is_admin;
+        return $user->is_admin
+            || $this->hasProjectRole($user, $message->project_id, [
+                Role::TECHNICIAN_REFERENT,
+                Role::TECHNICAL_COORDINATOR,
+            ]);
     }
 
     /**
@@ -85,7 +73,11 @@ class MessagePolicy
      */
     public function restore(User $user, Message $message): bool
     {
-        return false;
+        return $user->is_admin
+            || $this->hasProjectRole($user, $message->project_id, [
+                Role::TECHNICIAN_REFERENT,
+                Role::TECHNICAL_COORDINATOR,
+            ]);
     }
 
     /**
@@ -93,6 +85,6 @@ class MessagePolicy
      */
     public function forceDelete(User $user, Message $message): bool
     {
-        return false;
+        return $user->is_admin;
     }
 }

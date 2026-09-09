@@ -34,29 +34,32 @@
 
             <div class="actions">
 
-                <a class="actions__edit"
-                    href="{{ route('messages.edit', [
-                        'project' => $project,
-                        'message' => $message,
-                    ]) }}">
-                    <i class="fa-solid fa-pen"></i>
-                </a>
+                @can('update', $category)
+                    <a class="actions__edit"
+                        href="{{ route('messages.edit', [
+                            'project' => $project,
+                            'message' => $message,
+                        ]) }}">
+                        <i class="fa-solid fa-pen"></i>
+                    </a>
+                @endcan
 
-                <form
-                    action="{{ route('messages.destroy', [
-                        'project' => $project,
-                        'message' => $message,
-                    ]) }}"
-                    method="POST">
-                    @csrf
-                    @method('DELETE')
+                @can('delete', $message)
+                    <form
+                        action="{{ route('messages.destroy', [
+                            'project' => $project,
+                            'message' => $message,
+                        ]) }}"
+                        method="POST">
+                        @csrf
+                        @method('DELETE')
 
-                    <button class="actions__delete" type="submit" onclick="return confirm('Supprimer ce message ?')">
-                        <i class="fa-solid fa-trash"></i>
-                    </button>
+                        <button class="actions__delete" type="submit" onclick="return confirm('Supprimer ce message ?')">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
 
-                </form>
-
+                    </form>
+                @endcan
             </div>
 
         </div>
