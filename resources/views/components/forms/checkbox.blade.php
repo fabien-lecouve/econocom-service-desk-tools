@@ -1,8 +1,7 @@
 @props([
     'name',
     'options' => [],
-    'value' => [],
-    'required' => false,
+    'value' => []
 ])
 
 <div class="form__group form__group--row">

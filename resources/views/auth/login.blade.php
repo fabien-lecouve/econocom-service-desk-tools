@@ -52,7 +52,6 @@
                 <x-forms.checkbox
                     name="remember"
                     :options="[1 => 'Se souvenir de moi ?']"
-                    required
                 />
 
                 <button

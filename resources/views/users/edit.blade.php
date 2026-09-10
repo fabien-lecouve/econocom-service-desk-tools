@@ -188,7 +188,6 @@
                     name="is_knowledge_manager"
                     :options="[1 => 'Knowledge Manager']"
                     :value="$user->is_knowledge_manager ? [1] : []"
-                    required
                 />
 
             </div>

@@ -135,7 +135,7 @@
             <div class="form__content form__content--2">
 
                 <x-forms.select
-                    name="project_id"
+                    name="memberships[0][project_id]"
                     label="Projet"
                     :options="$projects"
                     placeholder="Sélectionnez un projet"
@@ -143,7 +143,7 @@
                 />
 
                 <x-forms.select
-                    name="role_id"
+                    name="memberships[0][role_id]"
                     label="Rôle"
                     :options="$roles"
                     placeholder="Sélectionnez un rôle"
@@ -175,13 +175,11 @@
                 <x-forms.checkbox
                     name="is_admin"
                     :options="[1 => 'Administrateur']"
-                    required
                 />
 
                 <x-forms.checkbox
                     name="is_knowledge_manager"
                     :options="[1 => 'Knowledge Manager']"
-                    required
                 />
 
             </div>

@@ -109,7 +109,6 @@
                 <x-forms.checkbox
                     name="languages"
                     :options="$languages"
-                    required
                 />
 
             </div>
