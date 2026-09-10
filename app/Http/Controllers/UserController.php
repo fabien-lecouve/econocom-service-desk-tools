@@ -118,7 +118,7 @@ class UserController extends Controller
 
             $user->update($userData);
 
-            $user->memberships()->delete();
+            $user->memberships()->forceDelete();
 
             foreach ($validated['memberships'] as $membership) {
                 $user->memberships()->create([

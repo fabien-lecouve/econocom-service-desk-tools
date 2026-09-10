@@ -16,12 +16,15 @@
         @endif
     </label>
 
+    @php
+        $fieldName = str_replace(['[', ']'], ['.', ''], $name);
+    @endphp
+
     <select
         {{ $attributes->merge(['class' => 'form__input']) }}
         id="{{ $name }}"
         name="{{ $name }}"
     >
-
         @if ($placeholder)
             <option value="">
                 {{ $placeholder }}
@@ -31,14 +34,14 @@
         @foreach($options as $option)
             <option
                 value="{{ $option['id'] }}"
-                @selected(old($name, $value) == $option['id'])
+                @selected(old($fieldName, $value) == $option['id'])
             >
                 {{ $option['label'] }}
             </option>
         @endforeach
     </select>
 
-    @error($name)
+    @error($fieldName)
         <div class="form__error">{{ $message }}</div>
     @enderror
 </div>
