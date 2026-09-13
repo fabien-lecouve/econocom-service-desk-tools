@@ -16,7 +16,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        // $this->authorize('viewAny', Project::class);
+        $this->authorize('viewAny', Project::class);
 
         $projects = Project::with('projectLanguageSettings.language')->get();
 

@@ -23,14 +23,18 @@
                 'type' => 'link',
                 'link' => route('messages.index', $project),
                 'label' => 'Annuler',
-                'icon' => 'fa-solid fa-xmark'
+                'icon' => 'fa-solid fa-xmark',
+                'policy' => 'update',
+                'model' => [$message, $project],
             ],
             [
                 'type' => 'submit',
                 'label' => 'Enregistrer',
                 'form' => 'message-edit-form',
                 'class' => 'button--primary',
-                'icon' => 'fa-solid fa-floppy-disk'
+                'icon' => 'fa-solid fa-floppy-disk',
+                'policy' => 'update',
+                'model' => [$message, $project],
             ]
         ]"
     />

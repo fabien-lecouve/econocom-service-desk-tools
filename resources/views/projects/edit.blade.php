@@ -23,14 +23,18 @@
                 'type' => 'link',
                 'link' => route('projects.show', $project),
                 'label' => 'Annuler',
-                'icon' => 'fa-solid fa-xmark'
+                'icon' => 'fa-solid fa-xmark',
+                'policy' => 'update',
+                'model' => $project,
             ],
             [
                 'type' => 'submit',
                 'label' => 'Enregistrer',
                 'form' => 'project-edit-form',
                 'class' => 'button--primary',
-                'icon' => 'fa-solid fa-floppy-disk'
+                'icon' => 'fa-solid fa-floppy-disk',
+                'policy' => 'update',
+                'model' => $project,
             ]
         ]" />
 

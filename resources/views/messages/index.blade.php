@@ -20,7 +20,9 @@
                 'link' => route('messages.create', $project),
                 'label' => 'Créer un message',
                 'class' => 'button--primary',
-                'icon' => 'fa-solid fa-plus'
+                'icon' => 'fa-solid fa-plus',
+                'policy' => 'create',
+                'model' => [App\Models\Message::class, $project],
             ]
         ]" />
 

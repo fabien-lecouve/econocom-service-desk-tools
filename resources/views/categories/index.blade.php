@@ -20,7 +20,9 @@
                 'link' => route('categories.create', $project),
                 'label' => 'Créer une catégorie',
                 'class' => 'button--primary',
-                'icon' => 'fa-solid fa-plus'
+                'icon' => 'fa-solid fa-plus',
+                'policy' => 'create',
+                'model' => [App\Models\Category::class, $project],
             ]
         ]" />
 

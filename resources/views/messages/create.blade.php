@@ -23,14 +23,18 @@
                 'type' => 'link',
                 'link' => route('projects.show', $project),
                 'label' => 'Annuler',
-                'icon' => 'fa-solid fa-xmark'
+                'icon' => 'fa-solid fa-xmark',
+                'policy' => 'create',
+                'model' => [App\Models\Message::class, $project],
             ],
             [
                 'type' => 'submit',
                 'label' => 'Enregistrer',
                 'form' => 'message-create-form',
                 'class' => 'button--primary',
-                'icon' => 'fa-solid fa-floppy-disk'
+                'icon' => 'fa-solid fa-floppy-disk',
+                'policy' => 'create',
+                'model' => [App\Models\Message::class, $project],
             ]
         ]"
     />

@@ -35,37 +35,41 @@
         <div class="header__actions">
             @foreach ($actions as $action)
 
-                @if ($action['type'] === 'link')
-                    <a
-                        @class([
-                            'header__link',
-                            'button',
-                            $action['class'] ?? '',
+                @can($action['policy'], $action['model'])
+                    @if ($action['type'] === 'link')
+                        <a
+                            @class([
+                                'header__link',
+                                'button',
+                                $action['class'] ?? '',
                             ])
-                        href="{{ $action['link'] }}">
+                            href="{{ $action['link'] }}"
+                        >
+                            @if (isset($action['icon']))
+                                <i class="{{ $action['icon'] }}"></i>
+                            @endif
 
-                        @if (isset($action['icon']))
-                        <i class="{{ $action['icon'] }}"></i>
-                        @endif
-                        <span>{{ $action['label'] }}</span>
-
-                    </a>
-                @else
-                    <button
-                        type="{{ $action['type'] }}"
-                        form="{{ $action['form'] }}"
-                        @class([
-                            'header__link',
-                            'button',
-                            $action['class'] ?? '',
+                            <span>{{ $action['label'] }}</span>
+                        </a>
+                    @else
+                        <button
+                            type="{{ $action['type'] }}"
+                            form="{{ $action['form'] }}"
+                            @class([
+                                'header__link',
+                                'button',
+                                $action['class'] ?? '',
                             ])
-                    >
-                        @if (isset($action['icon']))
-                        <i class="{{ $action['icon'] }}"></i>
-                        @endif
-                        <span>{{ $action['label'] }}</span>
-                    </button>
-                @endif
+                        >
+                            @if (isset($action['icon']))
+                                <i class="{{ $action['icon'] }}"></i>
+                            @endif
+
+                            <span>{{ $action['label'] }}</span>
+                        </button>
+                    @endif
+                @endcan
+
             @endforeach
         </div>
     @endif

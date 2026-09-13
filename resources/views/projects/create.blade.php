@@ -19,14 +19,18 @@
                 'type' => 'link',
                 'link' => route('projects.index'),
                 'label' => 'Annuler',
-                'icon' => 'fa-solid fa-xmark'
+                'icon' => 'fa-solid fa-xmark',
+                'policy' => 'create',
+                'model' => App\Models\Project::class,
             ],
             [
                 'type' => 'submit',
                 'label' => 'Enregistrer',
                 'form' => 'project-create-form',
                 'class' => 'button--primary',
-                'icon' => 'fa-solid fa-floppy-disk'
+                'icon' => 'fa-solid fa-floppy-disk',
+                'policy' => 'create',
+                'model' => App\Models\Project::class,
             ]
         ]" />
 

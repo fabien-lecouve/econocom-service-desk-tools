@@ -16,6 +16,8 @@
                 'label' => 'Créer un utilisateur',
                 'class' => 'button--primary',
                 'icon' => 'fa-solid fa-plus',
+                'policy' => 'create',
+                'model' => [App\Models\User::class],
             ],
         ]"
     />

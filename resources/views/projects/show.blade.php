@@ -20,7 +20,9 @@
                 'link' => route('projects.edit', $project),
                 'label' => 'Modifier le projet',
                 'icon' => 'fa-solid fa-pen',
-                'class' => 'button--primary'
+                'class' => 'button--primary',
+                'policy' => 'update',
+                'model' => $project,
             ]
         ]" />
 
@@ -94,22 +96,24 @@
                     </div>
                 </a>
 
-                <a href="{{ route('categories.create', ['project' => $project]) }}" class="card">
-                    <div class="card__header">
-                        <div class="card__icon">
-                            <i class="fa-solid fa-folder-plus"></i>
-                        </div>
+                @can('create', [App\Models\Category::class, $project])
+                    <a href="{{ route('categories.create', ['project' => $project]) }}" class="card">
+                        <div class="card__header">
+                            <div class="card__icon">
+                                <i class="fa-solid fa-folder-plus"></i>
+                            </div>
 
-                        <h3 class="card__title">Nouvelle catégorie</h3>
-                    </div>
-                    <div class="card__content">
-                        <p class="card__description">Créer une catégorie</p>
-
-                        <div class="card__arrow">
-                            <i class="fa-solid fa-chevron-right"></i>
+                            <h3 class="card__title">Nouvelle catégorie</h3>
                         </div>
-                    </div>
-                </a>
+                        <div class="card__content">
+                            <p class="card__description">Créer une catégorie</p>
+
+                            <div class="card__arrow">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </div>
+                        </div>
+                    </a>
+                @endcan
 
                 <a href="{{ route('messages.index', $project) }}" class="card">
                     <div class="card__header">
@@ -128,22 +132,24 @@
                     </div>
                 </a>
 
-                <a href="{{ route('messages.create', ['project' => $project]) }}" class="card">
-                    <div class="card__header">
-                        <div class="card__icon">
-                            <i class="fa-solid fa-file-circle-plus"></i>
-                        </div>
+                @can('create', [App\Models\Message::class, $project])
+                    <a href="{{ route('messages.create', ['project' => $project]) }}" class="card">
+                        <div class="card__header">
+                            <div class="card__icon">
+                                <i class="fa-solid fa-file-circle-plus"></i>
+                            </div>
 
-                        <h3 class="card__title">Nouveau message</h3>
-                    </div>
-                    <div class="card__content">
-                        <p class="card__description">Créer un message</p>
-
-                        <div class="card__arrow">
-                            <i class="fa-solid fa-chevron-right"></i>
+                            <h3 class="card__title">Nouveau message</h3>
                         </div>
-                    </div>
-                </a>
+                        <div class="card__content">
+                            <p class="card__description">Créer un message</p>
+
+                            <div class="card__arrow">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </div>
+                        </div>
+                    </a>
+                @endcan
 
                 <a href="{{ route('quick-messages.index', ['project' => $project]) }}" class="card" target="_blank">
                     <div class="card__header">

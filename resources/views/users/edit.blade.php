@@ -19,14 +19,18 @@
                 'type' => 'link',
                 'link' => route('users.index'),
                 'label' => 'Annuler',
-                'icon' => 'fa-solid fa-xmark'
+                'icon' => 'fa-solid fa-xmark',
+                'policy' => 'update',
+                'model' => $user,
             ],
             [
                 'type' => 'submit',
                 'label' => 'Enregistrer',
                 'form' => 'user-edit-form',
                 'class' => 'button--primary',
-                'icon' => 'fa-solid fa-floppy-disk'
+                'icon' => 'fa-solid fa-floppy-disk',
+                'policy' => 'update',
+                'model' => $user,
             ]
         ]" />
 
