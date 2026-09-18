@@ -158,19 +158,25 @@
                     <x-forms.select
                         name="font_color_id"
                         label="Texte"
-                        placeholder="Couleur"
+                        :options="$colors"
+                        placeholder="Choisiez une couleur"
+                        :value="old('font_color_id', $message->font_color_id)"
                     />
 
                     <x-forms.select
                         name="background_color_id"
-                        label="Fond"
-                        placeholder="Couleur"
+                        label="Arrière plan"
+                        :options="$colors"
+                        placeholder="Choisiez une couleur"
+                        :value="old('background_color_id', $message->background_color_id)"
                     />
 
                     <x-forms.select
                         name="border_top_color_id"
-                        label="Bordure"
-                        placeholder="Couleur"
+                        label="Bordure supérieure"
+                        :options="$colors"
+                        placeholder="Choisiez une couleur"
+                        :value="old('border_top_color_id', $message->border_top_color_id)"
                     />
 
                 </div>

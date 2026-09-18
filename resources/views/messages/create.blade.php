@@ -153,19 +153,22 @@
                     <x-forms.select
                         name="font_color_id"
                         label="Texte"
-                        placeholder="Couleur"
+                        :options="$colors"
+                        placeholder="Choisiez une couleur"
                     />
 
-                    <x-forms.select
+                     <x-forms.select
                         name="background_color_id"
-                        label="Fond"
-                        placeholder="Couleur"
+                        label="Arrière plan"
+                        :options="$colors"
+                        placeholder="Choisiez une couleur"
                     />
 
                     <x-forms.select
                         name="border_top_color_id"
-                        label="Bordure"
-                        placeholder="Couleur"
+                        label="Bordure supérieure"
+                        :options="$colors"
+                        placeholder="Choisiez une couleur"
                     />
 
                 </div>

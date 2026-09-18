@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
+use App\Models\Color;
 use App\Models\Project;
 
 class CategoryController extends Controller
@@ -41,9 +42,12 @@ class CategoryController extends Controller
             ->orderBy('position')
             ->get();
 
+        $colors = Color::orderBy('position', 'asc')->get();
+
         return view('categories.create', [
             'project' => $project,
-            'categories' => $categories
+            'categories' => $categories,
+            'colors' => $colors
         ]);
     }
 
@@ -79,10 +83,13 @@ class CategoryController extends Controller
             ->orderBy('position')
             ->get();
 
+        $colors = Color::orderBy('position', 'asc')->get();
+
         return view('categories.edit', [
             'project' => $project,
             'category' => $category,
             'categories' => $categories,
+            'colors' => $colors
         ]);
     }
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreMessageRequest;
 use App\Http\Requests\UpdateMessageRequest;
 use App\Models\Category;
+use App\Models\Color;
 use App\Models\Message;
 use App\Models\MessageType;
 use App\Models\Project;
@@ -54,10 +55,13 @@ class MessageController extends Controller
 
         $types = MessageType::all();
 
+        $colors = Color::orderBy('position', 'asc')->get();
+
         return view('messages.create', [
             'project' => $project,
             'categories' => $categories,
-            'types' => $types
+            'types' => $types,
+            'colors' =>$colors
         ]);
     }
 
@@ -115,11 +119,14 @@ class MessageController extends Controller
 
         $types = MessageType::all();
 
+        $colors = Color::orderBy('position', 'asc')->get();
+
         return view('messages.edit', [
             'project' => $project,
             'message' => $message,
             'categories' => $categories,
             'types' => $types,
+            'colors' =>$colors
         ]);
     }
 

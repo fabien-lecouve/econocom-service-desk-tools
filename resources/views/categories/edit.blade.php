@@ -119,13 +119,29 @@
 
                 <div class="form__content form__content--3">
 
-                    <x-forms.select name="font_color_id" label="Texte" placeholder="Couleur" :value="old('font_color_id', $category->font_color_id)" />
+                    <x-forms.select
+                        name="font_color_id"
+                        label="Texte"
+                        :options="$colors"
+                        placeholder="Choisiez une couleur"
+                        :value="old('font_color_id', $category->font_color_id)"
+                    />
 
-                    <x-forms.select name="background_color_id" label="Fond" placeholder="Couleur"
-                        :value="old('background_color_id', $category->background_color_id)" />
+                    <x-forms.select
+                        name="background_color_id"
+                        label="Arrière plan"
+                        :options="$colors"
+                        placeholder="Choisiez une couleur"
+                        :value="old('background_color_id', $category->background_color_id)"
+                    />
 
-                    <x-forms.select name="border_top_color_id" label="Bordure" placeholder="Couleur"
-                        :value="old('border_top_color_id', $category->border_top_color_id)" />
+                    <x-forms.select
+                        name="border_top_color_id"
+                        label="Bordure supérieure"
+                        :options="$colors"
+                        placeholder="Choisiez une couleur"
+                        :value="old('border_top_color_id', $category->border_top_color_id)"
+                    />
 
                 </div>
 
