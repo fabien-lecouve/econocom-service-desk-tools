@@ -108,10 +108,10 @@ window.quickMessages = function (projects, languagesByProject, data) {
                     return content;
 
                 case 'escalation':
-                    return `${salutation}\n\n${content}\n\n${closing}`;
+                    return `${salutation},\n\n${content}\n\n${closing},`;
 
                 default:
-                    return `${salutation}\n\n${content}\n\n${closing}\n${signature}`;
+                    return `${salutation},\n\n${content}\n\n${closing},\n${signature}`;
             }
         },
 
