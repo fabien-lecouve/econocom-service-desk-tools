@@ -30,10 +30,8 @@ a, button {
   display: grid;
   grid-template-columns: 240px 1fr;
   min-height: 100vh;
-  background-color: #FFFFFF;
 }
 .dashboard .main {
-  padding: 32px;
   background-color: #F5F5F5;
 }
 
@@ -61,7 +59,7 @@ a, button {
   color: #E5E5E5;
 }
 .sidebar__brand-subtitle {
-  color: #8B5CF6;
+  color: #E5E5E5;
 }
 .sidebar__content {
   height: 100%;
@@ -108,24 +106,22 @@ a, button {
   display: flex;
   flex-direction: column;
 }
-.sidebar-menu__item:hover {
-  border-right: 4px solid #8B5CF6;
-  background-color: #FFFFFF;
-}
-.sidebar-menu__item:hover .sidebar-menu__link,
-.sidebar-menu__item:hover i {
-  color: #8B5CF6;
-}
 .sidebar-menu__item.active {
-  border-right: 4px solid #8B5CF6;
-  background-color: #F5F5F5;
+  background-color: #E5E5E5;
 }
 .sidebar-menu__item.active .sidebar-menu__link {
-  color: #8B5CF6;
+  color: #1F2937;
   font-weight: 500;
 }
 .sidebar-menu__item.active i {
   color: #8B5CF6;
+}
+.sidebar-menu__item:hover {
+  background-color: #FFFFFF;
+}
+.sidebar-menu__item:hover .sidebar-menu__link,
+.sidebar-menu__item:hover i {
+  color: #111827;
 }
 .sidebar-menu__link {
   display: block;
@@ -145,7 +141,9 @@ a, button {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 32px;
+  padding: 32px;
+  background-color: #FFFFFF;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 .header__title {
   margin-bottom: 8px;
@@ -205,8 +203,8 @@ a, button {
 }
 
 .badge {
-  background-color: #C4B5FD;
-  color: #8B5CF6;
+  background-color: #8B5CF6;
+  color: #FFFFFF;
   font-weight: 600;
   padding: 8px;
   border-radius: 4px;
@@ -270,6 +268,7 @@ a, button {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  padding: 32px;
 }
 .detail__section {
   padding: 16px;
@@ -325,14 +324,15 @@ a, button {
   display: flex;
   flex-direction: column;
   gap: 32px;
+  padding: 32px;
+  border-radius: 8px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+.form__section {
   padding: 16px;
   border-radius: 8px;
   background: #FFFFFF;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-}
-.form__section:not(:last-child) {
-  padding-bottom: 32px;
-  border-bottom: 1px solid #D1D5DB;
 }
 .form__section--split {
   display: grid;
@@ -478,10 +478,10 @@ a, button {
   border-radius: 50%;
 }
 .icon-title {
-  background-color: #E5E5E5;
+  background-color: #8B5CF6;
 }
 .icon-title i {
-  color: #8B5CF6;
+  color: #FFFFFF;
 }
 .icon-label {
   background-color: #F5F5F5;
@@ -497,9 +497,10 @@ a, button {
 }
 
 .table-container {
-  background-color: #FFFFFF;
+  background-color: #F5F5F5;
   padding: 16px;
   border-radius: 8px;
+  padding: 32px;
 }
 
 .table {
@@ -527,13 +528,16 @@ a, button {
   padding: inherit;
 }
 .table__thead th {
-  background-color: #F5F5F5;
+  background-color: #E5E5E5;
 }
 .table__thead th:first-child {
   border-top-left-radius: 8px;
 }
 .table__thead th:last-child {
   border-top-right-radius: 8px;
+}
+.table__tbody td {
+  background-color: #FFFFFF;
 }
 .table__tbody tr:last-child td:first-child {
   border-bottom-left-radius: 8px;
@@ -551,8 +555,8 @@ a, button {
 }
 
 .tree {
+  padding: 32px;
   border-radius: 8px;
-  background-color: #FFFFFF;
 }
 .tree__item {
   display: flex;
@@ -564,6 +568,7 @@ a, button {
   grid-template-columns: minmax(0, 1fr) 250px 110px;
   align-items: center;
   min-height: 56px;
+  background-color: #FFFFFF;
   border-bottom: 1px solid #D1D5DB;
 }
 .tree__row:hover {

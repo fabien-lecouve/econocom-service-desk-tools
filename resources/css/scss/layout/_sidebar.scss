@@ -2,7 +2,6 @@
 
 .sidebar {
     background-color: $black;
-    // border-right: 1px solid $white-dark;
     position: sticky;
     top: 0;
     height: 100vh;
@@ -27,7 +26,7 @@
         }
 
         &-subtitle {
-            color: $purple-dark;
+            color: $white-dark;
         }
     }
 
@@ -87,27 +86,26 @@
     }
 
     &__item {
-        &:hover {
-            border-right: 4px solid $purple-dark;
-            background-color: $white-light;
-
-            .sidebar-menu__link,
-            i {
-                color: $purple-dark;
-            }
-        }
 
         &.active {
-            border-right: 4px solid $purple-dark;
-            background-color: $white;
+            background-color: $white-dark;
 
             .sidebar-menu__link {
-                color: $purple-dark;
+                color: $black;
                 font-weight: 500;
             }
 
             i {
                 color: $purple-dark;
+            }
+        }
+
+        &:hover {
+            background-color: $white-light;
+
+            .sidebar-menu__link,
+            i {
+                color: $black-dark;
             }
         }
     }

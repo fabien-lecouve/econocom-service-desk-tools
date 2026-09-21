@@ -5,10 +5,8 @@
     display: grid;
     grid-template-columns: 240px 1fr;
     min-height: 100vh;
-    background-color: $white-light;
 
     .main {
-        padding: 32px;
         background-color: $white;
     }
 }

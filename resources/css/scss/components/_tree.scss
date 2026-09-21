@@ -1,8 +1,8 @@
 @use '../abstracts/variables' as *;
 
 .tree {
+    padding: 32px;
     border-radius: 8px;
-    background-color: $white-light;
 
     &__item {
         display: flex;
@@ -15,6 +15,7 @@
         grid-template-columns: minmax(0, 1fr) 250px 110px;
         align-items: center;
         min-height: 56px;
+        background-color: $white-light;
 
         border-bottom: 1px solid $gray-light;
 

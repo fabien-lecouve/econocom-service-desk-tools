@@ -1,8 +1,8 @@
 @use '../abstracts/variables' as *;
 
 .badge {
-    background-color: $purple-light;
-    color: $purple-dark;
+    background-color: $purple-dark;
+    color: $white-light;
     font-weight: 600;
     padding: 8px;
     border-radius: 4px;
