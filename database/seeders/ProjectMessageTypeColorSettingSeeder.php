@@ -17,8 +17,8 @@ class ProjectMessageTypeColorSettingSeeder extends Seeder
     {
         $black = Color::where('code', 'black-dark')->firstOrFail();
         $white = Color::where('code', 'white-light')->firstOrFail();
-        $orange = Color::where('code', 'orange-dark')->firstOrFail();
-        $yellow = Color::where('code', 'yellow-dark')->firstOrFail();
+        $orange = Color::where('code', 'orange')->firstOrFail();
+        $yellow = Color::where('code', 'yellow')->firstOrFail();
 
         $workNote = MessageType::where('code', 'work_note')->firstOrFail();
         $comment = MessageType::where('code', 'comment')->firstOrFail();

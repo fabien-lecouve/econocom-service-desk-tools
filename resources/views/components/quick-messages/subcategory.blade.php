@@ -9,7 +9,9 @@
             </template>
 
             <template x-if="subcategory.children.length">
-                <div class="subcategory">
+                <div
+                    class="subcategory"
+                    :style="getCategoryStyle(subcategory)">
                     <h3 class="subcategory__title" x-text="subcategory.label">
                     </h3>
 

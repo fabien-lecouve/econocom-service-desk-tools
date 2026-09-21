@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Message;
 use App\Models\Project;
+use App\Models\ProjectCategoryColorSetting;
 use App\Models\ProjectLanguageSetting;
+use App\Models\ProjectMessageTypeColorSetting;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Collection;
 
@@ -64,6 +66,24 @@ class QuickMessageController extends Controller
 
     private function buildData(): void
     {
+        $categoryColorSettings = ProjectCategoryColorSetting::with([
+            'fontColor',
+            'backgroundColor',
+            'borderTopColor',
+        ])
+            ->whereIn('project_id', $this->allowedProjectIds)
+            ->get()
+            ->keyBy('project_id');
+
+        $messageTypeColorSettings = ProjectMessageTypeColorSetting::with([
+            'fontColor',
+            'backgroundColor',
+            'borderTopColor',
+        ])
+            ->whereIn('project_id', $this->allowedProjectIds)
+            ->get()
+            ->groupBy('project_id');
+
         $categories = Category::query()
             ->whereIn('project_id', $this->allowedProjectIds)
             ->orderBy('project_id')
@@ -77,7 +97,11 @@ class QuickMessageController extends Controller
             ->get();
 
         $messagesByProjectCategory = $messages
-            ->map(function (Message $message) {
+            ->map(function (Message $message) use ($messageTypeColorSettings) {
+                $colorSetting = $messageTypeColorSettings
+                    ->get($message->project_id, collect())
+                    ->firstWhere('message_type_id', $message->message_type_id);
+
                 return [
                     'project_id' => $message->project_id,
                     'category_id' => $message->category_id,
@@ -88,6 +112,10 @@ class QuickMessageController extends Controller
                         ->map(fn ($t) => $t->content)
                         ->toArray(),
                     'type' => $message->type->code,
+
+                    'font_color' => $colorSetting?->fontColor?->hex,
+                    'background_color' => $colorSetting?->backgroundColor?->hex,
+                    'border_top_color' => $colorSetting?->borderTopColor?->hex,
                 ];
             })
             ->groupBy(fn ($m) => $m['project_id'] . '-' . $m['category_id']);
@@ -97,6 +125,8 @@ class QuickMessageController extends Controller
         foreach ($categoriesByProject as $projectId => $projectCategories) {
             $items = [];
 
+            $colorSetting = $categoryColorSettings->get($projectId);
+
             foreach ($projectCategories as $category) {
                 $categoryKey = $projectId . '-' . $category->id;
 
@@ -105,6 +135,11 @@ class QuickMessageController extends Controller
                     'parent_id' => $category->parent_id,
                     'code' => $category->code,
                     'label' => $category->label,
+
+                    'font_color' => $colorSetting?->fontColor?->hex,
+                    'background_color' => $colorSetting?->backgroundColor?->hex,
+                    'border_top_color' => $colorSetting?->borderTopColor?->hex,
+
                     'children' => [],
                     'messages' => $messagesByProjectCategory
                         ->get($categoryKey, collect())

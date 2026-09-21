@@ -5,8 +5,8 @@
         <button
             type="button"
             @click="copy(message)"
+            :style="getMessageStyle(message)"
             class="quick__button message__button"
-            :class="{ 'accent-orange': message.type === 'work_note' }"
             x-text="message.label">
         </button>
     </template>

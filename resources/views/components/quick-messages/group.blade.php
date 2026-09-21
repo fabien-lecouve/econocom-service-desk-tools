@@ -1,6 +1,8 @@
 @props(['source'])
 
-<div class="group">
+<div
+    class="group"
+    :style="getCategoryStyle(group)">
     <h4 class="group__title" x-text="{{ $source}}.label"></h4>
     <div class="group__content">
 

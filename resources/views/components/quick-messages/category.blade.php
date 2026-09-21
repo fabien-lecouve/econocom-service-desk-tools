@@ -1,4 +1,7 @@
-<section :id="category.id" class="category">
+<section
+    :id="category.id"
+    class="category"
+    :style="getCategoryStyle(category)">
     <h2 class="category__title" x-text="category.label"></h2>
     <div class="category__content">
 

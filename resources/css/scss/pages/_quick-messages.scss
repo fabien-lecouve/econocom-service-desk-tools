@@ -47,14 +47,13 @@
 
     /* CATEGORY */
     .category {
-        background-color: $gray-light;
         padding: 8px;
         min-width: 0;
 
         &__title {
             text-align: center;
             margin-bottom: 8px;
-            text-transform: capitalize;
+            text-transform: uppercase;
         }
 
         &__content {
@@ -76,7 +75,6 @@
 
     /* SUBCATEGORY */
     .subcategory {
-        background-color: $white-dark;
         grid-column: 1 / -1;
         width: 100%;
         padding: 8px;
@@ -97,7 +95,6 @@
 
     /* GROUP */
     .group {
-        background-color: $white;
         border-radius: 8px;
         padding: 8px;
         width: 100%;
@@ -126,7 +123,6 @@
     /* BUTTONS */
     .quick__button {
         width: 100%;
-        background-color: $white-light;
         padding: 8px;
         border-radius: 8px;
         border: none;

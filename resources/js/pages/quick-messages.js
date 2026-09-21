@@ -49,6 +49,22 @@ window.quickMessages = function (projects, languagesByProject, data) {
             ) ?? null;
         },
 
+        getCategoryStyle(category) {
+            return {
+                color: category.font_color,
+                backgroundColor: category.background_color,
+                borderTopColor: category.border_top_color,
+            };
+        },
+
+        getMessageStyle(message) {
+            return {
+                color: message.font_color,
+                backgroundColor: message.background_color,
+                borderTopColor: message.border_top_color,
+            };
+        },
+
         replaceVariables(text) {
             const project = this.getSelectedProject();
             const language = this.getSelectedLanguage();
