@@ -16,4 +16,9 @@ class MessageType extends Model
     {
         return $this->hasMany(Message::class);
     }
+
+    public function projectColorSettings(): HasMany
+    {
+        return $this->hasMany(ProjectMessageTypeColorSetting::class);
+    }
 }

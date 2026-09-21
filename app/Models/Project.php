@@ -6,6 +6,7 @@ use App\Models\Concerns\HasSlugCode;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 #[Fillable(['code', 'label', 'internal_phone', 'external_phone', 'email'])]
@@ -39,5 +40,15 @@ class Project extends Model
     public function projectLanguageSettings(): HasMany
     {
         return $this->hasMany(ProjectLanguageSetting::class);
+    }
+
+    public function messageTypeColorSettings(): HasMany
+    {
+        return $this->hasMany(ProjectMessageTypeColorSetting::class);
+    }
+
+    public function categoryColorSetting(): HasOne
+    {
+        return $this->hasOne(ProjectCategoryColorSetting::class);
     }
 }
