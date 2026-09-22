@@ -53,7 +53,9 @@ window.quickMessages = function (projects, languagesByProject, data) {
             return {
                 color: category.font_color,
                 backgroundColor: category.background_color,
-                borderTopColor: category.border_top_color,
+                borderTop: category.border_top_color
+                            ? `4px solid ${category.border_top_color}`
+                            : null,
             };
         },
 
@@ -61,7 +63,9 @@ window.quickMessages = function (projects, languagesByProject, data) {
             return {
                 color: message.font_color,
                 backgroundColor: message.background_color,
-                borderTopColor: message.border_top_color,
+                borderTop: message.border_top_color
+                            ? `4px solid ${message.border_top_color}`
+                            : null,
             };
         },
 
