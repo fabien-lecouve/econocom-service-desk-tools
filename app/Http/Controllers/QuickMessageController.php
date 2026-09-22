@@ -113,9 +113,9 @@ class QuickMessageController extends Controller
                         ->toArray(),
                     'type' => $message->type->code,
 
-                    'font_color' => $colorSetting?->fontColor?->hex,
-                    'background_color' => $colorSetting?->backgroundColor?->hex,
-                    'border_top_color' => $colorSetting?->borderTopColor?->hex,
+                    'font_color' => $message?->fontColor?->hex ?? $colorSetting?->fontColor?->hex,
+                    'background_color' => $message?->backgroundColor?->hex ?? $colorSetting?->backgroundColor?->hex,
+                    'border_top_color' => $message?->borderTopColor?->hex ?? $colorSetting?->borderTopColor?->hex,
                 ];
             })
             ->groupBy(fn ($m) => $m['project_id'] . '-' . $m['category_id']);
@@ -136,9 +136,9 @@ class QuickMessageController extends Controller
                     'code' => $category->code,
                     'label' => $category->label,
 
-                    'font_color' => $colorSetting?->fontColor?->hex,
-                    'background_color' => $colorSetting?->backgroundColor?->hex,
-                    'border_top_color' => $colorSetting?->borderTopColor?->hex,
+                    'font_color' => $category?->fontColor?->hex ?? $colorSetting?->fontColor?->hex,
+                    'background_color' => $category?->backgroundColor?->hex ?? $colorSetting?->backgroundColor?->hex,
+                    'border_top_color' => $category?->borderTopColor?->hex ?? $colorSetting?->borderTopColor?->hex,
 
                     'children' => [],
                     'messages' => $messagesByProjectCategory

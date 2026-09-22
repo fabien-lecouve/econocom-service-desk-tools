@@ -11,7 +11,7 @@
                 'title' => $project->label,
             ],
             [
-                'link' => route('messages.index', $project),
+                'link' => route('projects.messages.index', $project),
                 'title' => 'Messages',
             ],
             [
@@ -42,7 +42,7 @@
     <form
         id="message-create-form"
         method="POST"
-        action="{{ route('messages.store', $project) }}"
+        action="{{ route('projects.messages.store', $project) }}"
         class="form"
         >
 

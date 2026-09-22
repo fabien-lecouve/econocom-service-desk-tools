@@ -105,7 +105,7 @@ class CategoryController extends Controller
         $category->update($validated);
 
         return redirect()
-            ->route('categories.index', $project)
+            ->route('projects.categories.index', $project)
             ->with('success', "La catégorie « {$category->label} » a été modifiée.");
     }
 
@@ -121,7 +121,7 @@ class CategoryController extends Controller
         $category->delete();
 
         return redirect()
-            ->route('categories.index', $project)
+            ->route('projects.categories.index', $project)
             ->with('success', "La catégorie « {$label} » a été supprimée.");
     }
 }

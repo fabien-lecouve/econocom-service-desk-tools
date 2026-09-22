@@ -17,7 +17,7 @@
         :actions="[
             [
                 'type' => 'link',
-                'link' => route('categories.create', $project),
+                'link' => route('projects.categories.create', $project),
                 'label' => 'Créer une catégorie',
                 'class' => 'button--primary',
                 'icon' => 'fa-solid fa-plus',

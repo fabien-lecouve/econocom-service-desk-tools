@@ -17,7 +17,7 @@
         :actions="[
             [
                 'type' => 'link',
-                'link' => route('messages.create', $project),
+                'link' => route('projects.messages.create', $project),
                 'label' => 'Créer un message',
                 'class' => 'button--primary',
                 'icon' => 'fa-solid fa-plus',

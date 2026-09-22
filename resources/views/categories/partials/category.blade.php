@@ -17,13 +17,13 @@
         <div class="actions">
             @can('update', $category)
                 <a class="actions__edit"
-                    href="{{ route('categories.edit', ['project' => $project, 'category' => $category['id']]) }}">
+                    href="{{ route('projects.categories.edit', ['project' => $project, 'category' => $category['id']]) }}">
                     <i class="fa-solid fa-pen"></i>
                 </a>
             @endcan
 
             @can('delete', $category)
-                <form action="{{ route('categories.destroy', ['project' => $project, 'category' => $category['id']]) }}"
+                <form action="{{ route('projects.categories.destroy', ['project' => $project, 'category' => $category['id']]) }}"
                     method="POST">
                     @csrf
                     @method('DELETE')

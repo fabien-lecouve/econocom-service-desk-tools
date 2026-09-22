@@ -10,7 +10,7 @@
             'title' => $project->label,
         ],
         [
-            'link' => route('categories.index', $project),
+            'link' => route('projects.categories.index', $project),
             'title' => 'Catégories',
         ],
         [
@@ -19,7 +19,7 @@
     ]" :actions="[
         [
             'type' => 'link',
-            'link' => route('categories.index', $project),
+            'link' => route('projects.categories.index', $project),
             'label' => 'Annuler',
             'icon' => 'fa-solid fa-xmark',
                 'policy' => 'update',
@@ -36,7 +36,7 @@
         ],
     ]" />
 
-    <form id="category-edit-form" method="POST" action="{{ route('categories.update', [$project, $category]) }}"
+    <form id="category-edit-form" method="POST" action="{{ route('projects.categories.update', [$project, $category]) }}"
         class="form">
 
         @csrf

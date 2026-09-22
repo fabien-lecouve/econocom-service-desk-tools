@@ -36,7 +36,7 @@
 
                 @can('update', $category)
                     <a class="actions__edit"
-                        href="{{ route('messages.edit', [
+                        href="{{ route('projects.messages.edit', [
                             'project' => $project,
                             'message' => $message,
                         ]) }}">
@@ -46,7 +46,7 @@
 
                 @can('delete', $message)
                     <form
-                        action="{{ route('messages.destroy', [
+                        action="{{ route('projects.messages.destroy', [
                             'project' => $project,
                             'message' => $message,
                         ]) }}"

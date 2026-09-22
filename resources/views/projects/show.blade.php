@@ -80,7 +80,7 @@
 
             <div class="detail__content detail__content--5">
 
-                <a href="{{ route('categories.index', $project) }}" class="card">
+                <a href="{{ route('projects.categories.index', $project) }}" class="card">
                     <div class="card__header">
                         <div class="card__icon">
                             <i class="fa-solid fa-folder"></i>
@@ -97,7 +97,7 @@
                 </a>
 
                 @can('create', [App\Models\Category::class, $project])
-                    <a href="{{ route('categories.create', ['project' => $project]) }}" class="card">
+                    <a href="{{ route('projects.categories.create', ['project' => $project]) }}" class="card">
                         <div class="card__header">
                             <div class="card__icon">
                                 <i class="fa-solid fa-folder-plus"></i>
@@ -115,7 +115,7 @@
                     </a>
                 @endcan
 
-                <a href="{{ route('messages.index', $project) }}" class="card">
+                <a href="{{ route('projects.messages.index', $project) }}" class="card">
                     <div class="card__header">
                         <div class="card__icon">
                             <i class="fa-solid fa-file"></i>
@@ -133,7 +133,7 @@
                 </a>
 
                 @can('create', [App\Models\Message::class, $project])
-                    <a href="{{ route('messages.create', ['project' => $project]) }}" class="card">
+                    <a href="{{ route('projects.messages.create', ['project' => $project]) }}" class="card">
                         <div class="card__header">
                             <div class="card__icon">
                                 <i class="fa-solid fa-file-circle-plus"></i>

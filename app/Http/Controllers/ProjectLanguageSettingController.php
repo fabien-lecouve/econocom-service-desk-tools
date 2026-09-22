@@ -12,14 +12,6 @@ use Illuminate\Http\Request;
 class ProjectLanguageSettingController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
      * Show the form for creating a new resource.
      */
     public function create(Request $request)
@@ -56,37 +48,5 @@ class ProjectLanguageSettingController extends Controller
         return redirect()->route('projects.show', [
             'project' => $request->project_id,
         ]);
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(ProjectLanguageSetting $projectLanguageSetting)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(ProjectLanguageSetting $projectLanguageSetting)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateProjectLanguageSettingRequest $request, ProjectLanguageSetting $projectLanguageSetting)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(ProjectLanguageSetting $projectLanguageSetting)
-    {
-        //
     }
 }

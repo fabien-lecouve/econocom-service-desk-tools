@@ -11,7 +11,7 @@
                 'title' => $project->label,
             ],
             [
-                'link' => route('categories.index', $project),
+                'link' => route('projects.categories.index', $project),
                 'title' => 'Catégories',
             ],
             [
@@ -41,7 +41,7 @@
     <form
         id="category-create-form"
         method="POST"
-        action="{{ route('categories.store', $project) }}"
+        action="{{ route('projects.categories.store', $project) }}"
         class="form"
         >
 

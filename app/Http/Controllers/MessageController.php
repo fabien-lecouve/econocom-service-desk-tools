@@ -165,7 +165,7 @@ class MessageController extends Controller
         });
 
         return redirect()
-            ->route('messages.index', [
+            ->route('projects.messages.index', [
                 'project' => $project,
             ])
             ->with(
@@ -184,7 +184,7 @@ class MessageController extends Controller
         $message->delete();
 
         return redirect()
-            ->route('messages.index', [
+            ->route('projects.messages.index', [
                 'project' => $project,
             ])
             ->with(

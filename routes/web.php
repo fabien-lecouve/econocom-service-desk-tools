@@ -32,55 +32,16 @@ Route::post('/logout', Logout::class)
 // Protected routes
 Route::middleware('auth')->group(function () {
 
-    Route::prefix('projects/{project}/categories')
-        ->name('categories.')
-        ->group(function () {
-
-            Route::get('/', [CategoryController::class, 'index'])
-                ->name('index');
-
-            Route::get('/create', [CategoryController::class, 'create'])
-                ->name('create');
-
-            Route::post('/', [CategoryController::class, 'store'])
-                ->name('store');
-
-            Route::get('/{category}/edit', [CategoryController::class, 'edit'])
-                ->name('edit');
-
-            Route::put('/{category}', [CategoryController::class, 'update'])
-                ->name('update');
-
-            Route::delete('/{category}', [CategoryController::class, 'destroy'])
-                ->name('destroy');
-        });
-
-    Route::prefix('projects/{project}/messages')
-        ->name('messages.')
-        ->group(function () {
-
-            Route::get('/', [MessageController::class, 'index'])
-                ->name('index');
-
-            Route::get('/create', [MessageController::class, 'create'])
-                ->name('create');
-
-            Route::post('/', [MessageController::class, 'store'])
-                ->name('store');
-
-            Route::get('/{message}/edit', [MessageController::class, 'edit'])
-                ->name('edit');
-
-            Route::put('/{message}', [MessageController::class, 'update'])
-                ->name('update');
-
-            Route::delete('/{message}', [MessageController::class, 'destroy'])
-                ->name('destroy');
-        });
-
-    Route::resource('message-translations', MessageTranslationController::class);
     Route::resource('projects', ProjectController::class);
-    Route::resource('project-language-settings', ProjectLanguageSettingController::class);
+    Route::resource('projects.categories', CategoryController::class)->except('show');
+    Route::resource('projects.messages', MessageController::class)->except('show');
+
+
+    Route::resource('project-language-settings', ProjectLanguageSettingController::class)->only(['create', 'store']);
+
+
+    // Route::resource('message-translations', MessageTranslationController::class); SI INUTILE, SUPPRIMER toute relation avec
+
 
     Route::get('quick-messages/{project}', [QuickMessageController::class, 'index'])
         ->name('quick-messages.index');

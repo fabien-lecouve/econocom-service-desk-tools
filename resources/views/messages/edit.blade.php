@@ -11,7 +11,7 @@
                 'title' => $project->label,
             ],
             [
-                'link' => route('messages.index', $project),
+                'link' => route('projects.messages.index', $project),
                 'title' => 'Messages',
             ],
             [
@@ -21,7 +21,7 @@
         :actions="[
             [
                 'type' => 'link',
-                'link' => route('messages.index', $project),
+                'link' => route('projects.messages.index', $project),
                 'label' => 'Annuler',
                 'icon' => 'fa-solid fa-xmark',
                 'policy' => 'update',
@@ -42,7 +42,7 @@
     <form
         id="message-edit-form"
         method="POST"
-        action="{{ route('messages.update', [$project, $message]) }}"
+        action="{{ route('projects.messages.update', [$project, $message]) }}"
         class="form"
     >
 
