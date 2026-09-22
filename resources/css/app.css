@@ -653,11 +653,13 @@ a, button {
 .quick-messages .category {
   padding: 8px;
   min-width: 0;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 .quick-messages .category__title {
   text-align: center;
   margin-bottom: 8px;
   text-transform: uppercase;
+  color: inherit;
 }
 .quick-messages .category__content {
   display: grid;
@@ -675,10 +677,12 @@ a, button {
   grid-column: 1/-1;
   width: 100%;
   padding: 8px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 .quick-messages .subcategory__title {
   text-align: center;
   margin-bottom: 8px;
+  color: inherit;
 }
 .quick-messages .subcategory__content {
   display: grid;
@@ -698,6 +702,7 @@ a, button {
   margin-bottom: 8px;
   text-transform: uppercase;
   font-weight: 600;
+  color: inherit;
 }
 .quick-messages .group__content {
   display: flex;
@@ -712,6 +717,7 @@ a, button {
   padding: 8px;
   border-radius: 8px;
   border: none;
+  color: inherit;
   text-transform: lowercase;
   cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;

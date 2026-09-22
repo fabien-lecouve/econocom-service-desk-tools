@@ -50,6 +50,7 @@ window.quickMessages = function (projects, languagesByProject, data) {
         },
 
         getCategoryStyle(category) {
+            console.log(category.label, category.background_color);
             return {
                 color: category.font_color,
                 backgroundColor: category.background_color,
