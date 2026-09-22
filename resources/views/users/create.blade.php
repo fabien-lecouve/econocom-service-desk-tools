@@ -19,14 +19,18 @@
                 'type' => 'link',
                 'link' => route('users.index'),
                 'label' => 'Annuler',
-                'icon' => 'fa-solid fa-xmark'
+                'icon' => 'fa-solid fa-xmark',
+                'policy' => 'create',
+                'model' => App\Models\User::class,
             ],
             [
                 'type' => 'submit',
                 'label' => 'Enregistrer',
                 'form' => 'user-create-form',
                 'class' => 'button--primary',
-                'icon' => 'fa-solid fa-floppy-disk'
+                'icon' => 'fa-solid fa-floppy-disk',
+                'policy' => 'create',
+                'model' => App\Models\User::class,
             ]
         ]" />
 
