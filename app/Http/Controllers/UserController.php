@@ -54,9 +54,11 @@ class UserController extends Controller
                 'lastname' => $validated['lastname'],
                 'email' => $validated['email'],
                 'password' => Hash::make($validated['password']),
-                'is_admin' => $validated['is_admin'] ?? false,
-                'is_knowledge_manager' => $validated['is_knowledge_manager'] ?? false,
             ]);
+
+            $user->is_admin = $validated['is_admin'] ?? false;
+            $user->is_knowledge_manager = $validated['is_knowledge_manager'] ?? false;
+            $user->save();
 
             foreach ($validated['memberships'] as $membership) {
                 $user->memberships()->create([
@@ -103,20 +105,20 @@ class UserController extends Controller
     {
         $validated = $request->validated();
 
+        // dd($validated['is_knowledge_manager']);
+
         DB::transaction(function () use ($validated, $user) {
-            $userData = [
-                'firstname' => $validated['firstname'],
-                'lastname' => $validated['lastname'],
-                'email' => $validated['email'],
-                'is_admin' => $validated['is_admin'] ?? false,
-                'is_knowledge_manager' => $validated['is_knowledge_manager'] ?? false,
-            ];
+            $user->firstname = $validated['firstname'];
+            $user->lastname = $validated['lastname'];
+            $user->email = $validated['email'];
+            $user->is_admin = $validated['is_admin'] ?? false;
+            $user->is_knowledge_manager = $validated['is_knowledge_manager'] ?? false;
 
             if (! empty($validated['password'])) {
-                $userData['password'] = Hash::make($validated['password']);
+                $user->password = Hash::make($validated['password']);
             }
 
-            $user->update($userData);
+            $user->save();
 
             $user->memberships()->forceDelete();
 

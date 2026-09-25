@@ -182,16 +182,16 @@
 
             <div class="form__content form__content--2">
 
-                <x-forms.checkbox
+                <x-forms.boolean-checkbox
                     name="is_admin"
-                    :options="[1 => 'Administrateur']"
-                    :value="$user->is_admin ? [1] : []"
+                    label="Administrateur"
+                    :value="$user->is_admin"
                 />
 
-                <x-forms.checkbox
+                <x-forms.boolean-checkbox
                     name="is_knowledge_manager"
-                    :options="[1 => 'Knowledge Manager']"
-                    :value="$user->is_knowledge_manager ? [1] : []"
+                    label="Knowledge Manager"
+                    :value="$user->is_knowledge_manager"
                 />
 
             </div>

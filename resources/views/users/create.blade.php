@@ -176,14 +176,14 @@
 
             <div class="form__content form__content--2">
 
-                <x-forms.checkbox
+                <x-forms.boolean-checkbox
                     name="is_admin"
-                    :options="[1 => 'Administrateur']"
+                    label="Administrateur"
                 />
 
-                <x-forms.checkbox
+                <x-forms.boolean-checkbox
                     name="is_knowledge_manager"
-                    :options="[1 => 'Knowledge Manager']"
+                    label="Knowledge Manager"
                 />
 
             </div>
