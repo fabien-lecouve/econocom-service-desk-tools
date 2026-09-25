@@ -7,10 +7,6 @@
         title="Projet {{ ucfirst($project->label) }}"
         :breadcrumbs="[
             [
-                'link' => route('projects.index'),
-                'title' => 'Projets',
-            ],
-            [
                 'link' => route('projects.show', $project),
                 'title' => ucfirst($project->label),
             ],

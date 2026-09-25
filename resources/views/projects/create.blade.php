@@ -7,10 +7,6 @@
         title="Créer un projet"
         :breadcrumbs="[
             [
-                'link' => route('projects.index'),
-                'title' => 'Projets',
-            ],
-            [
                 'title' => 'Créer',
             ],
         ]"

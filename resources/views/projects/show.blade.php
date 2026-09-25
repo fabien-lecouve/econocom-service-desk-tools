@@ -7,10 +7,6 @@
         :title="$project->label"
         :breadcrumbs="[
             [
-                'link' => route('projects.index'),
-                'title' => 'Projets',
-            ],
-            [
                 'title' => $project->label,
             ]
         ]"
