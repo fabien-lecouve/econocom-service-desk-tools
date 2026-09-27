@@ -2,30 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ProjectLanguageSetting;
 use App\Http\Requests\StoreProjectLanguageSettingRequest;
-use App\Http\Requests\UpdateProjectLanguageSettingRequest;
-use App\Models\Language;
 use App\Models\Project;
-use Illuminate\Http\Request;
 
 class ProjectLanguageSettingController extends Controller
 {
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Request $request)
+    public function create(Project $project)
     {
-        $languages = Language::select('id', 'code', 'label')
-            ->whereIn('id', $request->languageIds)
-            ->get();
-
-        $project = Project::select('id', 'code', 'label')
-            ->where('id', $request->projectId)
-            ->first();
+        $project->load('projectLanguageSettings.language');
 
         return view('project_language_settings.create', [
-            'languages' => $languages,
             'project' => $project
         ]);
     }
@@ -33,20 +22,22 @@ class ProjectLanguageSettingController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreProjectLanguageSettingRequest $request)
+    public function store(StoreProjectLanguageSettingRequest $request, Project $project)
     {
-        foreach ($request->languages as $data) {
-            ProjectLanguageSetting::create([
-                'project_id' => $request->project_id,
-                'language_id' => $data['language_id'],
-                'signature' => $data['signature'],
-                'internal_phone_override' => $data['internal_phone_override'],
-                'external_phone_override' => $data['external_phone_override']
-            ]);
+        $validated = $request->validated();
+
+        foreach ($validated['languages'] as $data) {
+            $project->projectLanguageSettings()
+                ->where('language_id', $data['language_id'])
+                ->update([
+                    'signature' => $data['signature'],
+                    'internal_phone_override' => $data['internal_phone_override'] ?? null,
+                    'external_phone_override' => $data['external_phone_override'] ?? null,
+                ]);
         }
 
         return redirect()->route('projects.show', [
-            'project' => $request->project_id,
+            'project' => $project,
         ]);
     }
 }

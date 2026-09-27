@@ -43,11 +43,21 @@ class ProjectController extends Controller
         $this->authorize('create', Project::class);
 
         $validated = $request->validated();
-        $project = Project::create($validated);
 
-        return redirect()->route('project-language-settings.create', [
-            'languageIds' => $request->languages,
-            'projectId' => $project->id
+        $project = DB::transaction(function () use ($validated) {
+            $project = Project::create($validated);
+
+            foreach ($validated['languages'] as $language) {
+                $project->projectLanguageSettings()->create([
+                    'language_id' => $language,
+                ]);
+            }
+
+            return $project;
+        });
+
+        return redirect()->route('projects.language-settings.create', [
+            'project' => $project,
         ]);
     }
 
@@ -122,7 +132,7 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        $this->authorize('delete', Project::class);
+        $this->authorize('delete', $project);
 
         $label = $project->label;
         $project->delete();

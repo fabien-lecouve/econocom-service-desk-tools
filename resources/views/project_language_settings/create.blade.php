@@ -19,21 +19,25 @@
                 'type' => 'link',
                 'link' => route('projects.show', $project),
                 'label' => 'Annuler',
-                'icon' => 'fa-solid fa-xmark'
+                'icon' => 'fa-solid fa-xmark',
+                'policy' => 'create',
+                'model' => App\Models\Project::class,
             ],
             [
                 'type' => 'submit',
                 'label' => 'Enregistrer',
                 'form' => 'project-settings-create-form',
                 'class' => 'button--primary',
-                'icon' => 'fa-solid fa-floppy-disk'
+                'icon' => 'fa-solid fa-floppy-disk',
+                'policy' => 'create',
+                'model' => App\Models\Project::class,
             ]
         ]" />
 
     <form
         id="project-settings-create-form"
         method="POST"
-        action="{{ route('project-language-settings.store',) }}"
+        action="{{ route('projects.language-settings.store', $project) }}"
         class="form"
         >
 
@@ -63,31 +67,31 @@
 
             <div class="form__content form__content--2">
 
-                @foreach ($languages as $language)
+                @foreach ($project->projectLanguageSettings as $languageSetting)
 
                     <div class="form__columns">
 
                         <x-forms.hidden
-                            name="languages[{{ $language->id }}][language_id]"
-                            :value="$language->id"
+                            name="languages[{{ $languageSetting->language_id }}][language_id]"
+                            :value="$languageSetting->language_id"
                         />
 
                         <x-forms.textarea
-                            name="languages[{{ $language->id }}][signature]"
-                            label="Signature {{ strtoupper($language->code) }}"
+                            name="languages[{{ $languageSetting->language_id }}][signature]"
+                            label="Signature {{ strtoupper($languageSetting->language->code) }}"
                             rows="10"
                             required
                         />
 
                         <x-forms.input
-                            name="languages[{{ $language->id }}][internal_phone_override]"
-                            label="Numéro de téléphone {{ strtoupper($language->code) }} interne (remplace le numéro par défaut)"
+                            name="languages[{{ $languageSetting->language_id }}][internal_phone_override]"
+                            label="Numéro de téléphone {{ strtoupper($languageSetting->language->code) }} interne (remplace le numéro par défaut)"
                             placeholder="1000"
                         />
 
                         <x-forms.input
-                            name="languages[{{ $language->id }}][external_phone_override]"
-                            label="Numéro de téléphone {{ strtoupper($language->code) }} externe (remplace le numéro par défaut)"
+                            name="languages[{{ $languageSetting->language_id }}][external_phone_override]"
+                            label="Numéro de téléphone {{ strtoupper($languageSetting->language->code) }} externe (remplace le numéro par défaut)"
                             placeholder="01 02 03 04 05"
                         />
 

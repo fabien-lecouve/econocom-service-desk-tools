@@ -196,7 +196,7 @@
                 <tbody class="table__tbody">
                     @forelse ($project->projectLanguageSettings as $setting)
                         <tr>
-                            <td><span class="badge">{{ strtoupper($setting->language->code) }}</span> {{ $setting->language->label}}</td>
+                            <td class="center"><span class="badge">{{ strtoupper($setting->language->code) }}</span></td>
                             <td>{!! nl2br(e($setting->signature)) !!}</td>
                             <td class="center">{{ $setting->internal_phone_override ?? 'Non communiqué' }}</td>
                             <td class="center">{{ $setting->external_phone_override ?? 'Non communiqué' }}</td>
