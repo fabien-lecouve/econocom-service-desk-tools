@@ -520,6 +520,9 @@ a, button {
 .table__col--80 {
   width: 80%;
 }
+.table__col--85 {
+  width: 85%;
+}
 .table th, .table td {
   border: 1px solid #E5E5E5;
   padding: 16px;

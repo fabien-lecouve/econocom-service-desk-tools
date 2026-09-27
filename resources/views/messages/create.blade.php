@@ -207,8 +207,8 @@
 
             <table class="table">
                 <colgroup>
-                    <col class="table__col--20">
-                    <col class="table__col--80">
+                    <col class="table__col--15">
+                    <col class="table__col--85">
                 </colgroup>
                 <thead class="table__thead">
                     <tr>
@@ -223,7 +223,7 @@
                             $languageId = $setting->language->id;
                         @endphp
                         <tr>
-                            <td><span class="badge">{{ strtoupper($setting->language->code) }}</span> {{ $setting->language->label}}</td>
+                            <td class="center"><span class="badge">{{ strtoupper($setting->language->code) }}</span></td>
                             <td class="no-padding">
                                 <x-forms.hidden
                                     name="translations[{{ $languageId }}][language_id]"

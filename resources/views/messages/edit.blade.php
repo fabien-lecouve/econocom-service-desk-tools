@@ -213,38 +213,50 @@
                 </div>
             </div>
 
-            <div class="form__content form__content--2">
+            <table class="table">
+                <colgroup>
+                    <col class="table__col--15">
+                    <col class="table__col--85">
+                </colgroup>
+                <thead class="table__thead">
+                    <tr>
+                        <th>Langue</th>
+                        <th>Contenu du message</th>
+                    </tr>
+                </thead>
+                <tbody class="table__tbody">
+                    @foreach ($project->projectLanguageSettings as $setting)
 
-                @foreach ($project->projectLanguageSettings as $setting)
+                        @php
+                            $languageId = $setting->language->id;
 
-                    @php
-                        $languageId = $setting->language->id;
+                            $translation = $message
+                                ->translations
+                                ->firstWhere('language_id', $languageId);
+                            $value = old(
+                                "translations.$languageId.content",
+                                $translation?->content
+                            );
+                        @endphp
+                        <tr>
+                            <td class="center"><span class="badge">{{ strtoupper($setting->language->code) }}</span></td>
+                            <td class="no-padding">
+                                <x-forms.hidden
+                                    name="translations[{{ $languageId }}][language_id]"
+                                    value="{{ $languageId }}"
+                                />
 
-                        $translation = $message
-                            ->translations
-                            ->firstWhere('language_id', $languageId);
-                        $value = old(
-                            "translations.$languageId.content",
-                            $translation?->content
-                        );
-                    @endphp
-
-                    <x-forms.hidden
-                        name="translations[{{ $languageId }}][language_id]"
-                        value="{{ $languageId }}"
-                    />
-
-                    <x-forms.textarea
-                        name="translations[{{ $languageId }}][content]"
-                        label="Corps du message {{ $setting->language->code }}"
-                        :value="$value"
-                        rows="15"
-                        required
-                    />
-
+                                <x-forms.textarea
+                                    name="translations[{{ $languageId }}][content]"
+                                    :value="$value"
+                                    rows="15"
+                                    required
+                                />
+                            </td>
+                        </tr>
                 @endforeach
-
-            </div>
+                </tbody>
+            </table>
 
         </section>
     </form>
