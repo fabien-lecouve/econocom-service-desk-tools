@@ -82,7 +82,7 @@
                     name="message_type_id"
                     label="Type de message"
                     :options="$types"
-                    placeholder="Sélectionner un type de message"
+                    :value="$defaultType"
                     required
                 />
 
@@ -243,6 +243,9 @@
             </table>
 
         </section>
+
+        <x-forms.notice />
+
     </form>
 
 </x-layouts.dashboard>

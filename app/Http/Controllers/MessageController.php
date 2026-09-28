@@ -54,6 +54,7 @@ class MessageController extends Controller
             ->get();
 
         $types = MessageType::all();
+        $defaultType = MessageType::where('code', 'comment')->value('id');
 
         $colors = Color::orderBy('position', 'asc')->get();
 
@@ -61,7 +62,8 @@ class MessageController extends Controller
             'project' => $project,
             'categories' => $categories,
             'types' => $types,
-            'colors' =>$colors
+            'defaultType' => $defaultType,
+            'colors' => $colors
         ]);
     }
 

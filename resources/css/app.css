@@ -429,7 +429,8 @@ a, button {
   gap: 32px;
   padding: 16px;
   border-radius: 8px;
-  background-color: #F5F5F5;
+  background: #FFFFFF;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 .form__notice p {
   color: #8B5CF6;

@@ -259,6 +259,9 @@
             </table>
 
         </section>
+
+        <x-forms.notice />
+
     </form>
 
 </x-layouts.dashboard>
