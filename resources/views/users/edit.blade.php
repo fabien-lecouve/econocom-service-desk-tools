@@ -140,26 +140,57 @@
                 </div>
             </div>
 
-            <div class="form__content form__content--2">
+            <div
+                x-data="{
+                    memberships: @js(
+                        old('memberships', $user->memberships->map(fn ($membership) => [
+                            'project_id' => $membership->project_id,
+                            'role_id' => $membership->role_id,
+                        ])->values()->all())
+                    )
+                }"
+            >
+                <template x-for="(membership, index) in memberships" :key="index">
+                    <div class="form__content form__content--3">
 
-                <x-forms.select
-                    name="memberships[0][project_id]"
-                    label="Projet"
-                    :options="$projects"
-                    placeholder="Sélectionnez un projet"
-                    :value="old('memberships.0.project_id', $user->memberships[0]->project_id)"
-                    required
-                />
+                        <x-forms.select
+                            x-bind:name="`memberships[${index}][project_id]`"
+                            x-model="membership.project_id"
+                            label="Projet"
+                            :options="$projects"
+                            placeholder="Sélectionnez un projet"
+                            required
+                        />
 
-                <x-forms.select
-                    name="memberships[0][role_id]"
-                    label="Rôle"
-                    :options="$roles"
-                    placeholder="Sélectionnez un rôle"
-                    :value="old('memberships.0.role_id', $user->memberships[0]->role_id)"
-                    required
-                />
+                        <x-forms.select
+                            x-bind:name="`memberships[${index}][role_id]`"
+                            x-model="membership.role_id"
+                            label="Rôle"
+                            :options="$roles"
+                            placeholder="Sélectionnez un rôle"
+                            required
+                        />
 
+                        <button
+                            type="button"
+                            x-show="memberships.length > 1"
+                            @click="memberships.splice(index, 1)"
+                        >
+                            Supprimer
+                        </button>
+
+                    </div>
+                </template>
+
+                <button
+                    type="button"
+                    @click="memberships.push({
+                        project_id: '',
+                        role_id: ''
+                    })"
+                >
+                    + Ajouter un projet
+                </button>
             </div>
 
         </section>

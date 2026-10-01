@@ -136,24 +136,41 @@
                 </div>
             </div>
 
-            <div class="form__content form__content--2">
+            <div x-data="{ memberships: [{}] }">
+                <template x-for="(membership, index) in memberships" :key="index">
+                    <div class="form__content form__content--3">
+                        <x-forms.select
+                            x-bind:name="`memberships[${index}][project_id]`"
+                            label="Projet"
+                            :options="$projects"
+                            placeholder="Sélectionnez un projet"
+                            required
+                        />
 
-                <x-forms.select
-                    name="memberships[0][project_id]"
-                    label="Projet"
-                    :options="$projects"
-                    placeholder="Sélectionnez un projet"
-                    required
-                />
+                        <x-forms.select
+                            x-bind:name="`memberships[${index}][role_id]`"
+                            label="Rôle"
+                            :options="$roles"
+                            placeholder="Sélectionnez un rôle"
+                            required
+                        />
 
-                <x-forms.select
-                    name="memberships[0][role_id]"
-                    label="Rôle"
-                    :options="$roles"
-                    placeholder="Sélectionnez un rôle"
-                    required
-                />
+                        <button
+                            type="button"
+                            x-show="memberships.length > 1"
+                            @click="memberships.splice(index, 1)"
+                        >
+                            Supprimer
+                        </button>
+                    </div>
+                </template>
 
+                <button
+                    type="button"
+                    @click="memberships.push({})"
+                >
+                    + Ajouter un projet
+                </button>
             </div>
 
         </section>
