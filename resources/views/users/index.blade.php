@@ -48,7 +48,21 @@
                             @forelse($user->memberships as $membership)
                                 <div>
                                     <strong>{{ $membership->project->label }}</strong>
-                                    <small>({{ $membership->role->label }})</small>
+                                    @if ($membership->role->code === App\Models\Role::READER)
+                                    <small style="color: #22C55E;">({{ $membership->role->label }})</small>
+                                    @endif
+
+                                    @if ($membership->role->code === App\Models\Role::TECHNICIAN)
+                                    <small style="color: #3B82F6;">({{ $membership->role->label }})</small>
+                                    @endif
+
+                                    @if ($membership->role->code === App\Models\Role::TECHNICIAN_REFERENT)
+                                    <small style="color: #8B5CF6;">({{ $membership->role->label }})</small>
+                                    @endif
+
+                                    @if ($membership->role->code === App\Models\Role::TECHNICAL_COORDINATOR)
+                                    <small style="color: #EAB308;">({{ $membership->role->label }})</small>
+                                    @endif
                                 </div>
                             @empty
                                 <em>Aucun</em>

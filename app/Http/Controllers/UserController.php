@@ -21,6 +21,7 @@ class UserController extends Controller
 
         $users = User::with('memberships.role')
             ->with('memberships.project')
+            ->orderBy('lastname')
             ->get();
 
         return view('users.index', ['users' => $users]);
