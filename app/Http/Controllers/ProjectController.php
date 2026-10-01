@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Project;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
+use App\Models\Color;
 use App\Models\Language;
+use App\Models\MessageType;
 use Illuminate\Support\Facades\DB;
 
 class ProjectController extends Controller
@@ -50,6 +52,46 @@ class ProjectController extends Controller
             foreach ($validated['languages'] as $language) {
                 $project->projectLanguageSettings()->create([
                     'language_id' => $language,
+                ]);
+            }
+
+            // Couleurs par défaut des catégories
+            $black = Color::where('code', 'black-dark')->firstOrFail();
+            $white = Color::where('code', 'white')->firstOrFail();
+
+            $project->categoryColorSetting()->create([
+                'font_color_id' => $black->id,
+                'background_color_id' => $white->id,
+                'border_top_color_id' => null,
+            ]);
+
+            // Couleurs par défaut des types de messages
+            $messageTypeColors = [
+                'work_note' => [
+                    'font' => 'white',
+                    'background' => 'orange',
+                ],
+                'comment' => [
+                    'font' => 'black-dark',
+                    'background' => 'white-light',
+                ],
+                'escalation' => [
+                    'font' => 'white',
+                    'background' => 'yellow',
+                ],
+            ];
+
+            foreach ($messageTypeColors as $typeCode => $colors) {
+                $messageType = MessageType::where('code', $typeCode)->firstOrFail();
+
+                $fontColor = Color::where('code', $colors['font'])->firstOrFail();
+                $backgroundColor = Color::where('code', $colors['background'])->firstOrFail();
+
+                $project->messageTypeColorSettings()->create([
+                    'message_type_id' => $messageType->id,
+                    'font_color_id' => $fontColor->id,
+                    'background_color_id' => $backgroundColor->id,
+                    'border_top_color_id' => null,
                 ]);
             }
 
