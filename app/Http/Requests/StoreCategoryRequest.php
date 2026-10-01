@@ -60,12 +60,6 @@ class StoreCategoryRequest extends FormRequest
                 'string',
                 'max:100'
             ],
-
-            'position' => [
-                'nullable',
-                'integer',
-                'min:0'
-            ]
         ];
     }
 }

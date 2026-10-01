@@ -119,13 +119,6 @@
                     type="message"
                 />
 
-                <x-forms.number
-                    name="position"
-                    label="Position"
-                    :value="1"
-                    min="1"
-                />
-
             </div>
 
         </section>

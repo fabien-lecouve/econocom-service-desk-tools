@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Concerns\HasIncrementalCode;
+use App\Models\Concerns\HasPosition;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -12,7 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 #[Fillable(['project_id', 'parent_id', 'font_color_id', 'background_color_id', 'border_top_color_id', 'code', 'label', 'position'])]
 class Category extends Model
 {
-    use HasIncrementalCode, SoftDeletes;
+    use HasIncrementalCode, HasPosition, SoftDeletes;
 
     protected static function booted()
     {

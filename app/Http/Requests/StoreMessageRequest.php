@@ -71,12 +71,6 @@ class StoreMessageRequest extends FormRequest
                     ->where('project_id', $this->input('project_id')),
             ],
 
-            'position' => [
-                'nullable',
-                'integer',
-                'min:0',
-            ],
-
             'translations' => [
                 'required',
                 'array',

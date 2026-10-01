@@ -83,6 +83,7 @@ class MessageController extends Controller
 
         $message = DB::transaction(function () use ($validated, $translations, $project) {
             $validated['code'] = Message::generateCode($project);
+            $validated['position'] = Message::setPosition('category_id', $validated['category_id']);
 
             $message = Message::create($validated);
 
@@ -98,7 +99,7 @@ class MessageController extends Controller
             return $message;
         });
 
-        return redirect()->route('projects.show', ['project' => $project])
+        return redirect()->route('projects.messages.index', ['project' => $project])
             ->with('success', "Message {$message->label} créé");
     }
 
