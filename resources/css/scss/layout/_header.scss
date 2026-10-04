@@ -1,12 +1,15 @@
 @use '../abstracts/variables' as *;
 
 .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 32px;
     background-color: $white-light;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+
+    &__nav {
+        padding: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
 
     &__title {
         margin-bottom: 8px;
@@ -43,6 +46,18 @@
         gap: 16px;
     }
 
-    &__link {
+    &__session {
+
+        display: flex;
+        justify-content: center;
+        align-items: baseline;
+        gap: 8px;
+        background-color: $green-dark;
+        padding: 8px;
+
+        * {
+            color: $white;
+            font-weight: 600;
+        }
     }
 }

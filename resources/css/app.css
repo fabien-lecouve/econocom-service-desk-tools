@@ -138,12 +138,14 @@ a, button {
 }
 
 .header {
+  background-color: #FFFFFF;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+.header__nav {
+  padding: 32px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 32px;
-  background-color: #FFFFFF;
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 .header__title {
   margin-bottom: 8px;
@@ -171,6 +173,19 @@ a, button {
   display: flex;
   gap: 16px;
 }
+.header__session {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  gap: 8px;
+  background-color: #22C55E;
+  padding: 8px;
+}
+.header__session * {
+  color: #F5F5F5;
+  font-weight: 600;
+}
+
 .actions {
   display: flex;
   justify-content: center;
