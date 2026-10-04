@@ -17,7 +17,8 @@ class CategoryController extends Controller
     {
         $this->authorize('viewAny', [Category::class, $project]);
 
-        $categories = Category::where('project_id', $project->id)
+        $categories = Category::select('id', 'code', 'label')
+            ->where('project_id', $project->id)
             ->whereNull('parent_id')
             ->with('children')
             ->orderBy('position')
@@ -36,13 +37,16 @@ class CategoryController extends Controller
     {
         $this->authorize('create', [Category::class, $project]);
 
-        $categories = Category::where('project_id', $project->id)
+        $categories = Category::select('id', 'label')
+            ->where('project_id', $project->id)
             ->whereNull('parent_id')
             ->with('children')
             ->orderBy('position')
             ->get();
 
-        $colors = Color::orderBy('position', 'asc')->get();
+        $colors = Color::select('id', 'label')
+            ->orderBy('position', 'asc')
+            ->get();
 
         return view('categories.create', [
             'project' => $project,
@@ -59,17 +63,14 @@ class CategoryController extends Controller
         $this->authorize('create', [Category::class, $project]);
 
         $validated = $request->validated();
-
-        $project = Project::findOrFail($validated['project_id']);
-
         $validated['code'] = Category::generateCode($project);
         $validated['position'] = Category::setPosition('parent_id', $validated['parent_id']);
 
-        $category = Category::create($validated);
+        $category = $project->categories()->create($validated);
 
-        return redirect()->route('projects.categories.index', [
-            'project' => $project
-        ])->with('success', "Catégorie $category->label créée");
+        return redirect()
+            ->route('projects.categories.index', ['project' => $project])
+            ->with('success', "La catégorie \"$category->label\" a été créée");
     }
 
     /**
@@ -79,13 +80,16 @@ class CategoryController extends Controller
     {
         $this->authorize('update', $category);
 
-        $categories = Category::where('project_id', $project->id)
+        $categories = Category::select('id', 'label')
+            ->where('project_id', $project->id)
             ->whereNull('parent_id')
             ->with('children')
             ->orderBy('position')
             ->get();
 
-        $colors = Color::orderBy('position', 'asc')->get();
+        $colors = Color::select('id', 'label')
+            ->orderBy('position', 'asc')
+            ->get();
 
         return view('categories.edit', [
             'project' => $project,
@@ -108,7 +112,7 @@ class CategoryController extends Controller
 
         return redirect()
             ->route('projects.categories.index', $project)
-            ->with('success', "La catégorie « {$category->label} » a été modifiée.");
+            ->with('success', "La catégorie \"$category->label\" a été modifiée");
     }
 
     /**
@@ -124,6 +128,6 @@ class CategoryController extends Controller
 
         return redirect()
             ->route('projects.categories.index', $project)
-            ->with('success', "La catégorie « {$label} » a été supprimée.");
+            ->with('success', "La catégorie \"$label\" a été supprimée");
     }
 }

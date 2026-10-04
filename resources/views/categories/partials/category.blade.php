@@ -6,24 +6,24 @@
                 <i class="fa-solid fa-folder"></i>
             </div>
             <span>
-                {{ $category['label'] }}
+                {{ $category->label }}
             </span>
         </div>
 
         <div class="tree__code">
-            {{ $category['code'] }}
+            {{ $category->code }}
         </div>
 
         <div class="actions">
             @can('update', $category)
                 <a class="actions__edit"
-                    href="{{ route('projects.categories.edit', ['project' => $project, 'category' => $category['id']]) }}">
+                    href="{{ route('projects.categories.edit', ['project' => $project, 'category' => $category]) }}">
                     <i class="fa-solid fa-pen"></i>
                 </a>
             @endcan
 
             @can('delete', $category)
-                <form action="{{ route('projects.categories.destroy', ['project' => $project, 'category' => $category['id']]) }}"
+                <form action="{{ route('projects.categories.destroy', ['project' => $project, 'category' => $category]) }}"
                     method="POST">
                     @csrf
                     @method('DELETE')
@@ -37,7 +37,7 @@
 
     </div>
 
-    @foreach ($category['children'] as $child)
+    @foreach ($category->children as $child)
         @include('categories.partials.category', [
             'category' => $child,
             'level' => $level + 1,

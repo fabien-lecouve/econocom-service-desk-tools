@@ -24,17 +24,11 @@ class StoreCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'project_id' => [
-                'required',
-                'integer',
-                'exists:projects,id'
-            ],
-
             'parent_id' => [
                 'nullable',
                 'integer',
                 Rule::exists('categories', 'id')
-                    ->where('project_id', $this->input('project_id')),
+                    ->where('project_id', $this->route('project')->id),
             ],
 
             'font_color_id' => [

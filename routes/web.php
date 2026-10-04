@@ -35,7 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('projects', ProjectController::class);
     Route::resource('projects.language-settings', ProjectLanguageSettingController::class)->only(['create', 'store']);
 
-    Route::resource('projects.categories', CategoryController::class)->except('show');
+    Route::resource('projects.categories', CategoryController::class)->except('show')->scoped();
     Route::resource('projects.messages', MessageController::class)->except('show');
 
     Route::get('projects/{project}/quick-messages', [QuickMessageController::class, 'index'])->name('quick-messages.index');

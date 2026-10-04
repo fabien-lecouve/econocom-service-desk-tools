@@ -47,12 +47,6 @@
 
         @csrf
 
-        <input
-            type="hidden"
-            name="project_id"
-            value="{{ $project->id }}"
-        >
-
         <section class="form__section">
 
             <div class="form__header">
