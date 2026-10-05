@@ -20,17 +20,11 @@ class StoreMessageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'project_id' => [
-                'required',
-                'integer',
-                'exists:projects,id',
-            ],
-
             'category_id' => [
                 'required',
                 'integer',
                 Rule::exists('categories', 'id')
-                    ->where('project_id', $this->input('project_id')),
+                    ->where('project_id', $this->route('project')->id),
             ],
 
             'message_type_id' => [
@@ -68,7 +62,7 @@ class StoreMessageRequest extends FormRequest
                 'string',
                 'size:1',
                 Rule::unique('messages', 'shortcut')
-                    ->where('project_id', $this->input('project_id')),
+                    ->where('project_id', $this->route('project')->id),
             ],
 
             'translations' => [
@@ -82,7 +76,7 @@ class StoreMessageRequest extends FormRequest
                 'integer',
                 'distinct',
                 Rule::exists('project_language_settings', 'language_id')
-                    ->where('project_id', $this->input('project_id')),
+                    ->where('project_id', $this->route('project')->id),
             ],
 
             'translations.*.content' => [

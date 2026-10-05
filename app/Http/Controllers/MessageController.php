@@ -9,7 +9,6 @@ use App\Models\Color;
 use App\Models\Message;
 use App\Models\MessageType;
 use App\Models\Project;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class MessageController extends Controller
@@ -21,7 +20,8 @@ class MessageController extends Controller
     {
         $this->authorize('viewAny', [Message::class, $project]);
 
-        $categories = Category::where('project_id', $project->id)
+        $categories = Category::select('id', 'code', 'label')
+            ->where('project_id', $project->id)
             ->whereNull('parent_id')
             ->with([
                 'children',
@@ -47,16 +47,21 @@ class MessageController extends Controller
 
         $project->load('projectLanguageSettings.language');
 
-        $categories = Category::where('project_id', $project->id)
+        $categories = Category::select('id', 'code', 'label')
+            ->where('project_id', $project->id)
             ->whereNull('parent_id')
             ->with('children')
             ->orderBy('position')
             ->get();
 
-        $types = MessageType::all();
-        $defaultType = MessageType::where('code', 'comment')->value('id');
+        $types = MessageType::select('id', 'code', 'label')
+            ->get();
 
-        $colors = Color::orderBy('position', 'asc')->get();
+        $defaultType = $types->firstWhere('code', 'comment')?->id;
+
+        $colors = Color::select('id', 'label')
+            ->orderBy('position', 'asc')
+            ->get();
 
         return view('messages.create', [
             'project' => $project,
@@ -79,13 +84,11 @@ class MessageController extends Controller
         $translations = $validated['translations'];
         unset($validated['translations']);
 
-        $project = Project::findOrFail($validated['project_id']);
-
         $message = DB::transaction(function () use ($validated, $translations, $project) {
             $validated['code'] = Message::generateCode($project);
             $validated['position'] = Message::setPosition('category_id', $validated['category_id']);
 
-            $message = Message::create($validated);
+            $message = $project->messages()->create($validated);
 
             foreach ($translations as $translation) {
                 if (! empty($translation['content'])) {
@@ -99,8 +102,9 @@ class MessageController extends Controller
             return $message;
         });
 
-        return redirect()->route('projects.messages.index', ['project' => $project])
-            ->with('success', "Message {$message->label} créé");
+        return redirect()
+            ->route('projects.messages.index', ['project' => $project])
+            ->with('success', "Le message \"$message->label\" a été créé");
     }
 
     /**
@@ -114,15 +118,19 @@ class MessageController extends Controller
 
         $message->load('translations');
 
-        $categories = Category::where('project_id', $project->id)
+        $categories = Category::select('id', 'code', 'label')
+            ->where('project_id', $project->id)
             ->whereNull('parent_id')
             ->with('children')
             ->orderBy('position')
             ->get();
 
-        $types = MessageType::all();
+        $types = MessageType::select('id', 'label')
+            ->get();
 
-        $colors = Color::orderBy('position', 'asc')->get();
+        $colors = Color::select('id', 'label')
+            ->orderBy('position', 'asc')
+            ->get();
 
         return view('messages.edit', [
             'project' => $project,
@@ -148,11 +156,6 @@ class MessageController extends Controller
             $submittedLanguageIds = collect($translations)
                 ->pluck('language_id');
 
-            /*
-         * Supprime les traductions correspondant aux langues présentes
-         * dans le formulaire. Elles seront ensuite recréées si leur
-         * contenu n'est pas vide.
-         */
             $message->translations()
                 ->whereIn('language_id', $submittedLanguageIds)
                 ->delete();
@@ -168,13 +171,8 @@ class MessageController extends Controller
         });
 
         return redirect()
-            ->route('projects.messages.index', [
-                'project' => $project,
-            ])
-            ->with(
-                'success',
-                "Message {$message->label} modifié"
-            );
+            ->route('projects.messages.index', ['project' => $project])
+            ->with('success', "Le message \"$message->label\" a été modifié");
     }
 
     /**
@@ -184,15 +182,12 @@ class MessageController extends Controller
     {
         $this->authorize('delete', $message);
 
+        $label = $message->label;
+
         $message->delete();
 
         return redirect()
-            ->route('projects.messages.index', [
-                'project' => $project,
-            ])
-            ->with(
-                'success',
-                "Message {$message->label} supprimé"
-            );
+            ->route('projects.messages.index', ['project' => $project])
+            ->with('success', "Le message \"$label\" a été supprimé");
     }
 }

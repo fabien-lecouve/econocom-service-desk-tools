@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MessageController;
-use App\Http\Controllers\MessageTranslationController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ProjectLanguageSettingController;
 use App\Http\Controllers\QuickMessageController;
@@ -36,7 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('projects.language-settings', ProjectLanguageSettingController::class)->only(['create', 'store']);
 
     Route::resource('projects.categories', CategoryController::class)->except('show')->scoped();
-    Route::resource('projects.messages', MessageController::class)->except('show');
+    Route::resource('projects.messages', MessageController::class)->except('show')->scoped();
 
     Route::get('projects/{project}/quick-messages', [QuickMessageController::class, 'index'])->name('quick-messages.index');
 
