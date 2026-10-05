@@ -24,8 +24,7 @@ class Login extends Controller
                 ?->project;
 
             return redirect()
-                ->route('projects.show', $project)
-                ->with('success', 'Content de vous revoir !');
+                ->route('projects.show', $project);
         }
 
         return back()
