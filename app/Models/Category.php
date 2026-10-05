@@ -10,19 +10,20 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-#[Fillable(['project_id', 'parent_id', 'font_color_id', 'background_color_id', 'border_top_color_id', 'code', 'label', 'position'])]
+#[Fillable([
+    'project_id', 
+    'parent_id', 
+    'font_color_id', 
+    'background_color_id', 
+    'border_top_color_id', 
+    'code', 
+    'label', 
+    'position'
+    ])
+]
 class Category extends Model
 {
     use HasIncrementalCode, HasPosition, SoftDeletes;
-
-    protected static function booted()
-    {
-        static::deleting(function (Category $category) {
-            $category->messages()->delete();
-            $category->children()->get()->each->delete();
-        });
-    }
-
 
     /**
      * Get the attributes that should be cast.
@@ -37,26 +38,34 @@ class Category extends Model
     }
 
 
-    /**
-     * Get the project that owns the category.
-     */
+    // BELONGS TO
     public function project(): BelongsTo
     {
         return $this->belongsTo(Project::class);
     }
 
-    /**
-     * Get the parent category.
-     */
     public function parent(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'parent_id');
     }
 
+    public function fontColor(): BelongsTo
+    {
+        return $this->belongsTo(Color::class, 'font_color_id');
+    }
 
-    /**
-     * Get the child categories.
-     */
+    public function backgroundColor(): BelongsTo
+    {
+        return $this->belongsTo(Color::class, 'background_color_id');
+    }
+
+    public function borderTopColor(): BelongsTo
+    {
+        return $this->belongsTo(Color::class, 'border_top_color_id');
+    }
+
+    
+    // HAS MANY
     public function children()
     {
         return $this->hasMany(Category::class, 'parent_id')
@@ -69,37 +78,19 @@ class Category extends Model
             ]);
     }
 
-    /**
-     * Get the messages for the category.
-     */
     public function messages(): HasMany
     {
         return $this->hasMany(Message::class);
     }
 
 
-    /**
-     * Get the font color that owns the category.
-     */
-    public function fontColor(): BelongsTo
+    // METHODS
+    protected static function booted()
     {
-        return $this->belongsTo(Color::class, 'font_color_id');
-    }
-
-    /**
-     * Get the background color that owns the category.
-     */
-    public function backgroundColor(): BelongsTo
-    {
-        return $this->belongsTo(Color::class, 'background_color_id');
-    }
-
-    /**
-     * Get the border top color that owns the category.
-     */
-    public function borderTopColor(): BelongsTo
-    {
-        return $this->belongsTo(Color::class, 'border_top_color_id');
+        static::deleting(function (Category $category) {
+            $category->messages()->delete();
+            $category->children()->get()->each->delete();
+        });
     }
 
     public static function generateCode(Project $project): string
