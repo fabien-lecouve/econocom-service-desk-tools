@@ -6,9 +6,16 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-#[Fillable(['code', 'label', 'hex', 'position'])]
+#[Fillable([
+    'code',
+    'label',
+    'hex',
+    'position'
+    ])
+]
 class Color extends Model
 {
+    // HAS MANY
     public function categoriesAsFontColor(): HasMany
     {
         return $this->hasMany(Category::class, 'font_color_id');
@@ -21,7 +28,6 @@ class Color extends Model
     {
         return $this->hasMany(Category::class, 'border_top_color_id');
     }
-
 
     public function messagesAsFontColor(): HasMany
     {
@@ -37,6 +43,7 @@ class Color extends Model
     }
 
 
+
     public function projectCategoryFontColorSettings(): HasMany
     {
         return $this->hasMany(ProjectCategoryColorSetting::class, 'font_color_id');
@@ -49,7 +56,6 @@ class Color extends Model
     {
         return $this->hasMany(ProjectCategoryColorSetting::class, 'border_top_color_id');
     }
-
 
     public function projectMessageTypeFontColorSettings(): HasMany
     {

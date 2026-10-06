@@ -7,30 +7,28 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-#[Fillable(['code', 'label'])]
+#[Fillable([
+    'code',
+    'label'
+    ])
+]
 class Language extends Model
 {
-    /**
-     * Get the project language settings for the language.
-     */
+    // HAS ONE
+    public function setting(): HasOne
+    {
+        return $this->hasOne(LanguageSetting::class);
+    }
+
+
+    // HAS MANY
     public function projectLanguageSettings(): HasMany
     {
         return $this->hasMany(ProjectLanguageSetting::class);
     }
 
-    /**
-     * Get the message translations for the language.
-     */
     public function messageTranslations(): HasMany
     {
         return $this->hasMany(MessageTranslation::class);
-    }
-
-    /**
-     * Get the language setting associated with the language.
-     */
-    public function setting(): HasOne
-    {
-        return $this->hasOne(LanguageSetting::class);
     }
 }

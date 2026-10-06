@@ -6,12 +6,14 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-#[Fillable(['code', 'label'])]
+#[Fillable([
+    'code',
+    'label'
+    ])
+]
 class MessageType extends Model
 {
-    /**
-     * Get the messages for the type.
-     */
+    // HAS MANY
     public function messages(): HasMany
     {
         return $this->hasMany(Message::class);

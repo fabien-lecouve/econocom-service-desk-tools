@@ -6,7 +6,11 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-#[Fillable(['code', 'label'])]
+#[Fillable([
+    'code',
+    'label'
+    ])
+]
 class Role extends Model
 {
     public const READER = 'reader';
@@ -14,9 +18,8 @@ class Role extends Model
     public const TECHNICIAN_REFERENT = 'technician_referent';
     public const TECHNICAL_COORDINATOR = 'technical_coordinator';
 
-    /**
-     * Get the memberships for the role.
-     */
+    
+    // HAS MANY
     public function memberships(): HasMany
     {
         return $this->hasMany(Membership::class);

@@ -7,11 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-#[Fillable(['project_id', 'font_color_id', 'background_color_id', 'border_top_color_id'])]
+#[Fillable([
+    'project_id',
+    'font_color_id',
+    'background_color_id',
+    'border_top_color_id'
+    ])
+]
 class ProjectCategoryColorSetting extends Model
 {
     use SoftDeletes;
 
+    // BELONGS TO
     public function project(): BelongsTo
     {
         return $this->belongsTo(Project::class);

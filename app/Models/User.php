@@ -11,8 +11,18 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-#[Fillable(['firstname', 'lastname', 'email', 'password'])]
-#[Hidden(['password', 'remember_token'])]
+#[Fillable([
+    'firstname',
+    'lastname',
+    'email',
+    'password'
+    ])
+]
+#[Hidden([
+    'password',
+    'remember_token'
+    ])
+]
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
@@ -33,7 +43,8 @@ class User extends Authenticatable
         ];
     }
 
-
+    
+    // HAS MANY
     public function memberships(): HasMany
     {
         return $this->hasMany(Membership::class);

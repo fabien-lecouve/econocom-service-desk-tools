@@ -9,46 +9,47 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-#[Fillable(['code', 'label', 'internal_phone', 'external_phone', 'email'])]
+#[Fillable([
+    'code',
+    'label',
+    'internal_phone',
+    'external_phone',
+    'email'
+    ])
+]
 class Project extends Model
 {
     use HasSlugCode, SoftDeletes;
-    /**
-     * Get the memberships for the project.
-     */
-    public function memberships(): HasMany
+
+    // HAS ONE
+    public function categoryColorSetting(): HasOne
     {
-        return $this->hasMany(Membership::class);
+        return $this->hasOne(ProjectCategoryColorSetting::class);
     }
 
-    /**
-     * Get the categories for the project.
-    */
-    public function categories(): HasMany
-    {
-        return $this->hasMany(Category::class);
-    }
 
-    public function messages(): HasMany
+    // HAS MANY
+    public function messageTypeColorSettings(): HasMany
     {
-        return $this->hasMany(Message::class);
+        return $this->hasMany(ProjectMessageTypeColorSetting::class);
     }
-
-    /**
-     * Get the project language settings for the project.
-     */
     public function projectLanguageSettings(): HasMany
     {
         return $this->hasMany(ProjectLanguageSetting::class);
     }
 
-    public function messageTypeColorSettings(): HasMany
+    public function memberships(): HasMany
     {
-        return $this->hasMany(ProjectMessageTypeColorSetting::class);
+        return $this->hasMany(Membership::class);
     }
 
-    public function categoryColorSetting(): HasOne
+    public function categories(): HasMany
     {
-        return $this->hasOne(ProjectCategoryColorSetting::class);
+        return $this->hasMany(Category::class);
     }
+    public function messages(): HasMany
+    {
+        return $this->hasMany(Message::class);
+    }
+
 }
