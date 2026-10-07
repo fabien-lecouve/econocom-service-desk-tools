@@ -36,7 +36,8 @@ class ProjectLanguageSettingController extends Controller
                 ]);
         }
 
-        return redirect()->route('projects.show', [
+        return redirect()
+            ->route('projects.show', [
             'project' => $project,
         ]);
     }
