@@ -27,12 +27,12 @@
         <table class="table">
             <thead class="table__thead">
                 <tr>
-                    <th>Prénom</th>
                     <th>Nom</th>
+                    <th>Prénom</th>
                     <th>Email</th>
                     <th>Projets</th>
                     <th>Admin</th>
-                    <th>Knowledge Manager</th>
+                    <th>KM</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -40,8 +40,8 @@
             <tbody class="table__tbody">
                 @foreach ($users as $user)
                     <tr>
-                        <td>{{ $user->firstname }}</td>
                         <td>{{ $user->lastname }}</td>
+                        <td>{{ $user->firstname }}</td>
                         <td>{{ $user->email }}</td>
 
                         <td>

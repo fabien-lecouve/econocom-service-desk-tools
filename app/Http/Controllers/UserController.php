@@ -19,8 +19,11 @@ class UserController extends Controller
     {
         $this->authorize('viewAny', User::class);
 
-        $users = User::with('memberships.role')
-            ->with('memberships.project')
+        $users = User::select('id', 'lastname', 'firstname', 'email')
+            ->with([
+                'memberships.role',
+                'memberships.project'
+            ])
             ->orderBy('lastname')
             ->get();
 
@@ -32,8 +35,10 @@ class UserController extends Controller
      */
     public function create()
     {
-        $projects = Project::all();
-        $roles = Role::all();
+        $this->authorize('create', User::class);
+
+        $projects = Project::select('id', 'label')->get();
+        $roles = Role::select('id', 'label')->get();
 
         return view('users.create', [
             'projects' => $projects,
@@ -46,6 +51,8 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
+        $this->authorize('create', User::class);
+
         $validated = $request->validated();
 
         DB::transaction(function () use ($validated) {
@@ -71,15 +78,7 @@ class UserController extends Controller
 
         return redirect()
             ->route('users.index')
-            ->with('success', 'Utilisateur créé.');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(User $user)
-    {
-        //
+            ->with('success', 'L\'utilisateur a bien été créé.');
     }
 
     /**
@@ -87,10 +86,12 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        $this->authorize('update', $user);
+
         $user->load(['memberships.project', 'memberships.role']);
 
-        $projects = Project::all();
-        $roles = Role::all();
+        $projects = Project::select('id', 'label')->get();
+        $roles = Role::select('id', 'label')->get();
 
         return view('users.edit', [
             'user' => $user,
@@ -104,9 +105,9 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        $validated = $request->validated();
+        $this->authorize('update', $user);
 
-        // dd($validated['is_knowledge_manager']);
+        $validated = $request->validated();
 
         DB::transaction(function () use ($validated, $user) {
             $user->firstname = $validated['firstname'];
@@ -133,7 +134,7 @@ class UserController extends Controller
 
         return redirect()
             ->route('users.index')
-            ->with('success', 'Utilisateur modifié.');
+            ->with('success', 'L\'utilisateur a bien été modifié.');
     }
 
     /**
@@ -141,10 +142,12 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        $this->authorize('delete', $user);
+
         $user->delete();
 
         return redirect()
             ->route('users.index')
-            ->with('success', 'Utilisateur supprimé.');
+            ->with('success', 'L\'utilisateur a bien été supprimé.');
     }
 }

@@ -39,6 +39,5 @@ Route::middleware('auth')->group(function () {
 
     Route::get('projects/{project}/quick-messages', [QuickMessageController::class, 'index'])->name('quick-messages.index');
 
-
-    Route::resource('users', UserController::class);
+    Route::resource('users', UserController::class)->except('show');
 });
