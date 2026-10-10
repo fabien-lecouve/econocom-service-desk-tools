@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Color;
 use App\Models\Language;
 use App\Models\MessageType;
+use App\Services\ProjectColorService;
 use Illuminate\Support\Facades\DB;
 
 class ProjectController extends Controller
@@ -20,7 +21,8 @@ class ProjectController extends Controller
     {
         $this->authorize('viewAny', Project::class);
 
-        $projects = Project::with('projectLanguageSettings.language')->get();
+        $projects = Project::select('id', 'code', 'label', 'internal_phone', 'external_phone')
+            ->with('projectLanguageSettings.language')->get();
 
         return view('projects.index', ['projects' => $projects]);
     }
@@ -40,13 +42,13 @@ class ProjectController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreProjectRequest $request)
+    public function store(StoreProjectRequest $request, ProjectColorService $colorService)
     {
         $this->authorize('create', Project::class);
 
         $validated = $request->validated();
 
-        $project = DB::transaction(function () use ($validated) {
+        $project = DB::transaction(function () use ($validated, $colorService) {
             $project = Project::create($validated);
 
             foreach ($validated['languages'] as $language) {
@@ -55,52 +57,14 @@ class ProjectController extends Controller
                 ]);
             }
 
-            // Couleurs par défaut des catégories
-            $black = Color::where('code', 'black-dark')->firstOrFail();
-            $white = Color::where('code', 'white')->firstOrFail();
-
-            $project->categoryColorSetting()->create([
-                'font_color_id' => $black->id,
-                'background_color_id' => $white->id,
-                'border_top_color_id' => null,
-            ]);
-
-            // Couleurs par défaut des types de messages
-            $messageTypeColors = [
-                'work_note' => [
-                    'font' => 'white',
-                    'background' => 'orange',
-                ],
-                'comment' => [
-                    'font' => 'black-dark',
-                    'background' => 'white-light',
-                ],
-                'escalation' => [
-                    'font' => 'white',
-                    'background' => 'yellow',
-                ],
-            ];
-
-            foreach ($messageTypeColors as $typeCode => $colors) {
-                $messageType = MessageType::where('code', $typeCode)->firstOrFail();
-
-                $fontColor = Color::where('code', $colors['font'])->firstOrFail();
-                $backgroundColor = Color::where('code', $colors['background'])->firstOrFail();
-
-                $project->messageTypeColorSettings()->create([
-                    'message_type_id' => $messageType->id,
-                    'font_color_id' => $fontColor->id,
-                    'background_color_id' => $backgroundColor->id,
-                    'border_top_color_id' => null,
-                ]);
-            }
+            $colorService->initialize($project);
 
             return $project;
         });
 
-        return redirect()->route('projects.language-settings.create', [
-            'project' => $project,
-        ]);
+        return redirect()
+            ->route('projects.language-settings.create', ['project' => $project])
+            ->with('success', "Le projet \"$project->label\" a été créé");
     }
 
     /**
@@ -125,10 +89,11 @@ class ProjectController extends Controller
         $this->authorize('view', $project);
 
         $project->load('projectLanguageSettings.language');
+        $languages = Language::pluck('label', 'id');
 
         return view('projects.edit', [
             'project' => $project,
-            'languages' => Language::all(),
+            'languages' => $languages,
         ]);
     }
 
@@ -166,7 +131,7 @@ class ProjectController extends Controller
 
         return redirect()
             ->route('projects.show', $project)
-            ->with('success', "Le projet {$project->label} a été modifié.");
+            ->with('success', "Le projet \"$project->label\" a été modifié");
     }
 
     /**
@@ -179,6 +144,8 @@ class ProjectController extends Controller
         $label = $project->label;
         $project->delete();
 
-        return redirect()->route('projects.index')->with('success', "Projet $label supprimé");
+        return redirect()
+            ->route('projects.index')
+            ->with('success', "Le projet \"$label\" a été supprimé");
     }
 }
