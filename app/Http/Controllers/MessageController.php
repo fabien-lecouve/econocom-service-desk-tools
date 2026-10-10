@@ -153,19 +153,16 @@ class MessageController extends Controller
         DB::transaction(function () use ($validated, $translations, $message) {
             $message->update($validated);
 
-            $submittedLanguageIds = collect($translations)
-                ->pluck('language_id');
-
-            $message->translations()
-                ->whereIn('language_id', $submittedLanguageIds)
-                ->delete();
-
             foreach ($translations as $translation) {
                 if (! empty($translation['content'])) {
-                    $message->translations()->create([
-                        'language_id' => $translation['language_id'],
-                        'content' => $translation['content'],
-                    ]);
+                    $message->translations()->updateOrCreate(
+                        ['language_id' => $translation['language_id']],
+                        ['content' => $translation['content']]
+                    );
+                } else {
+                    $message->translations()
+                        ->where('language_id', $translation['language_id'])
+                        ->delete();
                 }
             }
         });
