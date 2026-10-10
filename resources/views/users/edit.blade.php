@@ -63,16 +63,16 @@
             <div class="form__content form__content--3">
 
                 <x-forms.input
-                    name="firstname"
-                    label="Prénom"
-                    :value="old('firstname', $user->firstname)"
+                    name="lastname"
+                    label="Nom"
+                    :value="old('lastname', $user->lastname)"
                     required
                 />
 
                 <x-forms.input
-                    name="lastname"
-                    label="Nom"
-                    :value="old('lastname', $user->lastname)"
+                    name="firstname"
+                    label="Prénom"
+                    :value="old('firstname', $user->firstname)"
                     required
                 />
 

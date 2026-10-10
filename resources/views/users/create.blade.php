@@ -60,16 +60,16 @@
             </div>
 
             <div class="form__content form__content--3">
-
+                
                 <x-forms.input
-                    name="firstname"
-                    label="Prénom"
+                    name="lastname"
+                    label="Nom"
                     required
                 />
 
                 <x-forms.input
-                    name="lastname"
-                    label="Nom"
+                    name="firstname"
+                    label="Prénom"
                     required
                 />
 
