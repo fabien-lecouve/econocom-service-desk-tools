@@ -1,82 +1,78 @@
-window.quickMessages = function (projects, languagesByProject, data) {
-    return {
-        projects,
-        languagesByProject,
-        data,
-
-        projectId: projects[0]?.id ?? null,
-        languageId: null,
-        lastMessage: null,
-        toast: '',
-
-        init() {
-            this.languageId = this.projectLanguages()[0]?.language_id ?? null;
+document.addEventListener('alpine:init', () => {
+    Alpine.data('quickMessages', (projects, selectedProjectId) => ({
+        projects: projects,
+        messageTypes: {
+            worknote: 'work_note',
+            comment: 'comment',
+            escalation: 'escalation'
         },
+        selectedProjectId: selectedProjectId,
+        selectedLanguageId: null,
+        selectedMessage: null,
 
-        selectProject(id) {
-            this.projectId = id;
-            this.languageId = this.projectLanguages()[0]?.language_id ?? null;
-
-            // Évite de recopier un message appartenant à l'ancien projet.
-            this.lastMessage = null;
+        setProjectId(id) {
+            this.selectedProjectId = id;
+            this.selectedLanguageId = this.currentProject.project_language_settings[0].language_id;
+            this.selectedMessage = null;
         },
+        setLanguageId(id) {
+            this.selectedLanguageId = id;
 
-        async selectLanguage(id) {
-            this.languageId = id;
-
-            if (this.lastMessage) {
-                await this.copy(this.lastMessage);
+            if (this.selectedMessage) {
+                this.copy(this.selectedMessage)
             }
         },
 
+        get currentProject() {
+            return this.projects.find((p) => p.id === this.selectedProjectId);
+        },
+
+        get currentProjectLanguageSetting() {
+            return this.currentProject.project_language_settings.find((setting) => setting.language_id === this.selectedLanguageId);
+        },
+
+        filteredLanguages() {
+            return this.currentProject.project_language_settings;
+        },
+
         categories() {
-            return this.data?.[this.projectId] ?? [];
-        },
-
-        projectLanguages() {
-            return this.languagesByProject?.[this.projectId] ?? [];
-        },
-
-        getSelectedLanguage() {
-            return this.projectLanguages().find(
-                language => language.language_id === this.languageId
-            ) ?? null;
-        },
-
-        getSelectedProject() {
-            return this.projects.find(
-                project => project.id === this.projectId
-            ) ?? null;
+            return this.currentProject.categories;
         },
 
         getCategoryStyle(category) {
+            const categoryColorSetting = this.currentProject.category_color_setting;
+
+            let borderTopColor = category.border_top_color ? category.border_top_color.hex : categoryColorSetting.border_top_color?.hex;
+
             return {
-                color: category.font_color,
-                backgroundColor: category.background_color,
-                borderTop: category.border_top_color
-                            ? `4px solid ${category.border_top_color}`
-                            : null,
+                color: category.font_color ? category.font_color.hex : categoryColorSetting.font_color.hex,
+                backgroundColor: category.background_color ? category.background_color.hex : categoryColorSetting.background_color.hex,
+                borderTop: borderTopColor
+                    ? `4px solid ${borderTopColor}`
+                    : null,
             };
         },
 
         getMessageStyle(message) {
+            const messageColorSettings = this.currentProject.message_type_color_settings;
+            const messageColorSetting = messageColorSettings.find((m) => m.message_type_id === message.message_type_id)
+
+            let borderTopColor = message.border_top_color ? message.border_top_color.hex : messageColorSetting.border_top_color?.hex;
+
             return {
-                color: message.font_color,
-                backgroundColor: message.background_color,
-                borderTop: message.border_top_color
-                            ? `4px solid ${message.border_top_color}`
-                            : null,
+                color: message.font_color ? message.font_color.hex : messageColorSetting.font_color.hex,
+                backgroundColor: message.background_color ? message.background_color.hex : messageColorSetting.background_color.hex,
+                borderTop: borderTopColor
+                    ? `4px solid ${borderTopColor}`
+                    : null,
             };
         },
 
         replaceVariables(text) {
-            const project = this.getSelectedProject();
-            const language = this.getSelectedLanguage();
-
             const variables = {
-                external_phone: language?.external_phone_override || project?.external_phone || '',
-                internal_phone: language?.internal_phone_override || project?.internal_phone || '',
-                email: project?.email || '',
+                external_phone: this.currentProjectLanguageSetting.external_phone_override || this.currentProject.external_phone || '',
+                internal_phone: this.currentProjectLanguageSetting.internal_phone_override || this.currentProject.internal_phone || '',
+                email: this.currentProject.email || '',
             };
 
             return Object.entries(variables).reduce(
@@ -85,76 +81,51 @@ window.quickMessages = function (projects, languagesByProject, data) {
             );
         },
 
-        getMessageContent(message) {
-            const selectedContent = message.content?.[this.languageId];
+        getFilledContent(message) {
+            const selectedTranslation = message.translations.find((translation) => translation.language_id === this.selectedLanguageId);
 
-            if (selectedContent?.trim()) {
-                return selectedContent;
+            if (selectedTranslation?.content) {
+                return selectedTranslation.content;
             }
 
-            // Cherche selon l’ordre des langues du projet.
-            for (const language of this.projectLanguages()) {
-                const content = message.content?.[language.language_id];
+            const fallbackTranslation = message.translations.find((translation) => translation.content);
 
-                if (content?.trim()) {
-                    return content;
-                }
-            }
-
-            // Sécurité si une traduction existe mais que sa langue
-            // n’est plus configurée sur le projet.
-            return Object.values(message.content ?? {}).find(
-                content => content?.trim()
-            ) ?? '';
+            return fallbackTranslation?.content ?? '';
         },
 
-        getFormattedMessage(message) {
-            const lang = this.getSelectedLanguage();
+        buildMessage(message) {
+            const content = this.replaceVariables(this.getFilledContent(message));
 
-            if (!lang) {
-                return '';
+            if (message.type.code === this.messageTypes.worknote) {
+                return content;
             }
 
-            const salutation = this.replaceVariables(lang.salutation);
-            const closing = this.replaceVariables(lang.closing);
-            const signature = this.replaceVariables(lang.signature);
+            const salutation = this.currentProjectLanguageSetting.language.setting.salutation;
+            const closing = this.currentProjectLanguageSetting.language.setting.closing;
 
-            const content = this.replaceVariables(
-                this.getMessageContent(message)
-            );
+            if (message.type.code === this.messageTypes.escalation) {
+                return `${salutation},\n\n${content}\n\n${closing},`;
+            }
 
-            switch (message.type) {
-                case 'work_note':
-                    return content;
+            const signature = this.replaceVariables(this.currentProjectLanguageSetting.signature);
 
-                case 'escalation':
-                    return `${salutation},\n\n${content}\n\n${closing},`;
-
-                default:
-                    return `${salutation},\n\n${content}\n\n${closing},\n${signature}`;
+            if (message.type.code === this.messageTypes.comment) {
+                return `${salutation},\n\n${content}\n\n${closing},\n\n${signature}`;
             }
         },
 
-        async copy(message) {
-            this.lastMessage = message;
+        copy(message) {
+            this.selectedMessage = message;
 
-            try {
-                await navigator.clipboard.writeText(
-                    this.getFormattedMessage(message)
-                );
+            const text = this.buildMessage(message);
 
-                this.showToast('Copié');
-            } catch (error) {
-                this.showToast('Erreur copie');
+            if (navigator.clipboard?.writeText) {
+                return navigator.clipboard.writeText(text);
             }
         },
 
-        showToast(message) {
-            this.toast = message;
-
-            setTimeout(() => {
-                this.toast = '';
-            }, 1000);
+        init() {
+            this.selectedLanguageId = this.currentProject.project_language_settings[0].language_id;
         }
-    };
-};
+    }))
+})
