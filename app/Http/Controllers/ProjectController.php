@@ -89,7 +89,7 @@ class ProjectController extends Controller
         $this->authorize('view', $project);
 
         $project->load('projectLanguageSettings.language');
-        $languages = Language::pluck('label', 'id');
+        $languages = Language::select('id', 'code', 'label')->get();
 
         return view('projects.edit', [
             'project' => $project,
