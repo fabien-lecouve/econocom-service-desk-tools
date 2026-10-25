@@ -51,6 +51,10 @@
         &--3 {
             grid-template-columns: repeat(3, 1fr);
         }
+
+        &--center {
+            place-items: center;
+        }
     }
 
     &__main {
@@ -60,6 +64,20 @@
     &__aside {
         padding-left: 32px;
         border-left: 1px solid $gray-light;
+    }
+
+    &__preview {
+        width: fit-content;
+        padding: 16px 32px;
+        border-radius: 8px;
+        box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+        
+        &--category {
+            text-transform: uppercase;
+        }
+        &--message {
+            text-transform: lowercase;
+        }
     }
 
     &__columns {
@@ -132,6 +150,56 @@
         }
     }
 
+    &__color-selector {
+        position: relative;
+        &-button {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+            cursor: pointer;
+            * {
+                font-size: 13.3333px;
+            }
+        }
+        &-list {
+            width: 100%;
+            border: 1px solid $gray-light;
+            background: $white-light;
+            max-height: 500px;
+            overflow-y: auto;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            z-index: 10;
+
+            &.open-up {
+                top: auto;
+                bottom: 100%;
+            }
+        }
+        &-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 16px;
+            cursor: pointer;
+            span {
+                font-size: 13.3333px;
+            }
+        }
+        &-item:hover {
+            background-color: $gray-dark;
+            span {
+                color: $white-light;
+            }
+        }
+        &-hex {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+    }
+    
     &__notice {
         display: flex;
         align-items: center;

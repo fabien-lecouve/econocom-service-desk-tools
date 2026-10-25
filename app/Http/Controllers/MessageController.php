@@ -9,6 +9,7 @@ use App\Models\Color;
 use App\Models\Message;
 use App\Models\MessageType;
 use App\Models\Project;
+use App\Models\ProjectMessageTypeColorSetting;
 use Illuminate\Support\Facades\DB;
 
 class MessageController extends Controller
@@ -59,8 +60,12 @@ class MessageController extends Controller
 
         $defaultType = $types->firstWhere('code', 'comment')?->id;
 
-        $colors = Color::select('id', 'label')
+        $colors = Color::select('id', 'label', 'hex')
             ->orderBy('position', 'asc')
+            ->get();
+
+        $messageTypeColorSettings = ProjectMessageTypeColorSetting::where('project_id', $project->id)
+            ->with(['fontColor', 'backgroundColor', 'borderTopColor'])
             ->get();
 
         return view('messages.create', [
@@ -68,7 +73,8 @@ class MessageController extends Controller
             'categories' => $categories,
             'types' => $types,
             'defaultType' => $defaultType,
-            'colors' => $colors
+            'colors' => $colors,
+            'messageTypeColorSettings' => $messageTypeColorSettings
         ]);
     }
 
@@ -128,8 +134,12 @@ class MessageController extends Controller
         $types = MessageType::select('id', 'label')
             ->get();
 
-        $colors = Color::select('id', 'label')
+        $colors = Color::select('id', 'label', 'hex')
             ->orderBy('position', 'asc')
+            ->get();
+
+        $messageTypeColorSettings = ProjectMessageTypeColorSetting::where('project_id', $project->id)
+            ->with(['fontColor', 'backgroundColor', 'borderTopColor'])
             ->get();
 
         return view('messages.edit', [
@@ -137,7 +147,8 @@ class MessageController extends Controller
             'message' => $message,
             'categories' => $categories,
             'types' => $types,
-            'colors' =>$colors
+            'colors' => $colors,
+            'messageTypeColorSettings' => $messageTypeColorSettings
         ]);
     }
 

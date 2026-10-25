@@ -44,6 +44,18 @@
         method="POST"
         action="{{ route('projects.messages.update', [$project, $message]) }}"
         class="form"
+        x-data="messagePreview(
+            {{ Js::from($message) }},
+            {{ Js::from($colors) }},
+            {{ Js::from($messageTypeColorSettings) }},
+            {{ Js::from([
+                'label' => old('label', $message->label),
+                'message_type_id' => old('message_type_id', $message->message_type_id),
+                'font_color_id' => old('font_color_id', $message->font_color_id),
+                'background_color_id' => old('background_color_id', $message->background_color_id),
+                'border_top_color_id' => old('border_top_color_id', $message->border_top_color_id),
+            ]) }}
+        )"
     >
 
         @csrf
@@ -72,6 +84,7 @@
                     label="Libellé"
                     :value="old('label', $message->label)"
                     required
+                    x-model=label
                 />
 
                 <x-forms.select
@@ -81,13 +94,14 @@
                     :value="old('message_type_id', $message->message_type_id)"
                     placeholder="Sélectionner un type de message"
                     required
+                    x-model=messageTypeId
                 />
 
-                <x-forms.input
+                {{-- <x-forms.input
                     name="shortcut"
                     label="Raccourci clavier"
                     :value="old('shortcut', $message->shortcut)"
-                />
+                /> --}}
 
             </div>
 
@@ -149,28 +163,28 @@
 
                 <div class="form__content form__content--3">
 
-                    <x-forms.select
+                    <x-forms.color-selector 
                         name="font_color_id"
                         label="Texte"
-                        :options="$colors"
-                        placeholder="Choisiez une couleur"
-                        :value="old('font_color_id', $message->font_color_id)"
+                        :colors="$colors"
+                        :value="$message->font_color_id"
+                        x-model="fontColorId"
                     />
 
-                    <x-forms.select
+                    <x-forms.color-selector 
                         name="background_color_id"
                         label="Arrière plan"
-                        :options="$colors"
-                        placeholder="Choisiez une couleur"
-                        :value="old('background_color_id', $message->background_color_id)"
+                        :colors="$colors"
+                        :value="$message->background_color_id"
+                        x-model="backgroundColorId"
                     />
 
-                    <x-forms.select
+                    <x-forms.color-selector 
                         name="border_top_color_id"
                         label="Bordure supérieure"
-                        :options="$colors"
-                        placeholder="Choisiez une couleur"
-                        :value="old('border_top_color_id', $message->border_top_color_id)"
+                        :colors="$colors"
+                        :value="$message->border_top_color_id"
+                        x-model="borderTopColorId"
                     />
 
                 </div>
@@ -183,8 +197,16 @@
                     <h2 class="form__title">Aperçu</h2>
                 </div>
 
-                <div class="form__content">
-                    <p>Message</p>
+                <div class="form__content form__content--center">
+                    <p 
+                        x-text="label"
+                        class="form__preview form__preview--message"
+                        :style="{
+                            color: fontColor,
+                            background: bgColor,
+                            borderTop: borderTopColor
+                            }"
+                        ></p>
                 </div>
 
             </aside>

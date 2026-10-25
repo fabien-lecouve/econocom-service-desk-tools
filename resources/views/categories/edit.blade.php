@@ -36,8 +36,23 @@
         ],
     ]" />
 
-    <form id="category-edit-form" method="POST" action="{{ route('projects.categories.update', [$project, $category]) }}"
-        class="form">
+    <form 
+        id="category-edit-form" 
+        method="POST" 
+        action="{{ route('projects.categories.update', [$project, $category]) }}"
+        class="form"
+        x-data="categoryPreview(
+            {{ Js::from($category) }},
+            {{ Js::from($colors) }},
+            {{ Js::from($categoryTypeColorSetting) }},
+            {{ Js::from([
+                'label' => old('label'),
+                'font_color_id' => old('font_color_id'),
+                'background_color_id' => old('background_color_id'),
+                'border_top_color_id' => old('border_top_color_id'),
+            ]) }}
+        )"
+        >
 
         @csrf
         @method('PUT')
@@ -60,7 +75,13 @@
 
             <div class="form__content form__content--2">
 
-                <x-forms.input name="label" label="Libellé" :value="old('label', $category->label)" x-model="categoryLabel" required />
+                <x-forms.input 
+                    name="label" 
+                    label="Libellé" 
+                    :value="old('label', $category->label)" 
+                    x-model=label
+                    required 
+                    />
 
             </div>
 
@@ -117,28 +138,28 @@
 
                 <div class="form__content form__content--3">
 
-                    <x-forms.select
+                    <x-forms.color-selector 
                         name="font_color_id"
                         label="Texte"
-                        :options="$colors"
-                        placeholder="Choisiez une couleur"
-                        :value="old('font_color_id', $category->font_color_id)"
+                        :colors="$colors"
+                        :value="$category->font_color_id"
+                        x-model="fontColorId"
                     />
 
-                    <x-forms.select
+                    <x-forms.color-selector 
                         name="background_color_id"
                         label="Arrière plan"
-                        :options="$colors"
-                        placeholder="Choisiez une couleur"
-                        :value="old('background_color_id', $category->background_color_id)"
+                        :colors="$colors"
+                        :value="$category->background_color_id"
+                        x-model="backgroundColorId"
                     />
 
-                    <x-forms.select
+                    <x-forms.color-selector 
                         name="border_top_color_id"
                         label="Bordure supérieure"
-                        :options="$colors"
-                        placeholder="Choisiez une couleur"
-                        :value="old('border_top_color_id', $category->border_top_color_id)"
+                        :colors="$colors"
+                        :value="$category->border_top_color_id"
+                        x-model="borderTopColorId"
                     />
 
                 </div>
@@ -153,8 +174,16 @@
                     </h2>
                 </div>
 
-                <div class="form__content">
-                    <p x-text="categoryLabel || 'Catégorie'"></p>
+                <div class="form__content form__content--center">
+                    <p 
+                        x-text="label"
+                        class="form__preview form__preview--category"
+                        :style="{
+                            color: fontColor,
+                            background: bgColor,
+                            borderTop: borderTopColor
+                            }"
+                        ></p>
                 </div>
 
             </aside>

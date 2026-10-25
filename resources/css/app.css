@@ -158,7 +158,7 @@ a, button {
   align-items: center;
 }
 .header .breadcrumb__item:not(:last-child)::after {
-  content: ">";
+  content: "/";
   margin-inline: 8px;
   color: #6B7280;
 }
@@ -377,12 +377,27 @@ a, button {
 .form__content--3 {
   grid-template-columns: repeat(3, 1fr);
 }
+.form__content--center {
+  place-items: center;
+}
 .form__main {
   min-width: 0;
 }
 .form__aside {
   padding-left: 32px;
   border-left: 1px solid #D1D5DB;
+}
+.form__preview {
+  width: fit-content;
+  padding: 16px 32px;
+  border-radius: 8px;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+.form__preview--category {
+  text-transform: uppercase;
+}
+.form__preview--message {
+  text-transform: lowercase;
 }
 .form__columns {
   display: flex;
@@ -437,6 +452,54 @@ a, button {
   padding-left: 16px;
   border-left: 1px solid #D1D5DB;
   font-weight: 600;
+}
+.form__color-selector {
+  position: relative;
+}
+.form__color-selector-button {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+  cursor: pointer;
+}
+.form__color-selector-button * {
+  font-size: 13.3333px;
+}
+.form__color-selector-list {
+  width: 100%;
+  border: 1px solid #D1D5DB;
+  background: #FFFFFF;
+  max-height: 500px;
+  overflow-y: auto;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 10;
+}
+.form__color-selector-list.open-up {
+  top: auto;
+  bottom: 100%;
+}
+.form__color-selector-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+.form__color-selector-item span {
+  font-size: 13.3333px;
+}
+.form__color-selector-item:hover {
+  background-color: #6B7280;
+}
+.form__color-selector-item:hover span {
+  color: #FFFFFF;
+}
+.form__color-selector-hex {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
 }
 .form__notice {
   display: flex;
@@ -678,6 +741,7 @@ a, button {
   text-align: center;
   margin-bottom: 8px;
   text-transform: uppercase;
+  font-weight: 700;
   color: inherit;
 }
 .quick-messages .category__content {
@@ -702,6 +766,8 @@ a, button {
   text-align: center;
   margin-bottom: 8px;
   color: inherit;
+  text-transform: uppercase;
+  font-weight: 600;
 }
 .quick-messages .subcategory__content {
   display: grid;
@@ -720,7 +786,7 @@ a, button {
   text-align: center;
   margin-bottom: 8px;
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: 500;
   color: inherit;
 }
 .quick-messages .group__content {

@@ -43,6 +43,17 @@
         method="POST"
         action="{{ route('projects.categories.store', $project) }}"
         class="form"
+        x-data="categoryPreview(
+            null,
+            {{ Js::from($colors) }},
+            {{ Js::from($categoryTypeColorSetting) }},
+            {{ Js::from([
+                'label' => old('label'),
+                'font_color_id' => old('font_color_id'),
+                'background_color_id' => old('background_color_id'),
+                'border_top_color_id' => old('border_top_color_id'),
+            ]) }}
+        )"
         >
 
         @csrf
@@ -69,6 +80,7 @@
                     name="label"
                     label="Libellé"
                     required
+                    x-model=label
                 />
 
             </div>
@@ -123,25 +135,25 @@
 
                 <div class="form__content form__content--3">
 
-                    <x-forms.select
+                    <x-forms.color-selector 
                         name="font_color_id"
                         label="Texte"
-                        :options="$colors"
-                        placeholder="Choisiez une couleur"
+                        :colors="$colors"
+                        x-model="fontColorId"
                     />
 
-                    <x-forms.select
+                    <x-forms.color-selector 
                         name="background_color_id"
                         label="Arrière plan"
-                        :options="$colors"
-                        placeholder="Choisiez une couleur"
+                        :colors="$colors"
+                        x-model="backgroundColorId"
                     />
 
-                    <x-forms.select
+                    <x-forms.color-selector 
                         name="border_top_color_id"
                         label="Bordure supérieure"
-                        :options="$colors"
-                        placeholder="Choisiez une couleur"
+                        :colors="$colors"
+                        x-model="borderTopColorId"
                     />
 
                 </div>
@@ -154,8 +166,16 @@
                     <h2 class="form__title">Aperçu</h2>
                 </div>
 
-                <div class="form__content">
-                    <p>Catégorie</p>
+                <div class="form__content form__content--center">
+                    <p 
+                        x-text="label"
+                        class="form__preview form__preview--category"
+                        :style="{
+                            color: fontColor,
+                            background: bgColor,
+                            borderTop: borderTopColor
+                            }"
+                        ></p>
                 </div>
 
             </aside>

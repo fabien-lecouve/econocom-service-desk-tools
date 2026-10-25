@@ -44,6 +44,18 @@
         method="POST"
         action="{{ route('projects.messages.store', $project) }}"
         class="form"
+        x-data="messagePreview(
+            null,
+            {{ Js::from($colors) }},
+            {{ Js::from($messageTypeColorSettings) }},
+            {{ Js::from([
+                'label' => old('label'),
+                'message_type_id' => old('message_type_id', $defaultType),
+                'font_color_id' => old('font_color_id'),
+                'background_color_id' => old('background_color_id'),
+                'border_top_color_id' => old('border_top_color_id'),
+            ]) }}
+        )"
         >
 
         @csrf
@@ -70,6 +82,7 @@
                     name="label"
                     label="Libellé"
                     required
+                    x-model=label
                 />
 
                 <x-forms.select
@@ -78,12 +91,13 @@
                     :options="$types"
                     :value="$defaultType"
                     required
+                    x-model=messageTypeId
                 />
 
-                <x-forms.input
+                {{-- <x-forms.input
                     name="shortcut"
                     label="Raccourci clavier"
-                />
+                /> --}}
 
             </div>
 
@@ -137,25 +151,25 @@
 
                 <div class="form__content form__content--3">
 
-                    <x-forms.select
+                    <x-forms.color-selector 
                         name="font_color_id"
                         label="Texte"
-                        :options="$colors"
-                        placeholder="Choisiez une couleur"
+                        :colors="$colors"
+                        x-model="fontColorId"
                     />
 
-                     <x-forms.select
+                    <x-forms.color-selector 
                         name="background_color_id"
                         label="Arrière plan"
-                        :options="$colors"
-                        placeholder="Choisiez une couleur"
+                        :colors="$colors"
+                        x-model="backgroundColorId"
                     />
 
-                    <x-forms.select
+                    <x-forms.color-selector 
                         name="border_top_color_id"
                         label="Bordure supérieure"
-                        :options="$colors"
-                        placeholder="Choisiez une couleur"
+                        :colors="$colors"
+                        x-model="borderTopColorId"
                     />
 
                 </div>
@@ -168,8 +182,16 @@
                     <h2 class="form__title">Aperçu</h2>
                 </div>
 
-                <div class="form__content">
-                    <p>Message</p>
+                <div class="form__content form__content--center">
+                    <p 
+                        x-text="label"
+                        class="form__preview form__preview--message"
+                        :style="{
+                            color: fontColor,
+                            background: bgColor,
+                            borderTop: borderTopColor
+                            }"
+                        ></p>
                 </div>
 
             </aside>

@@ -7,6 +7,7 @@ use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Color;
 use App\Models\Project;
+use App\Models\ProjectCategoryColorSetting;
 
 class CategoryController extends Controller
 {
@@ -44,14 +45,19 @@ class CategoryController extends Controller
             ->orderBy('position')
             ->get();
 
-        $colors = Color::select('id', 'label')
+        $colors = Color::select('id', 'label', 'hex')
             ->orderBy('position', 'asc')
             ->get();
+
+        $categoryTypeColorSetting = ProjectCategoryColorSetting::Where('project_id', $project->id)
+            ->with(['fontColor', 'backgroundColor', 'borderTopColor'])
+            ->first();
 
         return view('categories.create', [
             'project' => $project,
             'categories' => $categories,
-            'colors' => $colors
+            'colors' => $colors,
+            'categoryTypeColorSetting' => $categoryTypeColorSetting
         ]);
     }
 
@@ -87,15 +93,20 @@ class CategoryController extends Controller
             ->orderBy('position')
             ->get();
 
-        $colors = Color::select('id', 'label')
+        $colors = Color::select('id', 'label', 'hex')
             ->orderBy('position', 'asc')
             ->get();
+
+        $categoryTypeColorSetting = ProjectCategoryColorSetting::Where('project_id', $project->id)
+            ->with(['fontColor', 'backgroundColor', 'borderTopColor'])
+            ->first();
 
         return view('categories.edit', [
             'project' => $project,
             'category' => $category,
             'categories' => $categories,
-            'colors' => $colors
+            'colors' => $colors,
+            'categoryTypeColorSetting' => $categoryTypeColorSetting
         ]);
     }
 
