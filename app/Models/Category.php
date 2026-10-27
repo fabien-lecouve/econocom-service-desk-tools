@@ -73,7 +73,8 @@ class Category extends Model
             ->with([
                 'children',
                 'messages' => function ($query) {
-                    $query->orderBy('position');
+                    $query->with(['fontColor', 'backgroundColor', 'borderTopColor', 'translations', 'type'])
+                        ->orderBy('position');
                 },
             ]);
     }
