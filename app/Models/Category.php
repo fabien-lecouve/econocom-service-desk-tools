@@ -71,6 +71,9 @@ class Category extends Model
         return $this->hasMany(Category::class, 'parent_id')
             ->orderBy('position')
             ->with([
+                'fontColor', 
+                'backgroundColor',
+                'borderTopColor',
                 'children',
                 'messages' => function ($query) {
                     $query->with(['fontColor', 'backgroundColor', 'borderTopColor', 'translations', 'type'])
