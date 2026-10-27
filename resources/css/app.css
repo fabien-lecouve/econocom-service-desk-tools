@@ -517,6 +517,13 @@ a, button {
 .form__notice small {
   color: #6B7280;
 }
+.form__error {
+  padding: 8px;
+  border-radius: 4px;
+  background-color: #EF4444;
+  color: #F5F5F5;
+  font-weight: 600;
+}
 
 .category-form__hierarchy {
   display: grid;
@@ -536,7 +543,12 @@ a, button {
   gap: 8px;
 }
 .category-form__error {
-  color: #EF4444;
+  margin-top: 8px;
+  padding: 8px;
+  border-radius: 4px;
+  background-color: #EF4444;
+  color: #F5F5F5;
+  font-weight: 600;
 }
 
 .required_field {

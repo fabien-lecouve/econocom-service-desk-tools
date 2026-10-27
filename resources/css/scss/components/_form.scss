@@ -218,6 +218,14 @@
             color: $gray-dark;
         }
     }
+
+    &__error {
+        padding: 8px;
+        border-radius: 4px;
+        background-color: $red-dark;
+        color: $white;
+        font-weight: 600;
+    }
 }
 
 .category-form {
@@ -243,7 +251,12 @@
     }
 
     &__error {
-        color: $red-dark;
+        margin-top: 8px;
+        padding: 8px;
+        border-radius: 4px;
+        background-color: $red-dark;
+        color: $white;
+        font-weight: 600;
     }
 }
 
