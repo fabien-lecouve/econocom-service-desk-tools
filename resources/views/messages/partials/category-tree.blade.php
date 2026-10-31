@@ -34,7 +34,7 @@
 
             <div class="actions">
 
-                @can('update', $category)
+                @can('update', $message)
                     <a class="actions__edit"
                         href="{{ route('projects.messages.edit', [
                             'project' => $project,
