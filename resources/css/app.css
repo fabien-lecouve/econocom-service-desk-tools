@@ -587,6 +587,19 @@ a, button {
   color: #8B5CF6;
 }
 
+.role--reader {
+  color: #22C55E;
+}
+.role--technician {
+  color: #3B82F6;
+}
+.role--technician_referent {
+  color: #8B5CF6;
+}
+.role--technical_coordinator {
+  color: #EAB308;
+}
+
 .table-container {
   background-color: #F5F5F5;
   padding: 16px;
@@ -638,6 +651,24 @@ a, button {
 }
 .table__tbody tr:last-child td:last-child {
   border-bottom-right-radius: 8px;
+}
+.table__activity {
+  text-align: center;
+}
+.table__activity div {
+  display: inline-block;
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+}
+.table__activity .active {
+  background-color: #22C55E;
+}
+.table__activity .less-active {
+  background-color: #EAB308;
+}
+.table__activity .inactive {
+  background-color: #EF4444;
 }
 .table__textarea {
   border: inherit;

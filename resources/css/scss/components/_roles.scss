@@ -1,0 +1,20 @@
+@use '../abstracts/variables' as *;
+
+.role {
+
+    &--reader {
+        color: #22C55E;
+    }
+
+    &--technician {
+        color: #3B82F6;
+    }
+
+    &--technician_referent {
+        color: #8B5CF6;
+    }
+
+    &--technical_coordinator {
+        color: #EAB308;
+    }
+}

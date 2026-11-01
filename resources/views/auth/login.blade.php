@@ -49,9 +49,9 @@
                     required
                 />
 
-                <x-forms.checkbox
+                <x-forms.boolean-checkbox
                     name="remember"
-                    :options="[1 => 'Se souvenir de moi ?']"
+                    label="Se souvenir de moi ?"
                 />
 
                 <button

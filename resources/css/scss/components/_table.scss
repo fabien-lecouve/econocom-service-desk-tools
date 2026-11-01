@@ -74,6 +74,27 @@
         }
     }
 
+    &__activity {
+        text-align: center;
+
+        div {
+            display: inline-block;
+            height: 15px;
+            width: 15px;
+            border-radius: 50%;
+        }
+
+        .active {
+            background-color: $green-dark;
+        }
+        .less-active {
+            background-color: $yellow-dark;
+        }
+        .inactive {
+            background-color: $red-dark;
+        }
+    }
+
     &__textarea {
         border: inherit;
         border-radius: inherit;

@@ -40,6 +40,7 @@ class User extends Authenticatable
             'password' => 'hashed',
             'is_admin' => 'boolean',
             'is_knowledge_manager' => 'boolean',
+            'last_activity_at' => 'datetime'
         ];
     }
 

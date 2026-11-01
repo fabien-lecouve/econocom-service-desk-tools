@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\Login;
 use App\Http\Controllers\Auth\Logout;
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\UpdateLastActivity;
 
 Route::get('/', function () {
     return redirect()->route('projects.index');
@@ -29,7 +30,7 @@ Route::post('/logout', Logout::class)
 
 
 // Protected routes
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', UpdateLastActivity::class])->group(function () {
 
     Route::resource('projects', ProjectController::class);
     Route::resource('projects.language-settings', ProjectLanguageSettingController::class)->only(['create', 'store']);

@@ -33,6 +33,7 @@
                     <th>Projets</th>
                     <th>Admin</th>
                     <th>KM</th>
+                    <th>Activité</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -48,21 +49,9 @@
                             @forelse($user->memberships as $membership)
                                 <div>
                                     <strong>{{ $membership->project->label }}</strong>
-                                    @if ($membership->role->code === App\Models\Role::READER)
-                                    <small style="color: #22C55E;">({{ $membership->role->label }})</small>
-                                    @endif
-
-                                    @if ($membership->role->code === App\Models\Role::TECHNICIAN)
-                                    <small style="color: #3B82F6;">({{ $membership->role->label }})</small>
-                                    @endif
-
-                                    @if ($membership->role->code === App\Models\Role::TECHNICIAN_REFERENT)
-                                    <small style="color: #8B5CF6;">({{ $membership->role->label }})</small>
-                                    @endif
-
-                                    @if ($membership->role->code === App\Models\Role::TECHNICAL_COORDINATOR)
-                                    <small style="color: #EAB308;">({{ $membership->role->label }})</small>
-                                    @endif
+                                    <span class="role role--{{ $membership->role->code }}">
+                                        ({{ $membership->role->label }})
+                                    </span>
                                 </div>
                             @empty
                                 <em>Aucun</em>
@@ -77,8 +66,18 @@
                             {{ $user->is_knowledge_manager ? '✔' : '✖' }}
                         </td>
 
+                        <td class="table__activity">
+                            @if ($user->last_activity_at?->greaterThan(now()->subHours(48)))
+                                <div class="active" title="Actif ces dernières 48 heures" aria-label="Actif ces dernières 48 heures"></div>
+                            @elseif ($user->last_activity_at?->greaterThan(now()->subWeek()))
+                                <div class="less-active" title="Actif ces 7 derniers jours" aria-label="Actif ces 7 derniers jours"></div>
+                            @else
+                                <div class="inactive" title="Inactif depluis d'une semaine" aria-label="Inactif depluis d'une semaine"></div>
+                            @endif
+                        </td>
+
                         <td class="actions">
-                            <a class="actions__edit" href="{{ route('users.edit', $user) }}" class="btn btn--secondary">
+                            <a class="actions__edit btn btn--secondary" href="{{ route('users.edit', $user) }}">
                                 <i class="fa-solid fa-pen"></i>
                             </a>
 
@@ -87,7 +86,7 @@
                                 @csrf
                                 @method('DELETE')
 
-                                <button class="actions__delete"  type="submit" class="btn btn--danger">
+                                <button class="actions__delete btn btn--danger"  type="submit">
                                     <i class="fa-solid fa-trash"></i>
                                 </button>
                             </form>

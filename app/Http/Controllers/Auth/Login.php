@@ -29,7 +29,7 @@ class Login extends Controller
 
         return back()
             ->withErrors([
-                'email' => 'The provided credentials do not match our records.',
+                'email' => 'Les identifiants fournis ne correspondent pas à nos dossiers',
             ])
             ->onlyInput('email');
     }
