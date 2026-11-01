@@ -19,7 +19,7 @@ class UserController extends Controller
     {
         $this->authorize('viewAny', User::class);
 
-        $users = User::select('id', 'lastname', 'firstname', 'email', 'last_activity_at')
+        $users = User::select('id', 'lastname', 'firstname', 'is_admin', 'is_knowledge_manager', 'last_activity_at')
             ->with([
                 'memberships.role',
                 'memberships.project'

@@ -29,7 +29,6 @@
                 <tr>
                     <th>Nom</th>
                     <th>Prénom</th>
-                    <th>Email</th>
                     <th>Projets</th>
                     <th>Admin</th>
                     <th>KM</th>
@@ -43,7 +42,6 @@
                     <tr>
                         <td>{{ $user->lastname }}</td>
                         <td>{{ $user->firstname }}</td>
-                        <td>{{ $user->email }}</td>
 
                         <td>
                             @forelse($user->memberships as $membership)
@@ -76,20 +74,22 @@
                             @endif
                         </td>
 
-                        <td class="actions">
-                            <a class="actions__edit btn btn--secondary" href="{{ route('users.edit', $user) }}">
-                                <i class="fa-solid fa-pen"></i>
-                            </a>
-
-                            <form action="{{ route('users.destroy', $user) }}" method="POST"
-                                onsubmit="return confirm('Supprimer cet utilisateur ?')">
-                                @csrf
-                                @method('DELETE')
-
-                                <button class="actions__delete btn btn--danger"  type="submit">
-                                    <i class="fa-solid fa-trash"></i>
-                                </button>
-                            </form>
+                        <td>
+                            <div class="actions">
+                                <a class="actions__edit btn btn--secondary" href="{{ route('users.edit', $user) }}">
+                                    <i class="fa-solid fa-pen"></i>
+                                </a>
+                                    
+                                <form action="{{ route('users.destroy', $user) }}" method="POST"
+                                    onsubmit="return confirm('Supprimer cet utilisateur ?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    
+                                    <button class="actions__delete btn btn--danger"  type="submit">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                 @endforeach
