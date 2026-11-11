@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Concerns\HasIncrementalCode;
 use App\Models\Concerns\HasPosition;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -23,7 +24,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 ]
 class Category extends Model
 {
-    use HasIncrementalCode, HasPosition, SoftDeletes;
+    use HasIncrementalCode, HasPosition, SoftDeletes, HasFactory;
 
     /**
      * Get the attributes that should be cast.

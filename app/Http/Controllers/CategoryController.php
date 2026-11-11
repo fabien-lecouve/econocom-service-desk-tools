@@ -70,7 +70,7 @@ class CategoryController extends Controller
 
         $validated = $request->validated();
         $validated['code'] = Category::generateCode($project);
-        $validated['position'] = Category::setPosition('parent_id', $validated['parent_id']);
+        $validated['position'] = Category::setPosition($project, 'parent_id', $validated['parent_id']);
 
         $category = $project->categories()->create($validated);
 
