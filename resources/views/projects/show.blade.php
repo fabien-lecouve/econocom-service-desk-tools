@@ -180,17 +180,17 @@
 
             <table class="table">
                 <colgroup>
-                    <col class="table__col--15">
-                    <col class="table__col--45">
-                    <col class="table__col--20">
-                    <col class="table__col--20">
+                    <col class="table__col--name">
+                    <col class="table__col--description">
+                    <col class="table__col--secondary">
+                    <col class="table__col--secondary">
                 </colgroup>
                 <thead class="table__thead">
                     <tr>
                         <th>Langue</th>
                         <th>Signature</th>
-                        <th>Téléphone interne spécifique</th>
-                        <th>Téléphone externe spécifique</th>
+                        <th class="table__secondary">Téléphone interne spécifique</th>
+                        <th class="table__secondary">Téléphone externe spécifique</th>
                     </tr>
                 </thead>
                 <tbody class="table__tbody">
@@ -198,15 +198,15 @@
                         <tr>
                             <td class="center"><span class="badge">{{ strtoupper($setting->language->code) }}</span></td>
                             <td>{!! nl2br(e($setting->signature)) !!}</td>
-                            <td class="center">{{ $setting->internal_phone_override ?? 'Non communiqué' }}</td>
-                            <td class="center">{{ $setting->external_phone_override ?? 'Non communiqué' }}</td>
+                            <td class="center table__secondary">{{ $setting->internal_phone_override ?? 'Non communiqué' }}</td>
+                            <td class="center table__secondary">{{ $setting->external_phone_override ?? 'Non communiqué' }}</td>
                         </tr>
                     @empty
                         <tr>
                             <td>Non communiqué</td>
                             <td>Non communiqué</td>
-                            <td>Non communiqué</td>
-                            <td>Non communiqué/td>
+                            <td class="table__secondary">Non communiqué</td>
+                            <td class="table__secondary">Non communiqué</td>
                         </tr>
                     @endforelse
                 </tbody>

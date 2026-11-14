@@ -5,9 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Project;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
-use App\Models\Color;
 use App\Models\Language;
-use App\Models\MessageType;
 use App\Services\ProjectColorService;
 use Illuminate\Support\Facades\DB;
 
@@ -21,7 +19,7 @@ class ProjectController extends Controller
     {
         $this->authorize('viewAny', Project::class);
 
-        $projects = Project::select('id', 'code', 'label', 'internal_phone', 'external_phone')
+        $projects = Project::select('id', 'code', 'label')
             ->with('projectLanguageSettings.language')->get();
 
         return view('projects.index', ['projects' => $projects]);

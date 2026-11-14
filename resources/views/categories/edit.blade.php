@@ -1,4 +1,3 @@
-```blade
 <x-layouts.dashboard>
     <x-slot:title>
         Modifier {{ $category->label }}
@@ -16,28 +15,9 @@
         [
             'title' => $category->label,
         ],
-    ]" :actions="[
-        [
-            'type' => 'link',
-            'link' => route('projects.categories.index', $project),
-            'label' => 'Annuler',
-            'icon' => 'fa-solid fa-xmark',
-                'policy' => 'update',
-                'model' => [$category, $project],
-        ],
-        [
-            'type' => 'submit',
-            'label' => 'Enregistrer',
-            'form' => 'category-edit-form',
-            'class' => 'button--primary',
-            'icon' => 'fa-solid fa-floppy-disk',
-                'policy' => 'update',
-                'model' => [$category, $project],
-        ],
-    ]" />
+    ]"/>
 
     <form 
-        id="category-edit-form" 
         method="POST" 
         action="{{ route('projects.categories.update', [$project, $category]) }}"
         class="form"
@@ -189,6 +169,24 @@
             </aside>
 
         </section>
+
+        <div class="form__actions">
+            <a
+                class="header__link button button--cancel"
+                href="{{ route('projects.categories.index', $project) }}"
+            >
+                <i class="fa-solid fa-xmark"></i>
+                <span>Annuler</span>
+            </a>
+        
+            <button
+                type="submit"
+                class="header__link button button--primary"
+            >
+                <i class="fa-solid fa-floppy-disk"></i>
+                <span>Enregistrer</span>
+            </button>
+        </div>
 
     </form>
 

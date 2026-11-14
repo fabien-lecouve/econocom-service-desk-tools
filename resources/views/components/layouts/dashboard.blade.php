@@ -1,15 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <x-layouts.head :title="$title ?? null" />
 
 <body>
-    <div class="dashboard">
+    <div
+        class="dashboard"
+        x-data="{ sidebarOpen: false }"
+        @keydown.escape.window="sidebarOpen = false"
+    >
         <x-layouts.sidebar />
 
-        <div class="main">
+        <main class="main">
             {{ $slot }}
-        </div>
+        </main>
     </div>
 </body>
 </html>

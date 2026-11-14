@@ -1,12 +1,18 @@
 @use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
 
 .form {
     display: flex;
     flex-direction: column;
-    gap: 32px;
-
-    padding: 32px;
     border-radius: 8px;
+    
+    gap: 16px;
+    padding: 16px;
+
+    @include up(lg) {
+        gap: 32px;
+        padding: 32px;
+    }
 
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 
@@ -19,8 +25,12 @@
 
         &--split {
             display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 32px;
+            gap: 16px;
+            
+            @include up(xl) {
+                gap: 32px;
+                grid-template-columns: 2fr 1fr;
+            }
         }
     }
 
@@ -37,19 +47,31 @@
     }
 
     &__description {
+        display: none;
         color: $gray-dark;
+
+        @include up(sm) {
+            display: inherit;
+        }
     }
 
     &__content {
         display: grid;
-        gap: 24px;
+        gap: 16px;
 
         &--2 {
-            grid-template-columns: repeat(2, 1fr);
+            @include up(sm) {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
         &--3 {
-            grid-template-columns: repeat(3, 1fr);
+            @include up(sm) {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            @include up(md) {
+                grid-template-columns: repeat(3, 1fr);
+            }
         }
 
         &--center {
@@ -62,8 +84,15 @@
     }
 
     &__aside {
-        padding-left: 32px;
-        border-left: 1px solid $gray-light;
+        padding-top: 16px;
+        border-top: 1px solid $gray-light;
+        
+        @include up(xl) {
+            padding-top: inherit;
+            border-top: inherit;
+            padding-left: 32px;
+            border-left: 1px solid $gray-light;
+        }
     }
 
     &__preview {
@@ -226,15 +255,28 @@
         color: $white;
         font-weight: 600;
     }
+
+    &__actions {
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+
+        @include up(md) {
+        justify-content: end;
+        }
+    }
 }
 
 .category-form {
 
     &__hierarchy {
         display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 24px;
+        gap: 16px;
         align-items: start;
+
+        @include up(sm) {
+            grid-template-columns: repeat(2, 1fr);
+        }
     }
 
     &__parents {

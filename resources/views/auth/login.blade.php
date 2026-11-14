@@ -3,17 +3,56 @@
         Se connecter
     </x-slot:title>
 
-    <x-layouts.header
-        title="Econocom"
-    />
-
     <form
         method="POST"
         action="/login"
-        class="form"
+        class="guest__form"
         >
 
         @csrf
+
+        <section class="guest__section">
+            <h1 class="guest__title">Econocom</h1>
+            <div class="guest__header">
+                <h2 class="guest__subtitle">Service Desk Tools</h2>
+
+                <small class="guest__description">
+                    Votre outil interne de support et de gestion des activités Service Desk
+                </small>
+            </div>
+
+            <div class="guest__content">
+                <ul class="guest__list">
+                    <li class="guest__item">
+                        <div class="icon icon--square icon-title">
+                            <i class="fa-solid fa-bolt"></i>
+                        </div>
+                        <div>
+                            <h3>Messages rapides</h3>
+                            <small>Modèles standardisés et prêts à l'emploi</small>
+                        </div>
+                    </li>
+                    <li class="guest__item">
+                        <div class="icon icon--square icon-title">
+                            <i class="fa-solid fa-book-open"></i>
+                        </div>
+                        <div>
+                            <h3>Bases de connaissance</h3>
+                            <small>Guides, procédures et bonnes pratiques</small>
+                        </div>
+                    </li>
+                    <li class="guest__item">
+                        <div class="icon icon--square icon-title">
+                            <i class="fa-regular fa-square-check"></i>
+                        </div>
+                        <div>
+                            <h3>Outils et suivis</h3>
+                            <small>Checklists, pickings et reporting</small>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
 
         <section class="form__section">
 

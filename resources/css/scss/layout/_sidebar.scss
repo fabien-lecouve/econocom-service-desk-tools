@@ -1,10 +1,82 @@
-@use '../abstracts/variables' as *;
 
-.sidebar {
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+// Barre supérieure mobile
+.sidebar-mobile {
+    height: 64px;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     background-color: $black;
-    position: sticky;
+
+    @include up(lg) {
+        display: none;
+    }
+
+    &__brand {
+        color: $white-dark;
+        font-size: 1.5rem;
+        font-weight: 400;
+    }
+
+    &__toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        border: none;
+        background: none;
+        color: $white-dark;
+        font-size: 1.5rem;
+        cursor: pointer;
+
+        i {
+            color: inherit;
+        }
+    }
+}
+
+// Fond sombre derrière le menu
+.sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    background-color: rgba(0, 0, 0, 0.6);
+
+    @include up(lg) {
+        display: none !important;
+    }
+}
+
+// Sidebar
+.sidebar {
+    position: fixed;
     top: 0;
+    left: 0;
+    z-index: 100;
+
+    width: min(280px, 85vw);
     height: 100vh;
+    height: 100dvh;
+
+    background-color: $black;
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+
+    &--open {
+        transform: translateX(0);
+    }
+
+    @include up(lg) {
+        position: sticky;
+        width: 240px;
+        height: 100vh;
+        transform: none;
+        transition: none;
+    }
 
     &__nav {
         height: 100%;
@@ -14,10 +86,19 @@
         gap: 64px;
     }
 
+    &__header {
+        position: relative;
+    }
+
     &__brand {
         display: flex;
         flex-direction: column;
         align-items: center;
+        padding-top: 20px;
+
+        @include up(lg) {
+            padding-top: 0;
+        }
 
         &-title {
             font-size: 2rem;
@@ -30,16 +111,46 @@
         }
     }
 
+    &__close {
+        position: absolute;
+        top: -24px;
+        right: 6px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 40px;
+        height: 40px;
+
+        border: none;
+        background: none;
+        color: $white-dark;
+        font-size: 1.25rem;
+        cursor: pointer;
+
+        @include up(lg) {
+            display: none;
+        }
+
+        i {
+            color: inherit;
+        }
+    }
+
     &__content {
-        height: 100%;
+        flex: 1;
+        min-height: 0;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        overflow-y: auto;
     }
 
     &__logout {
         display: flex;
         justify-content: center;
+        padding-top: 24px;
 
         &-button {
             display: flex;
@@ -53,7 +164,6 @@
             color: $white-dark;
             font-family: inherit;
             font-size: 1rem;
-
             cursor: pointer;
 
             &:hover {
@@ -67,6 +177,7 @@
     }
 }
 
+// Menu des projets
 .sidebar-menu {
     display: flex;
     flex-direction: column;
@@ -86,7 +197,6 @@
     }
 
     &__item {
-
         &.active {
             background-color: $white-dark;
 
@@ -113,9 +223,6 @@
     &__link {
         display: block;
         padding: 8px;
-    }
-
-    &__link {
         margin-left: 32px;
         color: $gray-dark;
         text-transform: capitalize;
@@ -125,4 +232,9 @@
             margin-right: 4px;
         }
     }
+}
+
+// Alpine : masquer avant initialisation
+[x-cloak] {
+    display: none !important;
 }

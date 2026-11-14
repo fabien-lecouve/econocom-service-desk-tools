@@ -1,14 +1,19 @@
 @use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
 
 .header {
     background-color: $white-light;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 
     &__nav {
-        padding: 32px;
+        padding: 16px;
         display: flex;
         align-items: center;
         justify-content: space-between;
+
+        @include up(lg) {
+            padding: 32px;
+        }
     }
 
     &__title {

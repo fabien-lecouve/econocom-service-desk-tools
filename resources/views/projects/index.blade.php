@@ -29,8 +29,6 @@
                 <tr>
                     <th>Code</th>
                     <th>Libellé</th>
-                    <th>Téléphone interne</th>
-                    <th>Téléphone externe</th>
                     <th>Langues</th>
                     <th>Actions</th>
                 </tr>
@@ -42,8 +40,6 @@
                     <tr>
                         <td>{{ $project->code }}</td>
                         <td>{{ $project->label }}</td>
-                        <td>{{ $project->internal_phone }}</td>
-                        <td>{{ $project->external_phone }}</td>
                         <td>
                             @foreach ($project->projectLanguageSettings as $setting)
                                 {{ $setting->language->label }}

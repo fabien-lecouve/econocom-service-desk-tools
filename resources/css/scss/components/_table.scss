@@ -1,10 +1,14 @@
 @use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
 
 .table-container {
     background-color: $white;
     padding: 16px;
     border-radius: 8px;
-    padding: 32px;
+
+    @include up(lg) {
+        padding: 32px;
+    }
 }
 
 .table {
@@ -16,20 +20,30 @@
         width: 15%;
     }
 
-    &__col--20 {
+    &__col--85 {
+        width: 85%;
+    }
+
+
+    &__col--name, &__col--project, &__col--activity, &__col--actions {
         width: 20%;
     }
 
-    &__col--45 {
-        width: 45%;
-    }
-
-    &__col--80 {
-        width: 80%;
-    }
-
-    &__col--85 {
+    &__col--description {
         width: 85%;
+
+        @include up(lg) {
+            width: 40%;
+        }
+    }
+
+    &__col--secondary {
+        visibility: collapse;
+
+        @include up(lg) {
+            visibility: visible;
+            width: 20%;
+        }
     }
 
     th, td {
@@ -71,6 +85,14 @@
             td:last-child {
                 border-bottom-right-radius: 8px;
             }
+        }
+    }
+
+    &__secondary {
+        display: none;
+
+        @include up(lg) {
+            display: table-cell;
         }
     }
 

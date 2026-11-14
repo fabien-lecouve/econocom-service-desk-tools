@@ -13,29 +13,9 @@
             [
                 'title' => 'Créer',
             ],
-        ]"
-        :actions="[
-            [
-                'type' => 'link',
-                'link' => route('users.index'),
-                'label' => 'Annuler',
-                'icon' => 'fa-solid fa-xmark',
-                'policy' => 'update',
-                'model' => $user,
-            ],
-            [
-                'type' => 'submit',
-                'label' => 'Enregistrer',
-                'form' => 'user-edit-form',
-                'class' => 'button--primary',
-                'icon' => 'fa-solid fa-floppy-disk',
-                'policy' => 'update',
-                'model' => $user,
-            ]
-        ]" />
+        ]"/>
 
     <form
-        id="user-edit-form"
         method="POST"
         action="{{ route('users.update', $user) }}"
         class="form"
@@ -228,6 +208,24 @@
             </div>
 
         </section>
+
+        <div class="form__actions">
+            <a
+                class="header__link button button--cancel"
+                href="{{ route('users.index') }}"
+            >
+                <i class="fa-solid fa-xmark"></i>
+                <span>Annuler</span>
+            </a>
+        
+            <button
+                type="submit"
+                class="header__link button button--primary"
+            >
+                <i class="fa-solid fa-floppy-disk"></i>
+                <span>Enregistrer</span>
+            </button>
+        </div>
 
     </form>
 

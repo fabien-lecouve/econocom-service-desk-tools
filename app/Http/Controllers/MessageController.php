@@ -92,7 +92,7 @@ class MessageController extends Controller
 
         $message = DB::transaction(function () use ($validated, $translations, $project) {
             $validated['code'] = Message::generateCode($project);
-            $validated['position'] = Message::setPosition('category_id', $validated['category_id']);
+            $validated['position'] = Message::setPosition($project, 'category_id', $validated['category_id']);
 
             $message = $project->messages()->create($validated);
 

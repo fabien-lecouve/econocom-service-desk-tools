@@ -17,29 +17,9 @@
             [
                 'title' => 'Créer',
             ],
-        ]"
-        :actions="[
-            [
-                'type' => 'link',
-                'link' => route('projects.show', $project),
-                'label' => 'Annuler',
-                'icon' => 'fa-solid fa-xmark',
-                'policy' => 'create',
-                'model' => [App\Models\Category::class, $project],
-            ],
-            [
-                'type' => 'submit',
-                'label' => 'Enregistrer',
-                'form' => 'category-create-form',
-                'class' => 'button--primary',
-                'icon' => 'fa-solid fa-floppy-disk',
-                'policy' => 'create',
-                'model' => [App\Models\Category::class, $project],
-            ]
-        ]" />
+        ]"/>
 
     <form
-        id="category-create-form"
         method="POST"
         action="{{ route('projects.categories.store', $project) }}"
         class="form"
@@ -181,6 +161,25 @@
             </aside>
 
         </section>
+
+        <div class="form__actions">
+            <a
+                class="header__link button button--cancel"
+                href="{{ route('projects.show', $project) }}"
+            >
+                <i class="fa-solid fa-xmark"></i>
+                <span>Annuler</span>
+            </a>
+        
+            <button
+                type="submit"
+                class="header__link button button--primary"
+            >
+                <i class="fa-solid fa-floppy-disk"></i>
+                <span>Enregistrer</span>
+            </button>
+        </div>
+
     </form>
 
 </x-layouts.dashboard>

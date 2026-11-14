@@ -13,29 +13,9 @@
             [
                 'title' => 'Paramétrer',
             ],
-        ]"
-        :actions="[
-            [
-                'type' => 'link',
-                'link' => route('projects.show', $project),
-                'label' => 'Annuler',
-                'icon' => 'fa-solid fa-xmark',
-                'policy' => 'create',
-                'model' => App\Models\Project::class,
-            ],
-            [
-                'type' => 'submit',
-                'label' => 'Enregistrer',
-                'form' => 'project-settings-create-form',
-                'class' => 'button--primary',
-                'icon' => 'fa-solid fa-floppy-disk',
-                'policy' => 'create',
-                'model' => App\Models\Project::class,
-            ]
-        ]" />
+        ]"/>
 
     <form
-        id="project-settings-create-form"
         method="POST"
         action="{{ route('projects.language-settings.store', $project) }}"
         class="form"
@@ -104,6 +84,24 @@
         </section>
 
         <x-forms.notice />
+
+        <div class="form__actions">
+            <a
+                class="header__link button button--cancel"
+                href="{{ route('projects.show', $project) }}"
+            >
+                <i class="fa-solid fa-xmark"></i>
+                <span>Annuler</span>
+            </a>
+        
+            <button
+                type="submit"
+                class="header__link button button--primary"
+            >
+                <i class="fa-solid fa-floppy-disk"></i>
+                <span>Enregistrer</span>
+            </button>
+        </div>
 
     </form>
 

@@ -18,29 +18,9 @@
                 'title' => 'Créer',
             ],
         ]"
-        :actions="[
-            [
-                'type' => 'link',
-                'link' => route('projects.show', $project),
-                'label' => 'Annuler',
-                'icon' => 'fa-solid fa-xmark',
-                'policy' => 'create',
-                'model' => [App\Models\Message::class, $project],
-            ],
-            [
-                'type' => 'submit',
-                'label' => 'Enregistrer',
-                'form' => 'message-create-form',
-                'class' => 'button--primary',
-                'icon' => 'fa-solid fa-floppy-disk',
-                'policy' => 'create',
-                'model' => [App\Models\Message::class, $project],
-            ]
-        ]"
     />
 
     <form
-        id="message-create-form"
         method="POST"
         action="{{ route('projects.messages.store', $project) }}"
         class="form"
@@ -71,12 +51,12 @@
                     <h2 class="form__title">Informations générales</h2>
 
                     <p class="form__description">
-                        Définissez le nom de la catégorie
+                        Définissez le nom du message
                     </p>
                 </div>
             </div>
 
-            <div class="form__content form__content--3">
+            <div class="form__content form__content--2">
 
                 <x-forms.input
                     name="label"
@@ -114,7 +94,7 @@
                     <h2 class="form__title">Hiérarchie</h2>
 
                     <p class="form__description">
-                        Choisissez la catégorie dans laquelle cette catégorie sera placée
+                        Choisissez la catégorie dans laquelle ce message sera placée
                     </p>
                 </div>
             </div>
@@ -144,7 +124,7 @@
                         <h2 class="form__title">Apparence</h2>
 
                         <p class="form__description">
-                            Définissez les couleurs de la catégorie
+                            Définissez les couleurs du bouton du message
                         </p>
                     </div>
                 </div>
@@ -209,7 +189,7 @@
                     <h2 class="form__title">Traductions</h2>
 
                     <p class="form__description">
-                        Ajoutez le contenu du message pour chaque langue activée sur ce projet
+                        Ajoutez le contenu du message pour chaque langue du projet
                     </p>
                 </div>
             </div>
@@ -254,6 +234,24 @@
         </section>
 
         <x-forms.notice />
+
+        <div class="form__actions">
+            <a
+                class="header__link button button--cancel"
+                href="{{ route('projects.show', $project) }}"
+            >
+                <i class="fa-solid fa-xmark"></i>
+                <span>Annuler</span>
+            </a>
+        
+            <button
+                type="submit"
+                class="header__link button button--primary"
+            >
+                <i class="fa-solid fa-floppy-disk"></i>
+                <span>Enregistrer</span>
+            </button>
+        </div>
 
     </form>
 

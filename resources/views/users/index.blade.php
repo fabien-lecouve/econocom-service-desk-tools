@@ -29,9 +29,9 @@
                 <tr>
                     <th>Nom</th>
                     <th>Prénom</th>
-                    <th>Projets</th>
-                    <th>Admin</th>
-                    <th>KM</th>
+                    {{-- <th>Projets</th> --}}
+                    {{-- <th>Admin</th>
+                    <th>KM</th> --}}
                     <th>Activité</th>
                     <th>Actions</th>
                 </tr>
@@ -43,7 +43,7 @@
                         <td>{{ $user->lastname }}</td>
                         <td>{{ $user->firstname }}</td>
 
-                        <td>
+                        {{-- <td>
                             @forelse($user->memberships as $membership)
                                 <div>
                                     <strong>{{ $membership->project->label }}</strong>
@@ -54,15 +54,15 @@
                             @empty
                                 <em>Aucun</em>
                             @endforelse
-                        </td>
+                        </td> --}}
 
-                        <td class="center">
+                        {{-- <td class="center">
                             {{ $user->is_admin ? '✔' : '✖' }}
                         </td>
 
                         <td class="center">
                             {{ $user->is_knowledge_manager ? '✔' : '✖' }}
-                        </td>
+                        </td> --}}
 
                         <td class="table__activity">
                             @if ($user->last_activity_at?->greaterThan(now()->subHours(48)))
